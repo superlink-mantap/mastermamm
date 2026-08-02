@@ -12,6 +12,7 @@
     --ink:#23233B; --muted:#8A87A3; --card:#FFFFFF; --line:#ECE9F7;
     --violet:#7C6FFF; --violet-tint:#EFEBFF; --violet-deep:#5B4DE0;
     --mint:#34D1A4; --mint-tint:#E3FBF1; --mint-deep:#0B8A63;
+    --teal:#17A8C4; --teal-tint:#E3F7FA; --teal-deep:#0E7A90;
     --peach:#FF9472; --peach-tint:#FFF0E9; --peach-deep:#B85A35;
     --danger:#FF6B81; --danger-tint:#FFEAEF; --danger-deep:#C23A52;
     --t-norek:var(--peach-tint); --t-saldo:var(--mint-tint); --t-filter:var(--violet-tint); --t-date:var(--danger-tint);
@@ -31,11 +32,12 @@
   .card{background:var(--card);border:none;border-radius:var(--radius-lg);padding:22px;box-shadow:0 4px 20px rgba(35,35,59,.06);}
   #phaseUpload h2{font-family:'Sora',sans-serif;font-size:17px;margin:0 0 4px;}
   #phaseUpload .hint{font-size:13px;color:var(--muted);margin:0 0 6px;}
-  #dropzone{border:2px dashed #D9D4F2;border-radius:var(--radius-md);padding:44px 20px;text-align:center;cursor:pointer;max-width:600px;margin:32px auto 4px;background:#FBFAFF;transition:border-color .18s, background-color .18s, transform .12s;}
+  #dropzone{border:2px dashed #D9D4F2;border-radius:var(--radius-md);padding:44px 20px;text-align:center;cursor:pointer;max-width:600px;margin:32px auto 4px;background:#FBFAFF;transition:border-color .18s, background-color .18s, transform .12s;position:relative;overflow:hidden;}
+  #dropzone::before{content:'';position:absolute;top:-60px;right:-60px;width:160px;height:160px;border-radius:50%;background:conic-gradient(from 90deg, var(--violet-tint), var(--mint-tint), var(--peach-tint), var(--violet-tint));opacity:.5;filter:blur(2px);}
   #dropzone:hover{border-color:var(--violet);background:var(--violet-tint);transform:translateY(-1px);}
   #dropzone.drag{border-color:var(--violet);background:var(--violet-tint);}
-  #dropzone .upload-icon{width:52px;height:52px;border-radius:50%;background:#fff;display:flex;align-items:center;justify-content:center;margin:0 auto 14px;box-shadow:0 4px 14px rgba(124,111,255,.18);color:var(--violet-deep);}
-  #dropzone p{margin:0 0 4px;font-size:14.5px;color:var(--muted);}
+  #dropzone .upload-icon{width:52px;height:52px;border-radius:50%;background:#fff;display:flex;align-items:center;justify-content:center;margin:0 auto 14px;box-shadow:0 4px 14px rgba(124,111,255,.18);color:var(--violet-deep);position:relative;z-index:1;}
+  #dropzone p{margin:0 0 4px;font-size:14.5px;color:var(--muted);position:relative;z-index:1;}
   #dropzone .pick{font-weight:700;color:var(--violet-deep);text-decoration:underline;text-decoration-style:dotted;text-underline-offset:3px;}
   #fileInput{display:none;}
   .file-types{font-size:12px;color:var(--muted);margin-top:12px;display:flex;gap:6px;justify-content:center;flex-wrap:wrap;}
@@ -47,6 +49,8 @@
   .topbar{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;margin-bottom:18px;background:var(--card);padding:12px 14px;border-radius:var(--radius-md);box-shadow:0 4px 18px rgba(35,35,59,.05);}
   .file-pill{display:inline-flex;align-items:center;gap:6px;font-size:12.5px;background:var(--violet-tint);color:var(--violet-deep);padding:8px 14px;border-radius:20px;font-weight:700;}
   .topbar-actions{display:flex;gap:8px;flex-wrap:wrap;align-items:center;}
+  .topbar-group{display:flex;gap:6px;align-items:center;}
+  .topbar-divider{width:1px;align-self:stretch;background:var(--line);margin:0 2px;}
   .delim-box {font-size:13px; background:#fff; padding:6px 12px; border-radius:20px; border:1px solid var(--line); display:flex; align-items:center; gap:8px;}
   .delim-box select {border:none; outline:none; font-family:inherit; font-weight:600; color:var(--violet-deep); cursor:pointer;}
 
@@ -80,9 +84,12 @@
 
   /* Accordion tool groups: shrinks sidebar height so the worksheet is reachable
      without scrolling through every tool first */
-  details.tool-group{background:var(--card);border-radius:var(--radius-md);padding:0;box-shadow:0 4px 18px rgba(35,35,59,.05);overflow:hidden;}
+  details.tool-group{background:var(--card);border-radius:var(--radius-md);padding:0;box-shadow:0 2px 8px rgba(35,35,59,.045);border:1px solid var(--line);overflow:hidden;}
   details.tool-group[open]{padding-bottom:16px;}
-  details.tool-group summary{list-style:none;cursor:pointer;padding:14px 16px;display:flex;align-items:center;justify-content:space-between;gap:8px;font-family:'Sora',sans-serif;font-size:12px;color:var(--violet-deep);font-weight:700;text-transform:uppercase;letter-spacing:.03em;}
+  details.tool-group summary{list-style:none;cursor:pointer;padding:14px 16px;display:flex;align-items:center;gap:8px;font-family:'Sora',sans-serif;font-size:12px;color:var(--violet-deep);font-weight:700;text-transform:uppercase;letter-spacing:.03em;}
+  .summary-main{display:flex;align-items:baseline;flex-wrap:wrap;gap:6px;flex:1;min-width:0;}
+  .summary-title{white-space:nowrap;}
+  .summary-hint{font-size:10.5px;font-weight:600;color:var(--muted);text-transform:none;letter-spacing:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
   details.tool-group summary::-webkit-details-marker{display:none;}
   details.tool-group summary::after{content:'';width:8px;height:8px;border-right:2px solid var(--violet-deep);border-bottom:2px solid var(--violet-deep);transform:rotate(45deg);transition:transform .18s;flex-shrink:0;margin-right:2px;}
   details.tool-group[open] summary::after{transform:rotate(-135deg);margin-top:4px;}
@@ -90,12 +97,15 @@
   details.tool-group > summary + *{margin-top:0;}
   details.tool-group .tg-body{padding:0 16px;}
   details.tool-group.panel summary{padding:12px 14px;}
-  .sidebar .quick-hint{font-size:11.5px;color:var(--muted);background:#fff;border-radius:12px;padding:8px 12px;margin-bottom:2px;box-shadow:0 4px 18px rgba(35,35,59,.05);}
+  .badge-count{display:inline-flex;align-items:center;background:var(--violet);color:#fff;font-size:10px;font-weight:700;padding:2px 8px;border-radius:20px;margin-left:6px;vertical-align:middle;}
+  .sidebar-section-label{font-family:'Sora',sans-serif;font-size:11px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.06em;margin:4px 2px -2px;display:flex;align-items:center;gap:8px;}
+  .sidebar-section-label::after{content:'';flex:1;height:1px;background:var(--line);}
+  .sidebar-section-label.first{margin-top:0;}
 
   .tool-group{background:var(--card);border-radius:var(--radius-md);padding:16px;box-shadow:0 4px 18px rgba(35,35,59,.05);}
   .tool-group h3{font-family:'Sora',sans-serif;font-size:12px;color:var(--violet-deep);margin:0 0 12px;font-weight:700;text-transform:uppercase;letter-spacing:.03em;display:flex;align-items:center;gap:6px;}
-  .tool-group .btn-secondary.tool-mint{background:var(--mint-tint);color:var(--mint-deep);}
-  .tool-group .btn-secondary.tool-mint:hover{background:#D1F8E8;}
+  .tool-group .btn-secondary.tool-mint{background:var(--teal-tint);color:var(--teal-deep);}
+  .tool-group .btn-secondary.tool-mint:hover{background:#CDEFF3;}
   .tool-note{font-size:11.5px;color:var(--muted);margin:6px 0 0;line-height:1.45;}
   
   .input-field{width:100%;padding:9px 12px;border:1.5px solid var(--line);border-radius:12px;font-size:12.5px;font-family:inherit;outline:none;transition:border-color .15s;}
@@ -117,13 +127,14 @@
 
   table{border-collapse:collapse;width:100%;font-size:12.5px;background:var(--card);}
   th,td{padding:10px 12px;border-bottom:1px solid var(--line);text-align:left;white-space:nowrap; transition: background-color 0.15s;}
-  td{font-family:'Space Mono',monospace;}
+  td{font-family:'Plus Jakarta Sans',sans-serif;}
+  td.r-norek,td.r-saldo,td.r-date{font-family:'Space Mono',monospace;}
   tbody tr:hover td{filter:brightness(0.97);}
-  thead th{background:#fff;position:sticky;top:0;z-index:2;font-family:'Sora',sans-serif;box-shadow:0 2px 6px rgba(35,35,59,.05);}
-  .col-head{display:flex;flex-direction:column;gap:6px;min-width:150px;}
+  thead th{background:#fff;position:sticky;top:0;z-index:2;font-family:'Sora',sans-serif;box-shadow:0 2px 6px rgba(35,35,59,.05);padding:8px 9px;}
+  .col-head{display:flex;flex-direction:column;gap:5px;min-width:135px;}
   .col-head-row{display:flex;align-items:center;gap:6px;}
-  .hdr-name{font-size:12.5px;font-weight:700;flex:1;}
-  select.role-select{font-family:inherit;font-size:12px;padding:7px 8px;border:1.5px solid var(--line);border-radius:10px;background:#fff;width:100%;cursor:pointer;}
+  .hdr-name{font-size:12px;font-weight:700;flex:1;white-space:normal;word-break:break-word;line-height:1.25;}
+  select.role-select{font-family:inherit;font-size:11.5px;padding:6px 7px;border:1.5px solid var(--line);border-radius:9px;background:#fff;width:100%;cursor:pointer;}
   .del-col-btn{width:24px;height:24px;border-radius:50%;border:none;background:var(--danger-tint);color:var(--danger-deep);font-size:13px;cursor:pointer;padding:0;display:flex;align-items:center;justify-content:center;transition:background-color .15s;}
   .del-col-btn:hover{background:var(--danger);color:#fff;}
   .act-col{width:30px;text-align:center;}
@@ -163,12 +174,56 @@
   .clean-text{font-size:13px;color:var(--muted);}
 
   #toast {
-    position: fixed; top: 20px; right: 20px; background: var(--ink); color: #fff;
-    padding: 12px 24px; border-radius: 12px; font-size: 13px; font-weight: 600;
-    box-shadow: 0 4px 15px rgba(0,0,0,0.15); z-index: 9999;
+    position: fixed; top: 20px; right: 20px; max-width:min(360px, calc(100vw - 40px)); background: var(--ink); color: #fff;
+    padding: 13px 18px; border-radius: 14px; font-size: 13px; font-weight: 600; line-height:1.4;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.18); z-index: 9999; border-left:4px solid var(--violet);
     opacity: 0; transform: translateY(-20px); transition: all 0.3s ease; pointer-events: none;
   }
   #toast.show { opacity: 1; transform: translateY(0); }
+  #toast.danger { border-left-color: var(--danger); }
+  #toast.success { border-left-color: var(--mint); }
+
+  /* --- LOADING OVERLAY --- */
+  #loadingOverlay {
+    position: fixed; inset: 0; background: rgba(35,35,59,.45); backdrop-filter: blur(2px);
+    display: flex; align-items: center; justify-content: center; z-index: 10000;
+    opacity: 0; pointer-events: none; transition: opacity .2s ease;
+  }
+  #loadingOverlay.show { opacity: 1; pointer-events: auto; }
+  .loading-card { background: #fff; border-radius: var(--radius-md); padding: 26px 32px; display: flex; align-items: center; gap: 14px; box-shadow: 0 12px 30px rgba(0,0,0,.2); font-weight: 700; font-size: 13.5px; color: var(--ink); }
+  .spinner { width: 26px; height: 26px; border-radius: 50%; border: 3px solid var(--violet-tint); border-top-color: var(--violet); animation: spin .7s linear infinite; flex-shrink: 0; }
+  @keyframes spin { to { transform: rotate(360deg); } }
+
+  /* --- CONFIRM MODAL --- */
+  #confirmOverlay {
+    position: fixed; inset: 0; background: rgba(35,35,59,.5);
+    display: flex; align-items: center; justify-content: center; z-index: 10001; padding: 20px;
+    opacity: 0; pointer-events: none; transition: opacity .18s ease;
+  }
+  #confirmOverlay.show { opacity: 1; pointer-events: auto; }
+  .confirm-card { background: #fff; border-radius: var(--radius-md); padding: 22px; max-width: 380px; width: 100%; box-shadow: 0 16px 40px rgba(0,0,0,.25); transform: translateY(8px); transition: transform .18s ease; }
+  #confirmOverlay.show .confirm-card { transform: translateY(0); }
+  .confirm-icon { width: 42px; height: 42px; border-radius: 12px; background: var(--danger-tint); color: var(--danger-deep); display: flex; align-items: center; justify-content: center; margin-bottom: 12px; }
+  .confirm-title { font-family: 'Sora',sans-serif; font-weight: 700; font-size: 15px; margin: 0 0 6px; }
+  .confirm-msg { font-size: 13px; color: var(--muted); line-height: 1.5; margin: 0 0 18px; }
+  .confirm-actions { display: flex; gap: 8px; }
+  .confirm-actions button { flex: 1; }
+
+  /* --- SHORTCUT HELP MODAL --- */
+  #shortcutOverlay {
+    position: fixed; inset: 0; background: rgba(35,35,59,.5);
+    display: flex; align-items: center; justify-content: center; z-index: 10001; padding: 20px;
+    opacity: 0; pointer-events: none; transition: opacity .18s ease;
+  }
+  #shortcutOverlay.show { opacity: 1; pointer-events: auto; }
+  .shortcut-card { background: #fff; border-radius: var(--radius-md); padding: 24px; max-width: 420px; width: 100%; box-shadow: 0 16px 40px rgba(0,0,0,.25); transform: translateY(8px); transition: transform .18s ease; }
+  #shortcutOverlay.show .shortcut-card { transform: translateY(0); }
+  .shortcut-card h3{font-family:'Sora',sans-serif;font-size:16px;margin:0 0 14px;display:flex;align-items:center;justify-content:space-between;}
+  .shortcut-row{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:9px 0;border-bottom:1px solid var(--line);font-size:13px;}
+  .shortcut-row:last-of-type{border-bottom:none;}
+  .shortcut-row span{color:var(--muted);}
+  kbd{background:var(--violet-tint);color:var(--violet-deep);font-family:'Space Mono',monospace;font-size:11.5px;font-weight:700;padding:3px 8px;border-radius:6px;}
+  .shortcut-close{width:100%;margin-top:16px;}
 
 
   /* --- FITUR BLOK EXCEL STYLE --- */
@@ -260,17 +315,24 @@
         </div>
       </div>
       <div class="topbar-actions">
-        <button class="btn-icon" id="btnUndo" title="Undo (Ctrl+Z)">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3 7v6h6"></path><path d="M21 17a9 9 0 0 0-9-9 9 9 0 0 0-6 2.3L3 13"></path></svg>
-        </button>
-        <button class="btn-icon" id="btnRedo" title="Redo (Ctrl+Y)">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 7v6h-6"></path><path d="M3 17a9 9 0 0 1 9-9 9 9 0 0 1 6 2.3l3 2.7"></path></svg>
-        </button>
+        <div class="topbar-group">
+          <button class="btn-icon" id="btnShortcutHelp" title="Lihat semua shortcut keyboard">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path><line x1="12" y1="17" x2="12.01" y2="17"></line></svg>
+          </button>
+          <button class="btn-icon" id="btnUndo" title="Undo (Ctrl+Z)">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3 7v6h6"></path><path d="M21 17a9 9 0 0 0-9-9 9 9 0 0 0-6 2.3L3 13"></path></svg>
+          </button>
+          <button class="btn-icon" id="btnRedo" title="Redo (Ctrl+Y)">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 7v6h-6"></path><path d="M3 17a9 9 0 0 1 9-9 9 9 0 0 1 6 2.3l3 2.7"></path></svg>
+          </button>
+        </div>
+        <div class="topbar-divider"></div>
         <button class="btn-primary" id="btnDownload">
           <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg> 
           Unduh Excel
         </button>
-        <button class="btn-secondary" id="btnReset" style="border-radius:16px;">
+        <div class="topbar-divider"></div>
+        <button class="btn-secondary" id="btnReset" style="border-radius:16px;color:var(--danger-deep);">
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 2v6h-6"></path><path d="M3 12a9 9 0 0 1 15-6.7L21 8"></path><path d="M3 22v-6h6"></path><path d="M21 12a9 9 0 0 1-15 6.7L3 16"></path></svg>
           Ganti File
         </button>
@@ -280,47 +342,67 @@
     <div class="workspace">
       <div class="sidebar">
 
-        <details class="tool-group">
-          <summary>🧩 Preset Peran Kolom</summary>
+        <div class="sidebar-section-label first">Alat Utama</div>
+
+        <details class="tool-group" open>
+          <summary><span class="summary-main"><span class="summary-title">🖱️ Area Terpilih (Blok)</span><span class="summary-hint">salin, hapus, sisakan</span></span></summary>
           <div class="tg-body">
-          <div class="input-group" style="margin-bottom:8px;">
-            <input type="text" id="presetNameInput" class="input-field" placeholder="Nama preset baru...">
-            <button class="btn-primary" id="btnSavePreset" style="font-size:12.5px; padding:8px 12px;" title="Simpan konfigurasi peran dan pilihan filter saat ini">Simpan</button>
+          <div style="display:flex; flex-direction:column; gap:8px;">
+
+            <div style="display:flex; align-items:center; gap:8px; background:var(--violet-tint); padding:6px 8px; border-radius:12px;">
+              <span style="font-size:11px; font-weight:700; color:var(--violet-deep); flex:1; text-align:center;">📋 CLIPBOARD</span>
+              <button class="btn-secondary" id="btnCopySel" style="padding:6px 12px; font-size:11.5px; background:#fff; color:var(--violet-deep); border-radius:8px;" title="Salin sel (Ctrl+C)">Salin</button>
+              <button class="btn-secondary" id="btnCutSel" style="padding:6px 12px; font-size:11.5px; background:#fff; color:var(--violet-deep); border-radius:8px;" title="Potong sel (Ctrl+X)">Potong</button>
+            </div>
+            
+            <div style="display:flex; align-items:center; gap:8px; background:var(--danger-tint); padding:6px 8px; border-radius:12px;">
+              <span style="font-size:11px; font-weight:700; color:var(--danger-deep); flex:1; text-align:center;">🗑️ HAPUS</span>
+              <button class="btn-secondary" id="btnDelSelRows" style="padding:6px 12px; font-size:11.5px; background:#fff; color:var(--danger-deep); border-radius:8px;" title="Buang baris yang diblok">Baris</button>
+              <button class="btn-secondary" id="btnDelSelCols" style="padding:6px 12px; font-size:11.5px; background:#fff; color:var(--danger-deep); border-radius:8px;" title="Buang kolom yang diblok">Kolom</button>
+            </div>
+            
+            <div style="display:flex; align-items:center; gap:8px; background:var(--teal-tint); padding:6px 8px; border-radius:12px;">
+              <span style="font-size:11px; font-weight:700; color:var(--teal-deep); flex:1; text-align:center;">✂️ SISAKAN</span>
+              <button class="btn-secondary" id="btnKeepSelRows" style="padding:6px 12px; font-size:11.5px; background:#fff; color:var(--teal-deep); border-radius:8px;" title="Buang SEMUA baris KECUALI yang diblok">Baris</button>
+              <button class="btn-secondary" id="btnKeepSelCols" style="padding:6px 12px; font-size:11.5px; background:#fff; color:var(--teal-deep); border-radius:8px;" title="Buang SEMUA kolom KECUALI yang diblok">Kolom</button>
+            </div>
+            
           </div>
-          <div id="presetListContainer" style="max-height: 160px; overflow-y: auto;">
-            </div>
-          <p class="tool-note">Simpan nama header kolom beserta item centang filternya secara otomatis. Gunakan tombol ▲▼ untuk mengatur urutan.</p>
+          <p class="tool-note" style="margin-top:10px; text-align:center;">
+            Tahan <b>Ctrl</b> + Klik untuk blok banyak sel.<br>
+            Gunakan <b>Ctrl+C</b>/<b>V</b>/<b>X</b> untuk Salin Tempel.
+          </p>
+          </div>
+        </details>
 
-          <div class="gh-sync-block">
-            <p class="gh-sync-title">
-              <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M12 .3a12 12 0 0 0-3.8 23.4c.6.1.8-.3.8-.6v-2.2c-3.3.7-4-1.6-4-1.6-.6-1.4-1.4-1.8-1.4-1.8-1.1-.8.1-.8.1-.8 1.2.1 1.9 1.2 1.9 1.2 1.1 1.9 2.9 1.3 3.6 1 .1-.8.4-1.3.8-1.6-2.7-.3-5.5-1.3-5.5-5.9 0-1.3.5-2.4 1.2-3.2-.1-.3-.5-1.5.1-3.1 0 0 1-.3 3.3 1.2a11.4 11.4 0 0 1 6 0c2.3-1.6 3.3-1.2 3.3-1.2.6 1.6.2 2.8.1 3.1.8.8 1.2 1.9 1.2 3.2 0 4.6-2.8 5.6-5.5 5.9.4.4.8 1.1.8 2.2v3.3c0 .3.2.7.8.6A12 12 0 0 0 12 .3"/></svg>
-              Sinkron Preset (GitHub)
-            </p>
-            <p class="gh-status-line" id="mmGhStatusLine"></p>
+        <div id="filterPanelsContainer"></div>
 
-            <div id="mmGhLockedView" style="display:none;">
-              <div class="gh-mini-btns">
-                <button class="btn-secondary" id="btnGhEdit">Ubah Token</button>
-                <button class="btn-secondary tool-mint" id="btnGhSyncNow">Sinkron Ulang</button>
-                <button class="btn-secondary" id="btnGhClear" style="color:var(--danger-deep);background:var(--danger-tint);">Hapus Token</button>
-              </div>
-            </div>
-
-            <div id="mmGhEditView">
-              <div class="input-group" style="margin-bottom:6px;">
-                <input type="password" id="mmGhTokenInput" class="input-field" placeholder="Tempel token GitHub...">
-                <button class="btn-primary" id="btnGhSave" style="font-size:11.5px;padding:8px 10px;">Simpan</button>
-              </div>
-              <button class="btn-secondary" id="btnGhCancel" style="display:none;font-size:10.5px;padding:6px 8px;width:100%;">Batal</button>
-            </div>
-
-            <p class="gh-status-line" id="mmGhSyncStatus"></p>
+        <details class="tool-group" open>
+          <summary><span class="summary-main"><span class="summary-title">🧹 Rapikan Data</span><span class="summary-hint">nol-kan, bersihkan, duplikat</span></span></summary>
+          <div class="tg-body">
+          <div class="btn-row">
+            <button class="btn-secondary tool-mint" id="btnFillZero" title="Jika ada sel yang diblok, hanya sel diblok yang akan terisi 0.">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><circle cx="12" cy="12" r="4"></circle><line x1="12" y1="8" x2="12" y2="16"></line></svg>
+              0️⃣ Nol-kan Sel Kosong
+            </button>
+          </div>
+          <div class="btn-row" style="margin-top:8px;">
+            <button class="btn-secondary" id="btnCleanText" title="Bersihkan spasi ekstra & karakter tersembunyi">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m21 21-7-7"></path><path d="M15.4 15.4a4 4 0 0 0-5.6 5.6"></path><path d="M2 12a10 10 0 0 1 10-10"></path></svg>
+              ✨ Bersihkan Teks
+            </button>
+          </div>
+          <div class="btn-row" style="margin-top:8px;">
+            <button class="btn-secondary" id="btnRemoveDupes" title="Hapus baris yang seluruh isinya sama persis dengan baris lain">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect x="8" y="8" width="12" height="12" rx="2"></rect><path d="M16 8V6a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h2"></path></svg>
+              🧬 Hapus Baris Duplikat
+            </button>
           </div>
           </div>
         </details>
 
         <details class="tool-group">
-          <summary>🔎 Cari &amp; Ganti</summary>
+          <summary><span class="summary-main"><span class="summary-title">🔎 Cari &amp; Ganti</span><span class="summary-hint">temukan & ubah teks</span></span></summary>
           <div class="tg-body">
           <div class="input-group" style="margin-bottom:12px;">
             <input type="text" id="findInput" class="input-field" placeholder="Cari data...">
@@ -344,57 +426,8 @@
           </div>
         </details>
 
-        <details class="tool-group" open>
-          <summary>🧹 Rapikan Data</summary>
-          <div class="tg-body">
-          <div class="btn-row">
-            <button class="btn-secondary tool-mint" id="btnFillZero" title="Jika ada sel yang diblok, hanya sel diblok yang akan terisi 0.">
-              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><circle cx="12" cy="12" r="4"></circle><line x1="12" y1="8" x2="12" y2="16"></line></svg>
-              0️⃣ Nol-kan Sel Kosong
-            </button>
-          </div>
-          <div class="btn-row" style="margin-top:8px;">
-            <button class="btn-secondary" id="btnCleanText" title="Bersihkan spasi ekstra & karakter tersembunyi">
-              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m21 21-7-7"></path><path d="M15.4 15.4a4 4 0 0 0-5.6 5.6"></path><path d="M2 12a10 10 0 0 1 10-10"></path></svg>
-              ✨ Bersihkan Teks
-            </button>
-          </div>
-          </div>
-        </details>
-        
-        <details class="tool-group" open>
-          <summary>🖱️ Area Terpilih (Blok)</summary>
-          <div class="tg-body">
-          <div style="display:flex; flex-direction:column; gap:8px;">
-
-            <div style="display:flex; align-items:center; gap:8px; background:var(--violet-tint); padding:6px 8px; border-radius:12px;">
-              <span style="font-size:11px; font-weight:700; color:var(--violet-deep); flex:1; text-align:center;">📋 CLIPBOARD</span>
-              <button class="btn-secondary" id="btnCopySel" style="padding:6px 12px; font-size:11.5px; background:#fff; color:var(--violet-deep); border-radius:8px;" title="Salin sel (Ctrl+C)">Salin</button>
-              <button class="btn-secondary" id="btnCutSel" style="padding:6px 12px; font-size:11.5px; background:#fff; color:var(--violet-deep); border-radius:8px;" title="Potong sel (Ctrl+X)">Potong</button>
-            </div>
-            
-            <div style="display:flex; align-items:center; gap:8px; background:var(--danger-tint); padding:6px 8px; border-radius:12px;">
-              <span style="font-size:11px; font-weight:700; color:var(--danger-deep); flex:1; text-align:center;">🗑️ HAPUS</span>
-              <button class="btn-secondary" id="btnDelSelRows" style="padding:6px 12px; font-size:11.5px; background:#fff; color:var(--danger-deep); border-radius:8px;" title="Buang baris yang diblok">Baris</button>
-              <button class="btn-secondary" id="btnDelSelCols" style="padding:6px 12px; font-size:11.5px; background:#fff; color:var(--danger-deep); border-radius:8px;" title="Buang kolom yang diblok">Kolom</button>
-            </div>
-            
-            <div style="display:flex; align-items:center; gap:8px; background:var(--mint-tint); padding:6px 8px; border-radius:12px;">
-              <span style="font-size:11px; font-weight:700; color:var(--mint-deep); flex:1; text-align:center;">✂️ SISAKAN</span>
-              <button class="btn-secondary" id="btnKeepSelRows" style="padding:6px 12px; font-size:11.5px; background:#fff; color:var(--mint-deep); border-radius:8px;" title="Buang SEMUA baris KECUALI yang diblok">Baris</button>
-              <button class="btn-secondary" id="btnKeepSelCols" style="padding:6px 12px; font-size:11.5px; background:#fff; color:var(--mint-deep); border-radius:8px;" title="Buang SEMUA kolom KECUALI yang diblok">Kolom</button>
-            </div>
-            
-          </div>
-          <p class="tool-note" style="margin-top:10px; text-align:center;">
-            Tahan <b>Ctrl</b> + Klik untuk blok banyak sel.<br>
-            Gunakan <b>Ctrl+C</b>/<b>V</b>/<b>X</b> untuk Salin Tempel.
-          </p>
-          </div>
-        </details>
-
         <details class="tool-group hidden" id="norekToolGroup" open>
-          <summary>🔢 Opsi Number</summary>
+          <summary><span class="summary-main"><span class="summary-title">🔢 Opsi Number</span><span class="summary-hint">format nomor rekening</span></span></summary>
           <div class="tg-body">
           <div class="opts">
             <label><input type="checkbox" id="optStrip" checked> Buang karakter selain angka</label>
@@ -405,12 +438,50 @@
           </div>
         </details>
 
-        <div id="filterPanelsContainer"></div>
+        <div class="sidebar-section-label">Lanjutan</div>
+
+        <details class="tool-group">
+          <summary><span class="summary-main"><span class="summary-title">🧩 Preset Peran Kolom</span><span class="summary-hint">simpan & muat konfigurasi</span></span></summary>
+          <div class="tg-body">
+          <div class="input-group" style="margin-bottom:8px;">
+            <input type="text" id="presetNameInput" class="input-field" placeholder="Nama preset baru...">
+            <button class="btn-primary" id="btnSavePreset" style="font-size:12.5px; padding:8px 12px;" title="Simpan konfigurasi peran dan pilihan filter saat ini">Simpan</button>
+          </div>
+          <div id="presetListContainer" style="max-height: 160px; overflow-y: auto;">
+            </div>
+          <p class="tool-note">Simpan nama header kolom beserta item centang filternya secara otomatis. Gunakan tombol ▲▼ untuk mengatur urutan.</p>
+          </div>
+        </details>
+
+        <details class="tool-group">
+          <summary><span class="summary-main"><span class="summary-title">🔗 Sinkron Preset (GitHub)</span><span class="summary-hint">opsional, untuk tim</span></span></summary>
+          <div class="tg-body">
+            <p class="gh-status-line" id="mmGhStatusLine"></p>
+
+            <div id="mmGhLockedView" style="display:none;">
+              <div class="gh-mini-btns">
+                <button class="btn-secondary" id="btnGhEdit">Ubah Token</button>
+                <button class="btn-secondary tool-mint" id="btnGhSyncNow">Sinkron Ulang</button>
+                <button class="btn-secondary" id="btnGhClear" style="color:var(--danger-deep);background:var(--danger-tint);">Hapus Token</button>
+              </div>
+            </div>
+
+            <div id="mmGhEditView">
+              <div class="input-group" style="margin-bottom:6px;">
+                <input type="password" id="mmGhTokenInput" class="input-field" placeholder="Tempel token GitHub...">
+                <button class="btn-primary" id="btnGhSave" style="font-size:11.5px;padding:8px 10px;">Simpan</button>
+              </div>
+              <button class="btn-secondary" id="btnGhCancel" style="display:none;font-size:10.5px;padding:6px 8px;width:100%;">Batal</button>
+            </div>
+
+            <p class="gh-status-line" id="mmGhSyncStatus"></p>
+          </div>
+        </details>
 
       </div>
 
       <div class="main-area">
-        <div class="card" style="padding:16px;">
+        <div class="card" style="padding:16px;box-shadow:0 10px 32px rgba(35,35,59,.09);border-top:3px solid var(--violet);">
           <div class="role-legend">
             <span class="tag" style="background:var(--t-norek);"><span class="dot" style="background:var(--peach-deep);"></span>Number</span>
             <span class="tag" style="background:var(--t-saldo);"><span class="dot" style="background:var(--mint-deep);"></span>Currency</span>
@@ -423,6 +494,9 @@
             <div class="clean-text" id="tallyLabel"></div>
           </div>
           <div class="map-scroll" id="mapScroll"><table id="dataTable"></table></div>
+          <div id="loadMoreWrap" class="hidden" style="text-align:center;margin-top:10px;">
+            <button class="btn-secondary" id="btnLoadMore" style="padding:8px 18px;">Muat 150 baris lagi ↓</button>
+          </div>
           <p class="tool-note" id="rowCapNote" style="margin-top:8px;"></p>
         </div>
       </div>
@@ -430,6 +504,40 @@
   </section>
 
   <div id="toast"></div>
+
+  <div id="loadingOverlay">
+    <div class="loading-card">
+      <div class="spinner"></div>
+      <span class="loading-msg">Memproses...</span>
+    </div>
+  </div>
+
+  <div id="confirmOverlay">
+    <div class="confirm-card">
+      <div class="confirm-icon">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86 1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0Z"></path><line x1="12" y1="9" x2="12" y2="13"></line><line x1="12" y1="17" x2="12.01" y2="17"></line></svg>
+      </div>
+      <p class="confirm-title" id="confirmTitle">Yakin?</p>
+      <p class="confirm-msg" id="confirmMsg"></p>
+      <div class="confirm-actions">
+        <button class="btn-secondary" id="confirmNo">Batal</button>
+        <button class="btn-primary" id="confirmYes" style="background:var(--danger);box-shadow:0 4px 14px rgba(255,107,129,.35);">Ya, Lanjutkan</button>
+      </div>
+    </div>
+  </div>
+
+  <div id="shortcutOverlay">
+    <div class="shortcut-card">
+      <h3>⌨️ Shortcut Keyboard</h3>
+      <div class="shortcut-row"><span>Salin sel terpilih</span><kbd>Ctrl + C</kbd></div>
+      <div class="shortcut-row"><span>Potong sel terpilih</span><kbd>Ctrl + X</kbd></div>
+      <div class="shortcut-row"><span>Tempel</span><kbd>Ctrl + V</kbd></div>
+      <div class="shortcut-row"><span>Urungkan (Undo)</span><kbd>Ctrl + Z</kbd></div>
+      <div class="shortcut-row"><span>Ulangi (Redo)</span><kbd>Ctrl + Y</kbd></div>
+      <div class="shortcut-row"><span>Blok banyak sel</span><kbd>Ctrl + Klik</kbd></div>
+      <button class="btn-secondary shortcut-close" id="btnCloseShortcut">Tutup</button>
+    </div>
+  </div>
 </div>
 
 <script>
@@ -459,6 +567,7 @@
   }
   function maskToken(t){ return t ? '••••••••••••'+t.slice(-4) : ''; }
   let ROW_RENDER_LIMIT = 150;
+  let hasUnsavedWork = false;
   const FILTER_RENDER_LIMIT = 100; 
   
   // -- UPDATE DISINI: Tambahan opsi 'date' --
@@ -478,6 +587,7 @@
   const dropzone=$('dropzone'), fileInput=$('fileInput'), uploadErr=$('uploadErr');
   const filePill=$('filePill'), delimSelect=$('delimSelect'), delimContainer=$('delimContainer'), toast=$('toast');
   const dataTable=$('dataTable'), mapScroll=$('mapScroll'), rowCapNote=$('rowCapNote');
+  const loadMoreWrap=$('loadMoreWrap'), btnLoadMore=$('btnLoadMore');
   const norekToolGroup=$('norekToolGroup'), optStrip=$('optStrip'), optPad=$('optPad');
   const resultSummary=$('resultSummary');
   const filterPanelsContainer=$('filterPanelsContainer');
@@ -488,10 +598,41 @@
   function clearError(){ uploadErr.classList.add('hidden'); }
   function escapeHtml(s){ return String(s==null?'':s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
 
-  function showToast(message) {
+  function showToast(message, type) {
     toast.textContent = message;
+    toast.classList.remove('danger','success');
+    if(type) toast.classList.add(type);
     toast.classList.add('show');
-    setTimeout(() => { toast.classList.remove('show'); }, 2500);
+    const duration = type === 'danger' ? 4200 : 2800;
+    clearTimeout(showToast._t);
+    showToast._t = setTimeout(() => { toast.classList.remove('show'); }, duration);
+  }
+
+  function showLoading(message){
+    const ov = $('loadingOverlay');
+    ov.querySelector('.loading-msg').textContent = message || 'Memproses...';
+    ov.classList.add('show');
+  }
+  function hideLoading(){
+    $('loadingOverlay').classList.remove('show');
+  }
+
+  function confirmAction(title, message){
+    return new Promise((resolve) => {
+      const ov = $('confirmOverlay');
+      $('confirmTitle').textContent = title;
+      $('confirmMsg').textContent = message;
+      ov.classList.add('show');
+      const onYes = () => { cleanup(); resolve(true); };
+      const onNo = () => { cleanup(); resolve(false); };
+      function cleanup(){
+        ov.classList.remove('show');
+        $('confirmYes').removeEventListener('click', onYes);
+        $('confirmNo').removeEventListener('click', onNo);
+      }
+      $('confirmYes').addEventListener('click', onYes);
+      $('confirmNo').addEventListener('click', onNo);
+    });
   }
 
   function triggerActionFlash() {
@@ -527,6 +668,7 @@
     updateUndoRedoButtons();
   }
   function commitChange(){
+    hasUnsavedWork = true;
     state.history = state.history.slice(0, state.historyIndex+1);
     state.history.push(snapshotCurrent());
     state.historyIndex++;
@@ -628,6 +770,24 @@
     showToast(`✓ Berhasil membersihkan spasi & karakter aneh pada ${count} sel.`);
   }
 
+  async function removeDuplicateRows(){
+    if(!state.rows.length){ showToast('Tidak ada data untuk diperiksa.'); return; }
+    const seen = new Set();
+    const dupeIndexes = [];
+    state.rows.forEach((row, idx) => {
+      const key = row.join('\u0001');
+      if(seen.has(key)) dupeIndexes.push(idx);
+      else seen.add(key);
+    });
+    if(dupeIndexes.length === 0){ showToast('Tidak ditemukan baris duplikat (identik persis di semua kolom).'); return; }
+    const ok = await confirmAction('Hapus baris duplikat?', `${dupeIndexes.length} baris yang isinya identik persis dengan baris lain akan dihapus (hanya menyisakan kemunculan pertama). Kamu bisa membatalkannya dengan tombol Undo setelahnya.`);
+    if(!ok) return;
+    dupeIndexes.sort((a,b) => b - a).forEach(idx => state.rows.splice(idx, 1));
+    commitChange();
+    refresh();
+    showToast(`✓ Berhasil menghapus ${dupeIndexes.length} baris duplikat.`, 'danger');
+  }
+
   function deleteColumn(colIdx){
     state.headers.splice(colIdx,1);
     state.roles.splice(colIdx,1);
@@ -644,6 +804,7 @@
   }
 
   function resetAll(){
+    hasUnsavedWork = false;
     state.headers=[]; state.rows=[]; state.roles=[];
     state.filterSelections={}; state.filterSearchQueries={}; state.filterCacheItems={};
     state.history=[]; state.historyIndex=-1; rawFileContent = null; isExcelMode = false;
@@ -661,6 +822,7 @@
     const ext = name.split('.').pop().toLowerCase();
     state.fileBase = name.replace(/\.[^.]+$/,'');
     ROW_RENDER_LIMIT = 150;
+    showLoading('Membaca berkas ' + name + '...');
 
     if (ext === 'xlsx' || ext === 'xls') {
       isExcelMode = true;
@@ -676,6 +838,7 @@
           
           if(!rawData.length || rawData[0].length === 0){
             showError('File Excel kosong atau tidak terbaca.');
+            hideLoading();
             return;
           }
           
@@ -688,10 +851,13 @@
           phaseUpload.classList.add('hidden');
           phaseWork.classList.remove('hidden');
           refresh();
+          hideLoading();
         } catch(err) {
           showError('Gagal memproses file Excel. Pastikan berkas tidak rusak.');
+          hideLoading();
         }
       };
+      reader.onerror = () => { showError('Gagal membaca berkas.'); hideLoading(); };
       reader.readAsArrayBuffer(file);
     } else {
       isExcelMode = false;
@@ -701,7 +867,9 @@
       reader.onload = (e) => {
         rawFileContent = String(e.target.result);
         processRawCSVContent();
+        hideLoading();
       };
+      reader.onerror = () => { showError('Gagal membaca berkas.'); hideLoading(); };
       reader.readAsText(file,'UTF-8');
     }
   }
@@ -803,8 +971,10 @@
 
     filterPanelsContainer.innerHTML = state._filterCols.map(c=>{
       const headerName = state.headers[c]===''?('Kolom '+(c+1)):escapeHtml(String(state.headers[c]));
+      const selCount = state.filterSelections[c] && state.filterSelections[c].active ? state.filterSelections[c].values.size : 0;
+      const badge = selCount ? '<span class="badge-count">'+selCount+' dipilih</span>' : '';
       return '<details class="tool-group panel" style="margin-bottom:12px;" open>'
-           + '<summary class="panel-title">🎛️ '+headerName+'</summary>'
+           + '<summary class="panel-title"><span>🎛️ '+headerName+badge+'</span></summary>'
            + '<div class="tg-body">'
            + '<div class="mini-btns" style="margin-bottom:8px;">'
            + '<button class="btn-secondary" data-act="all" data-col="'+c+'">Semua</button>'
@@ -995,26 +1165,36 @@
       });
     }
     rowCapNote.textContent = filteredRows.length>ROW_RENDER_LIMIT ? 'Menampilkan '+ROW_RENDER_LIMIT+' baris di browser demi menjaga stabilitas RAM. Hasil unduhan berkas tetap memuat penuh '+filteredRows.length+' data.' : '';
+    loadMoreWrap.classList.toggle('hidden', filteredRows.length<=ROW_RENDER_LIMIT);
+    if(filteredRows.length>ROW_RENDER_LIMIT){
+      btnLoadMore.textContent = 'Muat '+Math.min(150, filteredRows.length-ROW_RENDER_LIMIT)+' baris lagi ↓ ('+(filteredRows.length-ROW_RENDER_LIMIT)+' tersisa)';
+    }
   }
 
   function exportWorkbook(){
-    if(!state._filteredRowsOut || !state._filteredRowsOut.length) { alert('Tidak ada data yang bisa diekspor.'); return; }
-    const aoa = [state.headers, ...state._filteredRowsOut.map(r => {
-      return state.headers.map((h, i) => state.roles[i] === 'norek' ? String(r[i]) : r[i]);
-    })];
-    const ws = XLSX.utils.aoa_to_sheet(aoa);
-    state.headers.forEach((h, i) => {
-      if (state.roles[i] === 'norek') {
-        for (let r = 1; r <= state._filteredRowsOut.length; r++) { const ref = XLSX.utils.encode_cell({r: r, c: i}); if (ws[ref]) ws[ref].t = 's'; }
-      }
-      if (state.roles[i] === 'saldo') {
-        for (let r = 1; r <= state._filteredRowsOut.length; r++) { const ref = XLSX.utils.encode_cell({r: r, c: i}); if (ws[ref]) { ws[ref].t = 'n'; ws[ref].z = '"Rp"#,##0;[Red]-"Rp"#,##0'; } }
-      }
-    });
-    ws['!cols'] = state.headers.map(() => ({wch: 16}));
-    const wb = XLSX.utils.book_new(); 
-    XLSX.utils.book_append_sheet(wb, ws, 'Sheet1');
-    XLSX.writeFile(wb, state.fileBase + '_hasil.xlsx');
+    if(!state._filteredRowsOut || !state._filteredRowsOut.length) { showToast('Tidak ada data yang bisa diekspor.'); return; }
+    showLoading('Menyiapkan file Excel...');
+    setTimeout(() => {
+      const aoa = [state.headers, ...state._filteredRowsOut.map(r => {
+        return state.headers.map((h, i) => state.roles[i] === 'norek' ? String(r[i]) : r[i]);
+      })];
+      const ws = XLSX.utils.aoa_to_sheet(aoa);
+      state.headers.forEach((h, i) => {
+        if (state.roles[i] === 'norek') {
+          for (let r = 1; r <= state._filteredRowsOut.length; r++) { const ref = XLSX.utils.encode_cell({r: r, c: i}); if (ws[ref]) ws[ref].t = 's'; }
+        }
+        if (state.roles[i] === 'saldo') {
+          for (let r = 1; r <= state._filteredRowsOut.length; r++) { const ref = XLSX.utils.encode_cell({r: r, c: i}); if (ws[ref]) { ws[ref].t = 'n'; ws[ref].z = '"Rp"#,##0;[Red]-"Rp"#,##0'; } }
+        }
+      });
+      ws['!cols'] = state.headers.map(() => ({wch: 16}));
+      const wb = XLSX.utils.book_new(); 
+      XLSX.utils.book_append_sheet(wb, ws, 'Sheet1');
+      XLSX.writeFile(wb, state.fileBase + '_hasil.xlsx');
+      hideLoading();
+      hasUnsavedWork = false;
+      showToast('✓ File Excel berhasil diunduh.', 'success');
+    }, 30);
   }
 
   // ==========================================
@@ -1331,11 +1511,30 @@
   dropzone.addEventListener('drop',(e)=>{ e.preventDefault(); dropzone.classList.remove('drag'); if(e.dataTransfer.files && e.dataTransfer.files[0]) handleFile(e.dataTransfer.files[0]); });
   fileInput.addEventListener('change',(e)=>{ if(e.target.files && e.target.files[0]) handleFile(e.target.files[0]); });
   delimSelect.addEventListener('change', () => { if (!isExcelMode && rawFileContent) processRawCSVContent(); });
-  $('btnReset').addEventListener('click', resetAll); 
+  $('btnReset').addEventListener('click', async () => {
+    if(hasUnsavedWork){
+      const ok = await confirmAction('Ganti file sekarang?', 'Perubahan yang belum diunduh pada data saat ini akan hilang. Pastikan sudah mengunduh hasilnya jika perlu.');
+      if(!ok) return;
+    }
+    resetAll();
+  });
+
+  window.addEventListener('beforeunload', function(e){
+    if(hasUnsavedWork){
+      e.preventDefault();
+      e.returnValue = '';
+      return '';
+    }
+  });
   $('btnDownload').addEventListener('click', exportWorkbook);
-  btnUndo.addEventListener('click', undo); 
+  btnLoadMore.addEventListener('click', () => { ROW_RENDER_LIMIT += 150; renderView(); });
+  btnUndo.addEventListener('click', undo);
+  $('btnShortcutHelp').addEventListener('click', () => { $('shortcutOverlay').classList.add('show'); });
+  $('btnCloseShortcut').addEventListener('click', () => { $('shortcutOverlay').classList.remove('show'); });
+  $('shortcutOverlay').addEventListener('click', (e) => { if(e.target.id==='shortcutOverlay') $('shortcutOverlay').classList.remove('show'); }); 
   btnRedo.addEventListener('click', redo);
   $('btnCleanText').addEventListener('click', cleanTextRows);
+  $('btnRemoveDupes').addEventListener('click', removeDuplicateRows);
   optStrip.addEventListener('change', renderTableHeaderAndBody); 
   optPad.addEventListener('input', renderTableHeaderAndBody);
   $('btnSavePreset').addEventListener('click', savePreset);
@@ -1720,27 +1919,31 @@
     }
   });
 
-  $('btnDelSelRows').addEventListener('click', () => {
+  $('btnDelSelRows').addEventListener('click', async () => {
     const coords = getSelectedCellsCoords();
     if (coords.length === 0) { showToast('Pilih sel dulu untuk menghapus baris.'); return; }
     
     const uniqueRows = Array.from(new Set(coords.map(c => c.r)));
     if (uniqueRows.length > 0) {
+      const ok = await confirmAction('Hapus baris ini?', `${uniqueRows.length} baris akan dihapus dari tabel. Kamu bisa membatalkannya dengan tombol Undo setelahnya.`);
+      if (!ok) return;
       const sortedRows = uniqueRows.sort((a,b) => b - a);
       sortedRows.forEach(idx => state.rows.splice(idx, 1));
       
       commitChange(); refresh();
-      showToast(`✓ Berhasil menghapus ${sortedRows.length} baris.`);
+      showToast(`✓ Berhasil menghapus ${sortedRows.length} baris.`, 'danger');
       selStart = { r: -1, c: -1 }; selEnd = { r: -1, c: -1 }; savedSelection = []; activeVirtualSelection = null; clearSelection();
     }
   });
 
-  $('btnDelSelCols').addEventListener('click', () => {
+  $('btnDelSelCols').addEventListener('click', async () => {
     const coords = getSelectedCellsCoords();
     if (coords.length === 0) { showToast('Pilih sel dulu untuk menghapus kolom.'); return; }
     
     const colsToDel = new Set(coords.map(c => c.c));
     if (colsToDel.size > 0) {
+      const ok = await confirmAction('Hapus kolom ini?', `${colsToDel.size} kolom beserta seluruh isinya akan dihapus. Kamu bisa membatalkannya dengan tombol Undo setelahnya.`);
+      if (!ok) return;
       const sortedCols = Array.from(colsToDel).sort((a,b) => b - a);
       sortedCols.forEach(c => {
         state.headers.splice(c, 1);
@@ -1751,12 +1954,12 @@
       state.filterSelections={}; state.filterSearchQueries={}; state.filterCacheItems={};
       
       commitChange(); refresh();
-      showToast(`✓ Berhasil menghapus ${sortedCols.length} kolom.`);
+      showToast(`✓ Berhasil menghapus ${sortedCols.length} kolom.`, 'danger');
       selStart = { r: -1, c: -1 }; selEnd = { r: -1, c: -1 }; savedSelection = []; activeVirtualSelection = null; clearSelection();
     }
   });
 
-  $('btnKeepSelCols').addEventListener('click', () => {
+  $('btnKeepSelCols').addEventListener('click', async () => {
     const coords = getSelectedCellsCoords();
     if (coords.length === 0) { showToast('Pilih sel dulu untuk menyisakan kolom.'); return; }
     
@@ -1767,6 +1970,8 @@
     }
 
     if (colsToDel.length > 0) {
+      const ok = await confirmAction('Buang kolom lainnya?', `${colsToDel.length} kolom yang TIDAK diblok akan dihapus, hanya kolom terpilih yang disisakan. Kamu bisa membatalkannya dengan tombol Undo setelahnya.`);
+      if (!ok) return;
       colsToDel.sort((a,b) => b - a);
       colsToDel.forEach(c => {
         state.headers.splice(c, 1);
@@ -1776,30 +1981,33 @@
       state.filterSelections={}; state.filterSearchQueries={}; state.filterCacheItems={};
       
       commitChange(); refresh();
-      showToast(`✓ Berhasil membuang ${colsToDel.length} kolom yang tidak diblok.`);
+      showToast(`✓ Berhasil membuang ${colsToDel.length} kolom yang tidak diblok.`, 'danger');
       selStart = { r: -1, c: -1 }; selEnd = { r: -1, c: -1 }; savedSelection = []; activeVirtualSelection = null; clearSelection();
     } else {
       showToast('Semua kolom sudah diblok. Tidak ada yang dihapus.');
     }
   });
 
-  $('btnKeepSelRows').addEventListener('click', () => {
+  $('btnKeepSelRows').addEventListener('click', async () => {
     const coords = getSelectedCellsCoords();
     if (coords.length === 0) { showToast('Pilih sel dulu untuk menyisakan baris.'); return; }
 
     const rowsToKeep = new Set(coords.map(c => c.r));
-    let deletedCount = 0;
-    
-    for (let i = state.rows.length - 1; i >= 0; i--) {
-      if (!rowsToKeep.has(i)) {
-        state.rows.splice(i, 1);
-        deletedCount++;
-      }
-    }
+    let deleteCandidateCount = 0;
+    for (let i = 0; i < state.rows.length; i++) { if (!rowsToKeep.has(i)) deleteCandidateCount++; }
 
-    if (deletedCount > 0) {
+    if (deleteCandidateCount > 0) {
+      const ok = await confirmAction('Buang baris lainnya?', `${deleteCandidateCount} baris yang TIDAK diblok akan dihapus, hanya baris terpilih yang disisakan. Kamu bisa membatalkannya dengan tombol Undo setelahnya.`);
+      if (!ok) return;
+      let deletedCount = 0;
+      for (let i = state.rows.length - 1; i >= 0; i--) {
+        if (!rowsToKeep.has(i)) {
+          state.rows.splice(i, 1);
+          deletedCount++;
+        }
+      }
       commitChange(); refresh();
-      showToast(`✓ Berhasil membuang ${deletedCount} baris yang tidak diblok.`);
+      showToast(`✓ Berhasil membuang ${deletedCount} baris yang tidak diblok.`, 'danger');
       selStart = { r: -1, c: -1 }; selEnd = { r: -1, c: -1 }; savedSelection = []; activeVirtualSelection = null; clearSelection();
     } else {
       showToast('Semua baris sudah diblok. Tidak ada yang dihapus.');
