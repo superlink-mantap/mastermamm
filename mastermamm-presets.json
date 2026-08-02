@@ -842,5 +842,70 @@
         "filterValues": []
       }
     }
+  },
+  {
+    "name": "IB Bisnis - Mikro",
+    "mapping": {
+      "kolom_1": {
+        "role": "ignore",
+        "filterValues": []
+      },
+      "kolom_2": {
+        "role": "ignore",
+        "filterValues": []
+      },
+      "kolom_3": {
+        "role": "ignore",
+        "filterValues": []
+      },
+      "kolom_4": {
+        "role": "ignore",
+        "filterValues": []
+      },
+      "kolom_5": {
+        "role": "ignore",
+        "filterValues": []
+      },
+      "kolom_6": {
+        "role": "filter",
+        "filterValues": [
+          "1051 - KK AMPEL",
+          "394 - KC Kapas Krampung",
+          "2017 - KK KAPASAN"
+        ]
+      },
+      "kolom_7": {
+        "role": "ignore",
+        "filterValues": []
+      },
+      "kolom_8": {
+        "role": "ignore",
+        "filterValues": []
+      },
+      "kolom_9": {
+        "role": "ignore",
+        "filterValues": []
+      },
+      "kolom_10": {
+        "role": "ignore",
+        "filterValues": []
+      },
+      "kolom_11": {
+        "role": "ignore",
+        "filterValues": []
+      },
+      "kolom_12": {
+        "role": "ignore",
+        "filterValues": []
+      },
+      "kolom_13": {
+        "role": "ignore",
+        "filterValues": []
+      },
+      "kolom_14": {
+        "role": "ignore",
+        "filterValues": []
+      }
+    }
   }
 ]
