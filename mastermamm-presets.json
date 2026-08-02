@@ -1,1 +1,115 @@
-[]
+[
+  {
+    "name": "CI324",
+    "mapping": {
+      "ci324 - multi pn - fds monthly trial balance by product type": {
+        "role": "ignore",
+        "filterValues": []
+      },
+      "kolom_2": {
+        "role": "ignore",
+        "filterValues": []
+      },
+      "kolom_3": {
+        "role": "ignore",
+        "filterValues": []
+      },
+      "kolom_4": {
+        "role": "ignore",
+        "filterValues": []
+      },
+      "kolom_5": {
+        "role": "ignore",
+        "filterValues": []
+      },
+      "kolom_6": {
+        "role": "ignore",
+        "filterValues": []
+      },
+      "kolom_7": {
+        "role": "norek",
+        "filterValues": []
+      },
+      "kolom_8": {
+        "role": "ignore",
+        "filterValues": []
+      },
+      "kolom_9": {
+        "role": "ignore",
+        "filterValues": []
+      },
+      "kolom_10": {
+        "role": "ignore",
+        "filterValues": []
+      },
+      "kolom_11": {
+        "role": "ignore",
+        "filterValues": []
+      },
+      "kolom_12": {
+        "role": "ignore",
+        "filterValues": []
+      },
+      "kolom_13": {
+        "role": "ignore",
+        "filterValues": []
+      },
+      "kolom_14": {
+        "role": "ignore",
+        "filterValues": []
+      },
+      "kolom_15": {
+        "role": "ignore",
+        "filterValues": []
+      },
+      "kolom_16": {
+        "role": "ignore",
+        "filterValues": []
+      },
+      "kolom_17": {
+        "role": "ignore",
+        "filterValues": []
+      },
+      "kolom_18": {
+        "role": "ignore",
+        "filterValues": []
+      },
+      "kolom_19": {
+        "role": "ignore",
+        "filterValues": []
+      },
+      "kolom_20": {
+        "role": "ignore",
+        "filterValues": []
+      },
+      "kolom_21": {
+        "role": "ignore",
+        "filterValues": []
+      },
+      "kolom_22": {
+        "role": "ignore",
+        "filterValues": []
+      },
+      "kolom_23": {
+        "role": "ignore",
+        "filterValues": []
+      },
+      "kolom_24": {
+        "role": "ignore",
+        "filterValues": []
+      },
+      "kolom_25": {
+        "role": "ignore",
+        "filterValues": []
+      },
+      "kolom_26": {
+        "role": "ignore",
+        "filterValues": []
+      },
+      "kolom_27": {
+        "role": "saldo",
+        "filterValues": []
+      }
+    }
+  }
+]
