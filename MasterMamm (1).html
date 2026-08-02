@@ -1,0 +1,1866 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MasterMamm - Manual Pro Mode Fix</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&family=Space+Mono:wght@400;500&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+<style>
+  :root{
+    --ink:#23233B; --muted:#8A87A3; --card:#FFFFFF; --line:#ECE9F7;
+    --violet:#7C6FFF; --violet-tint:#EFEBFF; --violet-deep:#5B4DE0;
+    --mint:#34D1A4; --mint-tint:#E3FBF1; --mint-deep:#0B8A63;
+    --peach:#FF9472; --peach-tint:#FFF0E9; --peach-deep:#B85A35;
+    --danger:#FF6B81; --danger-tint:#FFEAEF; --danger-deep:#C23A52;
+    --t-norek:var(--peach-tint); --t-saldo:var(--mint-tint); --t-filter:var(--violet-tint); --t-date:var(--danger-tint);
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;}
+  body{
+    background:linear-gradient(150deg,#F4F2FF 0%,#F1FBF7 55%,#FFF7F1 100%);
+    color:var(--ink);font-family:'Plus Jakarta Sans',sans-serif;-webkit-font-smoothing:antialiased;padding:20px 16px 60px;
+  }
+  .wrap{max-width:100%; padding:0 10px; margin:0 auto;}
+  h1{font-family:'Sora',sans-serif;font-weight:700;font-size:23px;line-height:1.2;margin:0 0 4px;color:var(--ink);}
+  .sub{font-size:13.5px;color:var(--muted);line-height:1.5;margin:0 0 18px;}
+  .card{background:var(--card);border:none;border-radius:20px;padding:20px;box-shadow:0 4px 18px rgba(35,35,59,.06);}
+  #dropzone{border:1.5px dashed #D9D4F2;border-radius:18px;padding:36px 16px;text-align:center;cursor:pointer; max-width:600px; margin: 40px auto;}
+  #dropzone.drag{border-color:var(--violet);background:var(--violet-tint);}
+  #dropzone p{margin:0 0 4px;font-size:14px;color:var(--muted);}
+  #dropzone .pick{font-weight:700;color:var(--violet-deep);}
+  #fileInput{display:none;}
+  .file-types{font-size:12px;color:var(--muted);margin-top:10px;}
+  .err{color:var(--danger-deep);font-size:13px;margin-top:10px;}
+  .hidden{display:none !important;}
+
+  /* Layout */
+  .topbar{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;margin-bottom:16px;}
+  .file-pill{display:inline-flex;align-items:center;gap:6px;font-size:12.5px;background:#fff;color:var(--ink);padding:8px 14px;border-radius:20px;box-shadow:0 2px 10px rgba(124,111,255,.1);font-weight:600;}
+  .topbar-actions{display:flex;gap:8px;flex-wrap:wrap;align-items:center;}
+  .delim-box {font-size:13px; background:#fff; padding:6px 12px; border-radius:20px; border:1px solid var(--line); display:flex; align-items:center; gap:8px;}
+  .delim-box select {border:none; outline:none; font-family:inherit; font-weight:600; color:var(--violet-deep); cursor:pointer;}
+
+  /* Button UI/UX Enhancements */
+  button{display:inline-flex;align-items:center;justify-content:center;gap:6px;font-family:'Plus Jakarta Sans',sans-serif;font-weight:700;font-size:13.5px;border:none;border-radius:12px;padding:10px 14px;cursor:pointer;transition:transform .1s, opacity .15s, box-shadow .15s, background-color .15s;}
+  button:active{transform:scale(.96);}
+  button:disabled{opacity:.4;cursor:not-allowed;}
+  button svg {flex-shrink:0;}
+  .btn-primary{background:var(--violet);color:#fff;box-shadow:0 4px 14px rgba(124,111,255,.35);border-radius:16px;}
+  .btn-primary:hover{box-shadow:0 6px 18px rgba(124,111,255,.45);}
+  .btn-secondary{background:var(--violet-tint);color:var(--violet-deep);}
+  .btn-secondary:hover{background:#E2DBFF;}
+  .btn-icon{background:#fff;color:var(--ink);width:38px;height:38px;padding:0;border-radius:50%;box-shadow:0 2px 8px rgba(35,35,59,.08);}
+  .btn-icon:hover{box-shadow:0 4px 12px rgba(35,35,59,.12);}
+  .btn-row{display:flex;gap:8px;flex-wrap:wrap;}
+  .btn-row button{flex:1; justify-content:flex-start; text-align:left;}
+  .btn-row.center-btns button {justify-content:center; text-align:center;}
+
+  .workspace{display:block;}
+  .sidebar{display:flex;flex-direction:column;gap:14px;margin-bottom:16px;}
+  .main-area{min-width:0;}
+  
+  @media (min-width:880px){
+    .workspace{display:grid;grid-template-columns:250px 1fr;gap:16px;align-items:start;}
+    .sidebar{position:sticky;top:16px;max-height:calc(100vh - 32px);overflow-y:auto;padding-right:4px;}
+  }
+
+  .tool-group{background:var(--card);border-radius:20px;padding:16px;box-shadow:0 4px 18px rgba(35,35,59,.05);}
+  .tool-group h3{font-family:'Sora',sans-serif;font-size:12.5px;color:var(--muted);margin:0 0 12px;font-weight:600;}
+  .tool-group .btn-secondary.tool-mint{background:var(--mint-tint);color:var(--mint-deep);}
+  .tool-group .btn-secondary.tool-mint:hover{background:#D1F8E8;}
+  .tool-note{font-size:11.5px;color:var(--muted);margin:6px 0 0;line-height:1.4;}
+  
+  .input-field{width:100%;padding:8px 11px;border:1px solid var(--line);border-radius:12px;font-size:12.5px;font-family:inherit;outline:none;}
+  .input-field:focus{border-color:var(--violet);}
+  .input-group {display:flex; gap:8px;}
+
+  .opts{display:flex;flex-wrap:wrap;gap:10px;align-items:center;font-size:13px;}
+  .opts label{display:flex;align-items:center;gap:7px;cursor:pointer;}
+  .opts input[type="number"]{width:54px;padding:6px 9px;border:1px solid var(--line);border-radius:10px;}
+
+  /* MAP SCROLL & TABLE ANIMATIONS */
+  .map-scroll{overflow:auto;border-radius:18px;max-height:650px;box-shadow:0 4px 18px rgba(35,35,59,.05); border:1px solid var(--line); transition: box-shadow 0.3s;}
+  
+  @keyframes tableFlashAnim {
+    0% { box-shadow: inset 0 0 0 5px var(--violet); filter: brightness(0.95); }
+    100% { box-shadow: inset 0 0 0 0px var(--violet); filter: brightness(1); }
+  }
+  .action-flash { animation: tableFlashAnim 0.5s ease-out; }
+
+  table{border-collapse:collapse;width:100%;font-size:12.5px;background:var(--card);}
+  th,td{padding:10px 12px;border-bottom:1px solid var(--line);text-align:left;white-space:nowrap; transition: background-color 0.15s;}
+  td{font-family:'Space Mono',monospace;}
+  thead th{background:#fff;position:sticky;top:0;z-index:2;font-family:'Sora',sans-serif;}
+  .col-head{display:flex;flex-direction:column;gap:6px;min-width:145px;}
+  .col-head-row{display:flex;align-items:center;gap:6px;}
+  .hdr-name{font-size:12.5px;font-weight:700;flex:1;}
+  select.role-select{font-family:inherit;font-size:12px;padding:6px 8px;border:1px solid var(--line);border-radius:10px;background:#fff;width:100%;}
+  .del-col-btn{width:24px;height:24px;border-radius:50%;border:none;background:var(--danger-tint);color:var(--danger-deep);font-size:13px;cursor:pointer;padding:0;display:flex;align-items:center;justify-content:center;}
+  .act-col{width:30px;text-align:center;}
+  .row-del-btn{width:24px;height:24px;border-radius:50%;border:none;background:var(--danger-tint);color:var(--danger-deep);font-size:13px;cursor:pointer;padding:0;display:flex;align-items:center;justify-content:center;}
+  
+  th.r-norek,td.r-norek{background:var(--t-norek);}
+  th.r-saldo,td.r-saldo{background:var(--t-saldo);}
+  th.r-filter,td.r-filter{background:var(--t-filter);}
+  th.r-date,td.r-date{background:var(--t-date);}
+  
+  .row-empty{color:var(--muted);font-family:'Plus Jakarta Sans',sans-serif;}
+
+  .panel{border-radius:18px;padding:16px;}
+  .panel-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;gap:8px;flex-wrap:wrap;}
+  .panel-title{font-weight:700;font-size:13px;font-family:'Sora',sans-serif; max-width: 100%; word-break: break-all;}
+  .mini-btns{display:flex;gap:4px; margin-top: 4px; width: 100%; justify-content: flex-start;}
+  .mini-btns button{padding:4px 8px;font-size:11px;border-radius:10px; flex: 1; justify-content:center;}
+  .search-box input{width:100%;padding:8px 11px;border:1px solid var(--line);border-radius:12px;font-size:12.5px;margin-bottom:8px;}
+  .opt-list{max-height:190px;overflow-y:auto;border-top:1px solid var(--line);padding-top:6px;}
+  .opt-row{display:flex;align-items:center;gap:8px;padding:4px 2px;font-size:12.5px;}
+  .opt-row .cnt{margin-left:auto;color:var(--muted);font-family:'Space Mono',monospace;font-size:11px;}
+
+  .summary{font-size:13px;color:var(--muted);margin:0 0 10px;line-height:1.6;}
+  .clean-badge{display:flex;align-items:center;gap:14px;background:#fff;border-radius:18px;padding:14px 16px;box-shadow:0 4px 18px rgba(35,35,59,.05);margin-bottom:14px;}
+  .ring{width:50px;height:50px;border-radius:50%;display:flex;align-items:center;justify-content:center;}
+  .ring span{width:39px;height:39px;border-radius:50%;background:#fff;display:flex;align-items:center;justify-content:center;font-family:'Sora',sans-serif;font-weight:700;font-size:11.5px;color:var(--mint-deep);}
+  .clean-text{font-size:13px;color:var(--muted);}
+
+  #toast {
+    position: fixed; top: 20px; right: 20px; background: var(--ink); color: #fff;
+    padding: 12px 24px; border-radius: 12px; font-size: 13px; font-weight: 600;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.15); z-index: 9999;
+    opacity: 0; transform: translateY(-20px); transition: all 0.3s ease; pointer-events: none;
+  }
+  #toast.show { opacity: 1; transform: translateY(0); }
+
+  footer{text-align:center;font-size:12px;color:var(--muted);margin-top:18px;}
+
+  /* --- FITUR BLOK EXCEL STYLE --- */
+  .selected-cell {
+    background-color: var(--danger-tint) !important; 
+    outline: 1.5px solid var(--danger);
+    z-index: 1;
+    position: relative;
+  }
+  .is-selecting {
+    user-select: none; 
+  }
+
+  /* --- ANIMASI SEARCH --- */
+  @keyframes pulseTarget {
+    0% { box-shadow: inset 0 0 0 3px var(--violet), 0 0 0 0 rgba(124,111,255, 0.7); }
+    70% { box-shadow: inset 0 0 0 3px var(--violet), 0 0 0 10px rgba(124,111,255, 0); }
+    100% { box-shadow: inset 0 0 0 3px var(--violet), 0 0 0 0 rgba(124,111,255, 0); }
+  }
+  .pulse-highlight {
+    animation: pulseTarget 1s ease-out 3; 
+    background-color: var(--violet-tint) !important;
+    outline: none !important;
+  }
+
+  /* --- PRESET MANAGER STYLING --- */
+  .preset-item {
+    display: flex; align-items: center; justify-content: space-between; gap: 8px;
+    background: #F8F7FC; padding: 6px 10px; border-radius: 10px; margin-top: 6px;
+    font-size: 12px; font-weight: 500;
+  }
+  .preset-item span { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; flex: 1; cursor: pointer; color: var(--violet-deep); font-weight: 600; }
+  .preset-item .del-preset-btn { background: none; border: none; color: var(--danger-deep); cursor: pointer; padding: 2px 6px; font-weight: bold; font-size: 14px; }
+  .preset-item .order-btns { display:flex; flex-direction:column; gap:1px; }
+  .preset-item .order-btn { background:none; border:none; color:var(--muted); cursor:pointer; padding:0; width:16px; height:12px; display:flex; align-items:center; justify-content:center; font-size:9px; line-height:1; }
+  .preset-item .order-btn:hover { color:var(--violet-deep); }
+  .preset-item .order-btn:disabled { opacity:.25; cursor:not-allowed; }
+
+  /* --- GITHUB SYNC PANEL --- */
+  .gh-sync-block { margin-top:12px; padding-top:12px; border-top:1px dashed var(--line); }
+  .gh-sync-title { font-size:11.5px; font-weight:700; color:var(--muted); margin:0 0 6px; display:flex; align-items:center; gap:6px; }
+  .gh-status-line { font-size:11px; line-height:1.5; margin:0 0 8px; }
+  .gh-status-ok { color:var(--mint-deep); }
+  .gh-status-warn { color:var(--peach-deep); }
+  .gh-status-err { color:var(--danger-deep); }
+  .gh-status-pending { color:var(--violet-deep); }
+  .gh-mini-btns { display:flex; gap:6px; flex-wrap:wrap; margin-bottom:6px; }
+  .gh-mini-btns button { font-size:10.5px; padding:6px 8px; flex:1; min-width:78px; }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <h1>MasterMamm (Manual Mode)</h1>
+  <p class="sub">Mendukung file Excel (.xlsx/.xls) &amp; CSV dengan sistem <b>Filter Berantai (Cascade)</b>.</p>
+
+  <section class="card" id="phaseUpload">
+    <h2>Unggah file</h2>
+    <p class="hint">Mendukung dokumen format Excel (.xlsx, .xls) atau teks terstruktur (.csv, .txt).</p>
+    <div id="dropzone">
+      <p>Tarik file ke sini, atau <span class="pick">pilih dari perangkat</span></p>
+      <input type="file" id="fileInput" accept=".xlsx,.xls,.csv,.txt">
+      <div class="file-types">.xlsx · .xls · .csv · .txt</div>
+    </div>
+    <div class="err hidden" id="uploadErr"></div>
+  </section>
+
+  <section class="hidden" id="phaseWork">
+    <div class="topbar">
+      <div style="display:flex;gap:10px;align-items:center;flex-wrap:wrap;">
+        <div class="file-pill" id="filePill"></div>
+        <div class="delim-box" id="delimContainer">
+          Pembatas CSV: 
+          <select id="delimSelect">
+            <option value="|">Pipe ( | )</option>
+            <option value=",">Koma ( , )</option>
+            <option value=";">Titik Koma ( ; )</option>
+            <option value="\t">Tab</option>
+          </select>
+        </div>
+      </div>
+      <div class="topbar-actions">
+        <button class="btn-icon" id="btnUndo" title="Undo (Ctrl+Z)">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3 7v6h6"></path><path d="M21 17a9 9 0 0 0-9-9 9 9 0 0 0-6 2.3L3 13"></path></svg>
+        </button>
+        <button class="btn-icon" id="btnRedo" title="Redo (Ctrl+Y)">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 7v6h-6"></path><path d="M3 17a9 9 0 0 1 9-9 9 9 0 0 1 6 2.3l3 2.7"></path></svg>
+        </button>
+        <button class="btn-primary" id="btnDownload">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg> 
+          Unduh Excel
+        </button>
+        <button class="btn-secondary" id="btnReset" style="border-radius:16px;">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 2v6h-6"></path><path d="M3 12a9 9 0 0 1 15-6.7L21 8"></path><path d="M3 22v-6h6"></path><path d="M21 12a9 9 0 0 1-15 6.7L3 16"></path></svg>
+          Ganti File
+        </button>
+      </div>
+    </div>
+
+    <div class="workspace">
+      <div class="sidebar">
+
+        <div class="tool-group">
+          <h3>Preset Peran Kolom</h3>
+          <div class="input-group" style="margin-bottom:8px;">
+            <input type="text" id="presetNameInput" class="input-field" placeholder="Nama preset baru...">
+            <button class="btn-primary" id="btnSavePreset" style="font-size:12.5px; padding:8px 12px;" title="Simpan konfigurasi peran dan pilihan filter saat ini">Simpan</button>
+          </div>
+          <div id="presetListContainer" style="max-height: 160px; overflow-y: auto;">
+            </div>
+          <p class="tool-note">Simpan nama header kolom beserta item centang filternya secara otomatis. Gunakan tombol ▲▼ untuk mengatur urutan.</p>
+
+          <div class="gh-sync-block">
+            <p class="gh-sync-title">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M12 .3a12 12 0 0 0-3.8 23.4c.6.1.8-.3.8-.6v-2.2c-3.3.7-4-1.6-4-1.6-.6-1.4-1.4-1.8-1.4-1.8-1.1-.8.1-.8.1-.8 1.2.1 1.9 1.2 1.9 1.2 1.1 1.9 2.9 1.3 3.6 1 .1-.8.4-1.3.8-1.6-2.7-.3-5.5-1.3-5.5-5.9 0-1.3.5-2.4 1.2-3.2-.1-.3-.5-1.5.1-3.1 0 0 1-.3 3.3 1.2a11.4 11.4 0 0 1 6 0c2.3-1.6 3.3-1.2 3.3-1.2.6 1.6.2 2.8.1 3.1.8.8 1.2 1.9 1.2 3.2 0 4.6-2.8 5.6-5.5 5.9.4.4.8 1.1.8 2.2v3.3c0 .3.2.7.8.6A12 12 0 0 0 12 .3"/></svg>
+              Sinkron Preset (GitHub)
+            </p>
+            <p class="gh-status-line" id="mmGhStatusLine"></p>
+
+            <div id="mmGhLockedView" style="display:none;">
+              <div class="gh-mini-btns">
+                <button class="btn-secondary" id="btnGhEdit">Ubah Token</button>
+                <button class="btn-secondary tool-mint" id="btnGhSyncNow">Sinkron Ulang</button>
+                <button class="btn-secondary" id="btnGhClear" style="color:var(--danger-deep);background:var(--danger-tint);">Hapus Token</button>
+              </div>
+            </div>
+
+            <div id="mmGhEditView">
+              <div class="input-group" style="margin-bottom:6px;">
+                <input type="password" id="mmGhTokenInput" class="input-field" placeholder="Tempel token GitHub...">
+                <button class="btn-primary" id="btnGhSave" style="font-size:11.5px;padding:8px 10px;">Simpan</button>
+              </div>
+              <button class="btn-secondary" id="btnGhCancel" style="display:none;font-size:10.5px;padding:6px 8px;width:100%;">Batal</button>
+            </div>
+
+            <p class="gh-status-line" id="mmGhSyncStatus"></p>
+          </div>
+        </div>
+
+        <div class="tool-group">
+          <h3>Cari &amp; Ganti</h3>
+          <div class="input-group" style="margin-bottom:12px;">
+            <input type="text" id="findInput" class="input-field" placeholder="Cari data...">
+            <button class="btn-secondary" id="btnFindAll" style="font-size:12.5px; padding:8px 14px;" title="Cari & gulir ke data yang tepat">
+               <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+               Cari
+            </button>
+          </div>
+          <hr style="border:0; border-top:1px dashed var(--line); margin:12px 0;">
+          <div style="display:flex; flex-direction:column; gap:8px;">
+            <input type="text" id="replaceInput" class="input-field" placeholder="Ganti dengan...">
+            <div class="btn-row center-btns" style="gap:8px;">
+              <button class="btn-secondary" id="btnReplaceSel" style="font-size:12px; padding:8px;" title="Ganti hanya pada sel yang sedang diblok">
+                 Di Blok
+              </button>
+              <button class="btn-secondary tool-mint" id="btnReplaceAll" style="font-size:12px; padding:8px;" title="Ganti di seluruh tabel">
+                 Semua
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <div class="tool-group">
+          <h3>Rapikan Data</h3>
+          <div class="btn-row">
+            <button class="btn-secondary tool-mint" id="btnFillZero" title="Jika ada sel yang diblok, hanya sel diblok yang akan terisi 0.">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><circle cx="12" cy="12" r="4"></circle><line x1="12" y1="8" x2="12" y2="16"></line></svg>
+              0️⃣ Nol-kan Sel Kosong
+            </button>
+          </div>
+          <div class="btn-row" style="margin-top:8px;">
+            <button class="btn-secondary" id="btnCleanText" title="Bersihkan spasi ekstra & karakter tersembunyi">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m21 21-7-7"></path><path d="M15.4 15.4a4 4 0 0 0-5.6 5.6"></path><path d="M2 12a10 10 0 0 1 10-10"></path></svg>
+              ✨ Bersihkan Teks
+            </button>
+          </div>
+        </div>
+        
+        <div class="tool-group">
+          <h3>Area Terpilih (Blok)</h3>
+          <div style="display:flex; flex-direction:column; gap:8px;">
+
+            <div style="display:flex; align-items:center; gap:8px; background:var(--violet-tint); padding:6px 8px; border-radius:12px;">
+              <span style="font-size:11px; font-weight:700; color:var(--violet-deep); flex:1; text-align:center;">📋 CLIPBOARD</span>
+              <button class="btn-secondary" id="btnCopySel" style="padding:6px 12px; font-size:11.5px; background:#fff; color:var(--violet-deep); border-radius:8px;" title="Salin sel (Ctrl+C)">Salin</button>
+              <button class="btn-secondary" id="btnCutSel" style="padding:6px 12px; font-size:11.5px; background:#fff; color:var(--violet-deep); border-radius:8px;" title="Potong sel (Ctrl+X)">Potong</button>
+            </div>
+            
+            <div style="display:flex; align-items:center; gap:8px; background:var(--danger-tint); padding:6px 8px; border-radius:12px;">
+              <span style="font-size:11px; font-weight:700; color:var(--danger-deep); flex:1; text-align:center;">🗑️ HAPUS</span>
+              <button class="btn-secondary" id="btnDelSelRows" style="padding:6px 12px; font-size:11.5px; background:#fff; color:var(--danger-deep); border-radius:8px;" title="Buang baris yang diblok">Baris</button>
+              <button class="btn-secondary" id="btnDelSelCols" style="padding:6px 12px; font-size:11.5px; background:#fff; color:var(--danger-deep); border-radius:8px;" title="Buang kolom yang diblok">Kolom</button>
+            </div>
+            
+            <div style="display:flex; align-items:center; gap:8px; background:var(--mint-tint); padding:6px 8px; border-radius:12px;">
+              <span style="font-size:11px; font-weight:700; color:var(--mint-deep); flex:1; text-align:center;">✂️ SISAKAN</span>
+              <button class="btn-secondary" id="btnKeepSelRows" style="padding:6px 12px; font-size:11.5px; background:#fff; color:var(--mint-deep); border-radius:8px;" title="Buang SEMUA baris KECUALI yang diblok">Baris</button>
+              <button class="btn-secondary" id="btnKeepSelCols" style="padding:6px 12px; font-size:11.5px; background:#fff; color:var(--mint-deep); border-radius:8px;" title="Buang SEMUA kolom KECUALI yang diblok">Kolom</button>
+            </div>
+            
+          </div>
+          <p class="tool-note" style="margin-top:10px; text-align:center;">
+            Tahan <b>Ctrl</b> + Klik untuk blok banyak sel.<br>
+            Gunakan <b>Ctrl+C</b>/<b>V</b>/<b>X</b> untuk Salin Tempel.
+          </p>
+        </div>
+
+        <div class="tool-group hidden" id="norekToolGroup">
+          <h3>Opsi Number</h3>
+          <div class="opts">
+            <label><input type="checkbox" id="optStrip" checked> Buang karakter selain angka</label>
+          </div>
+          <div class="opts" style="margin-top:8px;">
+            Panjang digit (opsional): <input type="number" id="optPad" min="0" max="30" placeholder="-">
+          </div>
+        </div>
+
+        <div id="filterPanelsContainer"></div>
+
+      </div>
+
+      <div class="main-area">
+        <div class="card" style="padding:16px;">
+          <div class="summary" id="resultSummary"></div>
+          <div id="tallyWrap" class="hidden clean-badge">
+            <div class="ring" id="tallyRing"><span id="tallyPct"></span></div>
+            <div class="clean-text" id="tallyLabel"></div>
+          </div>
+          <div class="map-scroll" id="mapScroll"><table id="dataTable"></table></div>
+          <p class="tool-note" id="rowCapNote" style="margin-top:8px;"></p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div id="toast"></div>
+
+  <footer>Semua pemrosesan berjalan di browser kamu — file tidak dikirim ke server manapun.</footer>
+</div>
+
+<script>
+(function(){
+  const $ = id => document.getElementById(id);
+
+  // ==========================================
+  // KONFIGURASI SINKRONISASI GITHUB (PRESET)
+  // ==========================================
+  const GITHUB_CONFIG = { owner:'superlink-mantap', repo:'highlightkinerja', branch:'main', path:'mastermamm-presets.json' };
+  const GH_TOKEN_KEY = 'mm_gh_token';
+  const PRESETS_KEY = 'mm_presets';
+  function ghApiUrl(){ return `https://api.github.com/repos/${GITHUB_CONFIG.owner}/${GITHUB_CONFIG.repo}/contents/${GITHUB_CONFIG.path}`; }
+  function ghRawUrl(){ return `https://raw.githubusercontent.com/${GITHUB_CONFIG.owner}/${GITHUB_CONFIG.repo}/${GITHUB_CONFIG.branch}/${GITHUB_CONFIG.path}`; }
+  function getGhToken(){ return localStorage.getItem(GH_TOKEN_KEY) || ''; }
+  function setGhToken(t){ if(t) localStorage.setItem(GH_TOKEN_KEY, t); else localStorage.removeItem(GH_TOKEN_KEY); }
+  function utf8ToBase64(str){
+    const bytes = new TextEncoder().encode(str);
+    let binary=''; bytes.forEach(b=>binary+=String.fromCharCode(b));
+    return btoa(binary);
+  }
+  function base64ToUtf8(b64){
+    const binary = atob(b64.replace(/\n/g,''));
+    const bytes = new Uint8Array(binary.length);
+    for(let i=0;i<binary.length;i++) bytes[i]=binary.charCodeAt(i);
+    return new TextDecoder().decode(bytes);
+  }
+  function maskToken(t){ return t ? '••••••••••••'+t.slice(-4) : ''; }
+  let ROW_RENDER_LIMIT = 150;
+  const FILTER_RENDER_LIMIT = 100; 
+  
+  // -- UPDATE DISINI: Tambahan opsi 'date' --
+  const roleLabel = {ignore:'Abaikan', norek:'Number', saldo:'Currency', filter:'Filter', date:'Date'};
+
+  let rawFileContent = null; 
+  let isExcelMode = false;   
+  
+  const state = {
+    headers:[], rows:[], roles:[], fileBase:'data',
+    history:[], historyIndex:-1,
+    filterSelections:{}, filterSearchQueries:{},
+    filterCacheItems:{} 
+  };
+
+  const phaseUpload=$('phaseUpload'), phaseWork=$('phaseWork');
+  const dropzone=$('dropzone'), fileInput=$('fileInput'), uploadErr=$('uploadErr');
+  const filePill=$('filePill'), delimSelect=$('delimSelect'), delimContainer=$('delimContainer'), toast=$('toast');
+  const dataTable=$('dataTable'), mapScroll=$('mapScroll'), rowCapNote=$('rowCapNote');
+  const norekToolGroup=$('norekToolGroup'), optStrip=$('optStrip'), optPad=$('optPad');
+  const resultSummary=$('resultSummary');
+  const filterPanelsContainer=$('filterPanelsContainer');
+  const tallyWrap=$('tallyWrap'), tallyLabel=$('tallyLabel'), tallyRing=$('tallyRing'), tallyPct=$('tallyPct');
+  const btnUndo=$('btnUndo'), btnRedo=$('btnRedo');
+
+  function showError(m){ uploadErr.textContent=m; uploadErr.classList.remove('hidden'); }
+  function clearError(){ uploadErr.classList.add('hidden'); }
+  function escapeHtml(s){ return String(s==null?'':s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+
+  function showToast(message) {
+    toast.textContent = message;
+    toast.classList.add('show');
+    setTimeout(() => { toast.classList.remove('show'); }, 2500);
+  }
+
+  function triggerActionFlash() {
+    mapScroll.classList.remove('action-flash');
+    void mapScroll.offsetWidth; 
+    mapScroll.classList.add('action-flash');
+  }
+
+  function parseCSV(text, delimiter){
+    const lines = text.split(/\r?\n/);
+    const result = [];
+    const d = delimiter === '\\t' ? '\t' : delimiter;
+    
+    for (let i = 0; i < lines.length; i++) {
+      let line = lines[i].trim();
+      if (!line) continue;
+      let columns = line.split(d).map(col => {
+        let clean = col.trim();
+        if (clean.startsWith('"') && clean.endsWith('"')) clean = clean.slice(1, -1);
+        return clean.trim();
+      });
+      result.push(columns);
+    }
+    return result;
+  }
+
+  function snapshotCurrent(){
+    return { headers: state.headers.slice(), rows: state.rows.map(r=>r.slice()), roles: state.roles.slice() };
+  }
+  function commitInitialHistory(){
+    state.history = [snapshotCurrent()];
+    state.historyIndex = 0;
+    updateUndoRedoButtons();
+  }
+  function commitChange(){
+    state.history = state.history.slice(0, state.historyIndex+1);
+    state.history.push(snapshotCurrent());
+    state.historyIndex++;
+    updateUndoRedoButtons();
+  }
+  function restoreSnapshot(snap){
+    state.headers = snap.headers.slice();
+    state.rows = snap.rows.map(r=>r.slice());
+    state.roles = snap.roles.slice();
+    updateUndoRedoButtons();
+    refresh();
+  }
+  
+  function undo(){ 
+    if(state.historyIndex>0){ 
+      state.historyIndex--; 
+      restoreSnapshot(state.history[state.historyIndex]); 
+      triggerActionFlash();
+      showToast('↶ Undo berhasil diterapkan.');
+    } 
+  }
+  function redo(){ 
+    if(state.historyIndex<state.history.length-1){ 
+      state.historyIndex++; 
+      restoreSnapshot(state.history[state.historyIndex]); 
+      triggerActionFlash();
+      showToast('↷ Redo berhasil diterapkan.');
+    } 
+  }
+  
+  function updateUndoRedoButtons(){
+    btnUndo.disabled = state.historyIndex<=0;
+    btnRedo.disabled = state.historyIndex>=state.history.length-1;
+  }
+
+  function fixNorekValue(val, strip, padLen){
+    let s = String(val==null?'':val).trim();
+    if(strip) s = s.replace(/[^\d]/g,'');
+    if(padLen && s.length<padLen && /^\d+$/.test(s)) s = s.padStart(padLen,'0');
+    return s;
+  }
+
+  function parseIndoNumber(val){
+    if(typeof val==='number') return val;
+    let s=String(val==null?'':val).trim();
+    if(s==='') return 0;
+    s=s.replace(/Rp\.?|IDR/gi,'').replace(/\s/g,'');
+    if(s.includes(',') && s.includes('.')){
+      if(s.lastIndexOf(',') > s.lastIndexOf('.')) s=s.replace(/\./g,'').replace(',', '.');
+      else s=s.replace(/,/g,'');
+    } else if(s.includes(',') && !s.includes('.')){
+      s=s.replace(/,/g, '.');
+    } else if(s.includes('.') && !s.includes(',')){
+      const parts=s.split('.');
+      if(!(parts.length>1 && parts[parts.length-1].length===2)) s=s.replace(/\./g,'');
+    }
+    const num=parseFloat(s);
+    return isNaN(num) ? 0 : num;
+  }
+
+  function fmtRp(n){
+    return (n<0?'-':'')+'Rp '+Math.abs(n).toLocaleString('id-ID',{maximumFractionDigits:2});
+  }
+
+  // -- UPDATE DISINI: Fungsi pengubah angka Serial Excel menjadi Tanggal --
+  function formatDateValue(val){
+    if(val === null || val === undefined || val === '') return '';
+    if(typeof val === 'number'){
+      let date = new Date(Math.round((val - 25569) * 86400 * 1000));
+      date = new Date(date.getTime() + date.getTimezoneOffset() * 60000);
+      let d = String(date.getDate()).padStart(2, '0');
+      let m = String(date.getMonth() + 1).padStart(2, '0');
+      let y = date.getFullYear();
+      let H = String(date.getHours()).padStart(2, '0');
+      let M = String(date.getMinutes()).padStart(2, '0');
+      
+      if(H === '00' && M === '00') return d + '/' + m + '/' + y;
+      return d + '/' + m + '/' + y + ' ' + H + ':' + M;
+    }
+    return val;
+  }
+
+  function cleanTextRows(){
+    let count = 0;
+    state.rows.forEach(row => {
+      for(let c = 0; c < state.headers.length; c++){
+        if(row[c] !== undefined && row[c] !== null){
+          let orig = String(row[c]);
+          let cleaned = orig.trim().replace(/[\x00-\x1F\x7F-\x9F]/g, "");
+          if(orig !== cleaned) {
+            row[c] = cleaned;
+            count++;
+          }
+        }
+      }
+    });
+    commitChange();
+    refresh();
+    showToast(`✓ Berhasil membersihkan spasi & karakter aneh pada ${count} sel.`);
+  }
+
+  function deleteColumn(colIdx){
+    state.headers.splice(colIdx,1);
+    state.roles.splice(colIdx,1);
+    state.rows.forEach(row=>row.splice(colIdx,1));
+    state.filterSelections={}; state.filterSearchQueries={}; state.filterCacheItems={};
+    commitChange();
+    refresh();
+  }
+  
+  function deleteRow(rowIdx){
+    state.rows.splice(rowIdx,1);
+    commitChange();
+    refresh();
+  }
+
+  function resetAll(){
+    state.headers=[]; state.rows=[]; state.roles=[];
+    state.filterSelections={}; state.filterSearchQueries={}; state.filterCacheItems={};
+    state.history=[]; state.historyIndex=-1; rawFileContent = null; isExcelMode = false;
+    fileInput.value=''; delimSelect.value = '|';
+    ROW_RENDER_LIMIT = 150;
+    delimContainer.classList.remove('hidden');
+    phaseWork.classList.add('hidden');
+    phaseUpload.classList.remove('hidden');
+    clearError();
+  }
+
+  function handleFile(file){
+    clearError();
+    const name = file.name;
+    const ext = name.split('.').pop().toLowerCase();
+    state.fileBase = name.replace(/\.[^.]+$/,'');
+    ROW_RENDER_LIMIT = 150;
+
+    if (ext === 'xlsx' || ext === 'xls') {
+      isExcelMode = true;
+      delimContainer.classList.add('hidden'); 
+      
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        try {
+          const data = new Uint8Array(e.target.result);
+          const wb = XLSX.read(data, {type: 'array', defval:''});
+          const firstSheetName = wb.SheetNames[0];
+          const rawData = XLSX.utils.sheet_to_json(wb.Sheets[firstSheetName], {header: 1, defval:''});
+          
+          if(!rawData.length || rawData[0].length === 0){
+            showError('File Excel kosong atau tidak terbaca.');
+            return;
+          }
+          
+          state.headers = rawData[0].map(h => String(h).trim());
+          state.rows = rawData.slice(1);
+          state.roles = state.headers.map(() => 'ignore'); 
+          state.filterSelections={}; state.filterSearchQueries={}; state.filterCacheItems={};
+          
+          commitInitialHistory();
+          phaseUpload.classList.add('hidden');
+          phaseWork.classList.remove('hidden');
+          refresh();
+        } catch(err) {
+          showError('Gagal memproses file Excel. Pastikan berkas tidak rusak.');
+        }
+      };
+      reader.readAsArrayBuffer(file);
+    } else {
+      isExcelMode = false;
+      delimContainer.classList.remove('hidden');
+      
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        rawFileContent = String(e.target.result);
+        processRawCSVContent();
+      };
+      reader.readAsText(file,'UTF-8');
+    }
+  }
+
+  function processRawCSVContent() {
+    const currentDelim = delimSelect.value;
+    const parsedData = parseCSV(rawFileContent, currentDelim);
+    if(!parsedData.length || parsedData[0].length <= 1){ 
+      showError(`Gagal memproses data. Kolom tidak terpisah. Coba ganti opsi Pembatas.`); 
+      return; 
+    }
+    clearError();
+    state.headers=parsedData[0];
+    state.rows=parsedData.slice(1);
+    state.roles=state.headers.map(() => 'ignore'); 
+    state.filterSelections={}; state.filterSearchQueries={}; state.filterCacheItems={};
+    
+    commitInitialHistory();
+    phaseUpload.classList.add('hidden');
+    phaseWork.classList.remove('hidden');
+    refresh();
+  }
+
+  function refresh(){
+    filePill.textContent = '📄 ' + state.fileBase + ' · ' + state.rows.length + ' baris';
+    norekToolGroup.classList.toggle('hidden', !state.roles.includes('norek'));
+    renderTableHeaderAndBody();
+  }
+
+  function renderTableHeaderAndBody(){
+    const strip = optStrip.checked;
+    const padLen = parseInt(optPad.value,10)||0;
+    
+    // -- UPDATE DISINI: Tambahan koleksi dateCols --
+    const norekCols=[], saldoCols=[], filterCols=[], dateCols=[];
+    state.roles.forEach((role,c)=>{
+      if(role==='norek') norekCols.push(c);
+      else if(role==='saldo') saldoCols.push(c);
+      else if(role==='filter') filterCols.push(c);
+      else if(role==='date') dateCols.push(c);
+    });
+
+    state._viewRows = state.rows.map((r, idx)=>{
+      const row = r.slice();
+      row.__origIdx = idx;
+      norekCols.forEach(c=>{ if(row[c]!==undefined) row[c]=fixNorekValue(row[c],strip,padLen); });
+      saldoCols.forEach(c=>{ if(row[c]!==undefined) row[c]=parseIndoNumber(row[c]); });
+      // -- UPDATE DISINI: Menerapkan fungsi ke kolom date --
+      dateCols.forEach(c=>{ if(row[c]!==undefined) row[c]=formatDateValue(row[c]); }); 
+      return row;
+    });
+
+    state._norekCols = norekCols;
+    state._saldoCols = saldoCols;
+    state._filterCols = filterCols;
+    state._dateCols = dateCols; 
+
+    filterCols.forEach(c => {
+      if(!state.filterSelections[c]) state.filterSelections[c] = { active: false, values: new Set() };
+      if(state.filterSearchQueries[c] === undefined) state.filterSearchQueries[c] = '';
+    });
+
+    renderFilterPanels();
+    tallyWrap.classList.toggle('hidden', filterCols.length===0);
+    renderColumnHeaders();
+    ROW_RENDER_LIMIT = 150; 
+    renderView();
+  }
+
+  function renderColumnHeaders(){
+    let thead='<thead><tr><th class="act-col"></th>';
+    state.headers.forEach((h,i)=>{
+      thead += '<th class="r-'+state.roles[i]+'"><div class="col-head">'
+             + '<div class="col-head-row"><span class="hdr-name">'+(h===''?('Kolom '+(i+1)):escapeHtml(String(h)))+'</span>'
+             + '<button class="del-col-btn" data-col="'+i+'"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg></button></div>'
+             + '<select class="role-select" data-col="'+i+'">'
+             + Object.keys(roleLabel).map(k=>'<option value="'+k+'"'+(state.roles[i]===k?' selected':'')+'>'+roleLabel[k]+'</option>').join('')
+             + '</select></div></th>';
+    });
+    thead+='</tr></thead>';
+    dataTable.innerHTML = thead + '<tbody></tbody>';
+
+    dataTable.querySelectorAll('select.role-select').forEach(sel=>{
+      sel.addEventListener('change',(e)=>{
+        const c = parseInt(e.target.getAttribute('data-col'),10);
+        state.roles[c]=e.target.value;
+        if(state.filterSelections[c]) delete state.filterSelections[c];
+        if(state.filterCacheItems[c]) delete state.filterCacheItems[c];
+        renderTableHeaderAndBody();
+      });
+    });
+    dataTable.querySelectorAll('.del-col-btn').forEach(btn=>{
+      btn.addEventListener('click',(e)=>{ deleteColumn(parseInt(e.currentTarget.getAttribute('data-col'),10)); });
+    });
+  }
+
+  function renderFilterPanels(){
+    if(!state._filterCols.length){ filterPanelsContainer.innerHTML=''; return; }
+
+    filterPanelsContainer.innerHTML = state._filterCols.map(c=>{
+      const headerName = state.headers[c]===''?('Kolom '+(c+1)):escapeHtml(String(state.headers[c]));
+      return '<div class="tool-group panel" style="margin-bottom:14px;">'
+           + '<div class="panel-head">'
+           + '<span class="panel-title">'+headerName+'</span>'
+           + '<div class="mini-btns">'
+           + '<button class="btn-secondary" data-act="all" data-col="'+c+'">Semua</button>'
+           + '<button class="btn-secondary" data-act="none" data-col="'+c+'">Kosongkan</button>'
+           + '</div></div>'
+           + '<div class="search-box"><input type="text" data-searchcol="'+c+'" value="'+escapeHtml(state.filterSearchQueries[c])+'" placeholder="Cari nilai…"></div>'
+           + '<div class="opt-list" data-listcol="'+c+'"></div>'
+           + '</div>';
+    }).join('');
+
+    state._filterCols.forEach(targetCol => {
+      const counts = new Map();
+
+      state._viewRows.forEach(row => {
+        let passOthers = true;
+        for (let i = 0; i < state._filterCols.length; i++) {
+          const c = state._filterCols[i];
+          if (c === targetCol) continue; 
+          if (state.filterSelections[c].active) {
+            const v = row[c] == null ? '' : String(row[c]).trim();
+            if (!state.filterSelections[c].values.has(v)) { passOthers = false; break; }
+          }
+        }
+        if (passOthers) {
+          const v = row[targetCol] == null ? '' : String(row[targetCol]).trim();
+          counts.set(v, (counts.get(v) || 0) + 1);
+        }
+      });
+
+      let uniqueItems = Array.from(counts.entries()).map(([value, count]) => ({ value, count }));
+      
+      state.filterCacheItems[targetCol] = uniqueItems;
+
+      const q = state.filterSearchQueries[targetCol].toLowerCase();
+      if(q) { uniqueItems = uniqueItems.filter(item => item.value.toLowerCase().includes(q)); }
+
+      const selSet = state.filterSelections[targetCol].values;
+      uniqueItems.sort((a,b) => {
+        const hasA = selSet.has(a.value) ? 1 : 0, hasB = selSet.has(b.value) ? 1 : 0;
+        return (hasB - hasA) || (b.count - a.count) || a.value.localeCompare(b.value);
+      });
+
+      const listEl = filterPanelsContainer.querySelector('[data-listcol="'+targetCol+'"]');
+      const renderSlice = uniqueItems.slice(0, FILTER_RENDER_LIMIT);
+
+      if (renderSlice.length === 0) {
+        listEl.innerHTML = '<div class="tool-note" style="text-align:center;padding:10px;">Tidak ada data</div>';
+      } else {
+        listEl.innerHTML = renderSlice.map((v, i) => {
+          const id = 'f' + targetCol + '_' + i;
+          const checked = selSet.has(v.value) ? ' checked' : '';
+          return '<div class="opt-row">'
+               + '<input type="checkbox" id="' + id + '" data-col="' + targetCol + '" data-val="' + escapeHtml(v.value) + '"' + checked + '>'
+               + '<label for="' + id + '">' + (v.value === '' ? '(kosong)' : escapeHtml(v.value)) + '</label>'
+               + '<span class="cnt">' + v.count + '</span></div>';
+        }).join('');
+
+        if (uniqueItems.length > FILTER_RENDER_LIMIT) {
+          listEl.innerHTML += '<div class="tool-note" style="text-align:center;color:var(--violet-deep);font-weight:600;padding-top:4px;">+ ' + (uniqueItems.length - FILTER_RENDER_LIMIT) + ' data tersembunyi.</div>';
+        }
+      }
+
+      listEl.querySelectorAll('input[type=checkbox]').forEach(cb => {
+        cb.addEventListener('change', (e) => {
+          const c = parseInt(e.target.getAttribute('data-col'), 10);
+          const val = e.target.getAttribute('data-val');
+          if (e.target.checked) {
+            state.filterSelections[c].active = true;
+            state.filterSelections[c].values.add(val);
+          } else {
+            state.filterSelections[c].values.delete(val);
+            if (state.filterSelections[c].values.size === 0) state.filterSelections[c].active = false;
+          }
+          renderFilterPanels(); 
+          renderView();
+        });
+      });
+    });
+
+    filterPanelsContainer.querySelectorAll('[data-searchcol]').forEach(inp => {
+      inp.addEventListener('input', () => {
+        const c = parseInt(inp.getAttribute('data-searchcol'), 10);
+        state.filterSearchQueries[c] = inp.value;
+        refreshSingleFilterPanel(c);
+      });
+    });
+
+    filterPanelsContainer.querySelectorAll('.mini-btns button').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const c = parseInt(btn.getAttribute('data-col'), 10);
+        const act = btn.getAttribute('data-act');
+        
+        if (act === 'all') {
+          const currentValidItems = state.filterCacheItems[c] || [];
+          state.filterSelections[c].active = true;
+          state.filterSelections[c].values = new Set(currentValidItems.map(item => item.value));
+        } else {
+          state.filterSelections[c] = { active: false, values: new Set() };
+        }
+        
+        state.filterSearchQueries[c] = '';
+        renderFilterPanels(); 
+        renderView();
+      });
+    });
+  }
+
+  function refreshSingleFilterPanel(targetCol) {
+    const counts = new Map();
+    state._viewRows.forEach(row => {
+      let passOthers = true;
+      for (let i = 0; i < state._filterCols.length; i++) {
+        const c = state._filterCols[i]; if (c === targetCol) continue;
+        if (state.filterSelections[c].active && !state.filterSelections[c].values.has(row[c] == null ? '' : String(row[c]).trim())) { passOthers = false; break; }
+      }
+      if (passOthers) { const v = row[targetCol] == null ? '' : String(row[targetCol]).trim(); counts.set(v, (counts.get(v) || 0) + 1); }
+    });
+    let items = Array.from(counts.entries()).map(([value, count]) => ({ value, count }));
+    const q = state.filterSearchQueries[targetCol].toLowerCase();
+    if(q) items = items.filter(it => it.value.toLowerCase().includes(q));
+    const selSet = state.filterSelections[targetCol].values;
+    items.sort((a,b) => (selSet.has(b.value)?1:0) - (selSet.has(a.value)?1:0) || (b.count - a.count));
+    
+    const listEl = filterPanelsContainer.querySelector('[data-listcol="'+targetCol+'"]');
+    const slice = items.slice(0, FILTER_RENDER_LIMIT);
+    if(slice.length===0){ listEl.innerHTML='<div class="tool-note" style="text-align:center;padding:10px;">Tidak ada</div>'; return; }
+    listEl.innerHTML = slice.map((v, i) => {
+      const id = 'f' + targetCol + '_' + i;
+      const checked = selSet.has(v.value) ? ' checked' : '';
+      return '<div class="opt-row"><input type="checkbox" id="' + id + '" data-col="' + targetCol + '" data-val="' + escapeHtml(v.value) + '"' + checked + '><label for="' + id + '">' + (v.value===''?'(kosong)':escapeHtml(v.value)) + '</label><span class="cnt">' + v.count + '</span></div>';
+    }).join('');
+    if (items.length > FILTER_RENDER_LIMIT) { listEl.innerHTML += '<div class="tool-note" style="text-align:center;color:var(--violet-deep);font-weight:600;">+ ' + (items.length - FILTER_RENDER_LIMIT) + ' data tersembunyi.</div>'; }
+    
+    listEl.querySelectorAll('input[type=checkbox]').forEach(cb => {
+      cb.addEventListener('change', (e) => {
+        const c = parseInt(e.target.getAttribute('data-col'), 10);
+        const val = e.target.getAttribute('data-val');
+        if (e.target.checked) { state.filterSelections[c].active = true; state.filterSelections[c].values.add(val); }
+        else { state.filterSelections[c].values.delete(val); if (state.filterSelections[c].values.size === 0) state.filterSelections[c].active = false; }
+        renderFilterPanels(); 
+        renderView();
+      });
+    });
+  }
+
+  function renderView(){
+    const filteredRows = state._viewRows.filter(row => {
+      for (let i = 0; i < state._filterCols.length; i++) {
+        const c = state._filterCols[i];
+        if (state.filterSelections[c].active) {
+          const v = row[c] == null ? '' : String(row[c]).trim();
+          if (!state.filterSelections[c].values.has(v)) return false;
+        }
+      }
+      return true;
+    });
+
+    const total=state._viewRows.length, matched=filteredRows.length;
+    const pct = total ? Math.round((matched/total)*100) : 0;
+    tallyLabel.innerHTML = '<b>'+matched.toLocaleString('id-ID')+'</b> dari '+total.toLocaleString('id-ID')+' baris cocok';
+    tallyPct.textContent = pct+'%'; 
+    tallyRing.style.background = 'conic-gradient(var(--mint) 0% '+pct+'%, var(--violet-tint) '+pct+'% 100%)';
+
+    const bits=[];
+    if(state._norekCols.length) bits.push('<b>'+state._norekCols.length+'</b> kolom Number');
+    if(state._saldoCols.length) bits.push('<b>'+state._saldoCols.length+'</b> kolom Currency');
+    // -- UPDATE DISINI: Menampilkan info kolom Date --
+    if(state._dateCols && state._dateCols.length) bits.push('<b>'+state._dateCols.length+'</b> kolom Date');
+    
+    resultSummary.innerHTML = bits.length ? bits.join(' · ') : 'Atur peran kolom di atas judul tabel untuk mengolah berkas.';
+
+    state._filteredRowsOut = filteredRows;
+    const tbody = dataTable.querySelector('tbody'), previewRows = filteredRows.slice(0, ROW_RENDER_LIMIT);
+    if(previewRows.length===0){
+      tbody.innerHTML = '<tr><td colspan="'+(state.headers.length+1)+'" class="row-empty">Tidak ada data cocok.</td></tr>';
+    } else {
+      tbody.innerHTML = previewRows.map(r=>{
+        let cells = '<td class="act-col"><button class="row-del-btn" data-idx="'+r.__origIdx+'"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg></button></td>';
+        state.headers.forEach((h,i)=>{
+          let v=r[i]==null?'':r[i]; 
+          if(state.roles[i]==='saldo' && typeof v==='number') v=fmtRp(v);
+          cells += '<td class="r-'+state.roles[i]+'">'+escapeHtml(v)+'</td>';
+        });
+        return '<tr>'+cells+'</tr>';
+      }).join('');
+      tbody.querySelectorAll('.row-del-btn').forEach(btn=>{
+        btn.addEventListener('click',(e)=>{ deleteRow(parseInt(e.currentTarget.getAttribute('data-idx'),10)); });
+      });
+    }
+    rowCapNote.textContent = filteredRows.length>ROW_RENDER_LIMIT ? 'Menampilkan '+ROW_RENDER_LIMIT+' baris di browser demi menjaga stabilitas RAM. Hasil unduhan berkas tetap memuat penuh '+filteredRows.length+' data.' : '';
+  }
+
+  function exportWorkbook(){
+    if(!state._filteredRowsOut || !state._filteredRowsOut.length) { alert('Tidak ada data yang bisa diekspor.'); return; }
+    const aoa = [state.headers, ...state._filteredRowsOut.map(r => {
+      return state.headers.map((h, i) => state.roles[i] === 'norek' ? String(r[i]) : r[i]);
+    })];
+    const ws = XLSX.utils.aoa_to_sheet(aoa);
+    state.headers.forEach((h, i) => {
+      if (state.roles[i] === 'norek') {
+        for (let r = 1; r <= state._filteredRowsOut.length; r++) { const ref = XLSX.utils.encode_cell({r: r, c: i}); if (ws[ref]) ws[ref].t = 's'; }
+      }
+      if (state.roles[i] === 'saldo') {
+        for (let r = 1; r <= state._filteredRowsOut.length; r++) { const ref = XLSX.utils.encode_cell({r: r, c: i}); if (ws[ref]) { ws[ref].t = 'n'; ws[ref].z = '"Rp"#,##0;[Red]-"Rp"#,##0'; } }
+      }
+    });
+    ws['!cols'] = state.headers.map(() => ({wch: 16}));
+    const wb = XLSX.utils.book_new(); 
+    XLSX.utils.book_append_sheet(wb, ws, 'Sheet1');
+    XLSX.writeFile(wb, state.fileBase + '_hasil.xlsx');
+  }
+
+  // ==========================================
+  // LOGIKA PRESET (DILENGKAPI DATA FILTER BARIS + URUTAN + SINKRON GITHUB)
+  // ==========================================
+
+  // Struktur baru: array [{name, mapping}, ...] supaya urutan bisa diatur.
+  // Migrasi otomatis dari format lama {nama: mapping}.
+  function loadPresetsArray(){
+    let raw;
+    try{ raw = JSON.parse(localStorage.getItem(PRESETS_KEY) || 'null'); }catch(e){ raw=null; }
+    if(Array.isArray(raw)) return raw;
+    if(raw && typeof raw==='object'){
+      // format lama (object) -> ubah jadi array, urutan mengikuti urutan key yang ada
+      const arr = Object.keys(raw).map(name => ({ name, mapping: raw[name] }));
+      localStorage.setItem(PRESETS_KEY, JSON.stringify(arr));
+      return arr;
+    }
+    return [];
+  }
+  function savePresetsArray(arr){
+    localStorage.setItem(PRESETS_KEY, JSON.stringify(arr));
+    syncPresetsToGitHub(arr);
+  }
+
+  function savePreset() {
+    const name = $('presetNameInput').value.trim();
+    if (!name) { showToast('Masukkan nama preset terlebih dahulu.'); return; }
+
+    const mapping = {};
+    let activeCount = 0;
+
+    state.headers.forEach((h, i) => {
+      const headerKey = h === '' ? `kolom_${i+1}` : h.trim().toLowerCase();
+      
+      mapping[headerKey] = {
+        role: state.roles[i],
+        filterValues: [] 
+      };
+
+      if (state.roles[i] === 'filter' && state.filterSelections[i] && state.filterSelections[i].active) {
+        mapping[headerKey].filterValues = Array.from(state.filterSelections[i].values);
+      }
+
+      if (state.roles[i] !== 'ignore') {
+        activeCount++;
+      }
+    });
+
+    if (activeCount === 0) {
+      showToast('⚠️ Gagal: Setidaknya harus ada satu kolom aktif (bukan Abaikan).');
+      return;
+    }
+
+    let presets = loadPresetsArray();
+    const existingIdx = presets.findIndex(p => p.name === name);
+    if(existingIdx !== -1){
+      presets[existingIdx].mapping = mapping;
+    }else{
+      presets.push({ name, mapping });
+    }
+    savePresetsArray(presets);
+    
+    $('presetNameInput').value = '';
+    renderPresetList();
+    showToast(`✓ Preset "${name}" disimpan beserta kriteria filternya!`);
+  }
+
+  function renderPresetList() {
+    const container = $('presetListContainer');
+    let presets = loadPresetsArray();
+    
+    if (presets.length === 0) {
+      container.innerHTML = '<div class="tool-note" style="text-align:center;padding:4px;">Belum ada preset tersimpan.</div>';
+      return;
+    }
+
+    container.innerHTML = presets.map((p, idx) => {
+      return `<div class="preset-item">
+        <div class="order-btns">
+          <button class="order-btn" data-idx="${idx}" data-dir="-1" title="Pindah ke atas" ${idx===0?'disabled':''}>▲</button>
+          <button class="order-btn" data-idx="${idx}" data-dir="1" title="Pindah ke bawah" ${idx===presets.length-1?'disabled':''}>▼</button>
+        </div>
+        <span class="load-preset-btn" data-name="${escapeHtml(p.name)}" title="Terapkan preset ke tabel ini">${escapeHtml(p.name)}</span>
+        <button class="del-preset-btn" data-name="${escapeHtml(p.name)}" title="Hapus preset">&times;</button>
+      </div>`;
+    }).join('');
+
+    container.querySelectorAll('.load-preset-btn').forEach(el => {
+      el.addEventListener('click', () => applyPreset(el.getAttribute('data-name')));
+    });
+
+    container.querySelectorAll('.del-preset-btn').forEach(el => {
+      el.addEventListener('click', () => deletePreset(el.getAttribute('data-name')));
+    });
+
+    container.querySelectorAll('.order-btn').forEach(el => {
+      el.addEventListener('click', () => movePreset(parseInt(el.getAttribute('data-idx'),10), parseInt(el.getAttribute('data-dir'),10)));
+    });
+  }
+
+  function movePreset(idx, direction){
+    let presets = loadPresetsArray();
+    const newIdx = idx + direction;
+    if(newIdx < 0 || newIdx >= presets.length) return;
+    const tmp = presets[idx];
+    presets[idx] = presets[newIdx];
+    presets[newIdx] = tmp;
+    savePresetsArray(presets);
+    renderPresetList();
+  }
+
+  function applyPreset(name) {
+    let presets = loadPresetsArray();
+    const found = presets.find(p => p.name === name);
+    if (!found) return;
+    const mapping = found.mapping;
+
+    let matchCount = 0;
+    state.filterSelections = {}; 
+
+    state.headers.forEach((h, i) => {
+      const headerKey = h === '' ? `kolom_${i+1}` : h.trim().toLowerCase();
+      const columnPreset = mapping[headerKey];
+
+      if (columnPreset) {
+        const targetRole = typeof columnPreset === 'string' ? columnPreset : columnPreset.role;
+        state.roles[i] = targetRole;
+        
+        if (targetRole !== 'ignore') matchCount++;
+
+        if (targetRole === 'filter' && columnPreset.filterValues && columnPreset.filterValues.length > 0) {
+          state.filterSelections[i] = {
+            active: true,
+            values: new Set(columnPreset.filterValues)
+          };
+        }
+      } else {
+        state.roles[i] = 'ignore';
+      }
+    });
+
+    commitChange();
+    refresh();
+    showToast(`✓ Preset "${name}" diterapkan otomatis ke data baris.`);
+  }
+
+  function deletePreset(name) {
+    if (confirm(`Hapus preset "${name}"?`)) {
+      let presets = loadPresetsArray();
+      presets = presets.filter(p => p.name !== name);
+      savePresetsArray(presets);
+      renderPresetList();
+      showToast(`Preset "${name}" telah dihapus.`);
+    }
+  }
+
+  // ------------------------------------------
+  // SINKRONISASI GITHUB
+  // ------------------------------------------
+  let _mmGhEditing = false;
+
+  function setGhLine(el, text, cls){
+    if(!el) return;
+    el.textContent = text;
+    el.className = 'gh-status-line ' + (cls||'');
+  }
+
+  function renderGhUI(){
+    const line = $('mmGhStatusLine');
+    if(!line) return;
+    const token = getGhToken();
+    const has = !!token;
+    const lockedView = $('mmGhLockedView');
+    const editView = $('mmGhEditView');
+    const cancelBtn = $('btnGhCancel');
+    const inp = $('mmGhTokenInput');
+
+    if(has && !_mmGhEditing){
+      setGhLine(line, 'Token tersimpan di device ini ✓ ('+maskToken(token)+')', 'gh-status-ok');
+      if(lockedView) lockedView.style.display='';
+      if(editView) editView.style.display='none';
+    }else{
+      setGhLine(line, has ? 'Sedang mengubah token...' : 'Belum tersambung — preset hanya tersimpan di device ini.', has?'gh-status-pending':'gh-status-warn');
+      if(lockedView) lockedView.style.display='none';
+      if(editView) editView.style.display='';
+      if(cancelBtn) cancelBtn.style.display = has ? '' : 'none';
+    }
+    if(inp) inp.value='';
+  }
+
+  function openGhEdit(){ _mmGhEditing=true; renderGhUI(); const inp=$('mmGhTokenInput'); if(inp) inp.focus(); }
+  function cancelGhEdit(){ _mmGhEditing=false; setGhLine($('mmGhSyncStatus'), '', ''); renderGhUI(); }
+
+  function clearGhToken(){
+    setGhToken('');
+    _mmGhEditing=false;
+    setGhLine($('mmGhSyncStatus'), 'Token dihapus dari device ini.', 'gh-status-warn');
+    renderGhUI();
+  }
+
+  async function saveGhTokenAndTest(){
+    const inp = $('mmGhTokenInput');
+    const token = inp.value.trim();
+    const statusEl = $('mmGhSyncStatus');
+    if(!token){ setGhLine(statusEl, 'Token tidak boleh kosong.', 'gh-status-err'); return; }
+    setGhLine(statusEl, 'Menguji koneksi...', 'gh-status-pending');
+    try{
+      const res = await fetch(`https://api.github.com/repos/${GITHUB_CONFIG.owner}/${GITHUB_CONFIG.repo}`, {
+        headers:{ 'Authorization':'Bearer '+token, 'Accept':'application/vnd.github+json' },
+        cache:'no-store'
+      });
+      if(res.ok || res.status===404){
+        setGhToken(token);
+        _mmGhEditing=false;
+        setGhLine(statusEl, 'Token valid, tersambung ke GitHub ✓', 'gh-status-ok');
+        renderGhUI();
+        // langsung sinkron preset yang ada sekarang
+        syncPresetsToGitHub(loadPresetsArray());
+      }else if(res.status===401){
+        setGhLine(statusEl, 'Token tidak valid / tidak punya akses.', 'gh-status-err');
+      }else{
+        const errJson = await res.json().catch(()=>({}));
+        setGhLine(statusEl, 'Gagal: '+(errJson.message||('status '+res.status)), 'gh-status-err');
+      }
+    }catch(e){
+      setGhLine(statusEl, 'Gagal terhubung: '+e.message, 'gh-status-err');
+    }
+  }
+
+  async function syncPresetsToGitHub(presetsArr){
+    const token = getGhToken();
+    const statusEl = $('mmGhSyncStatus');
+    if(!token){
+      setGhLine(statusEl, 'Belum tersambung ke GitHub — preset hanya tersimpan di device ini.', 'gh-status-warn');
+      return;
+    }
+    setGhLine(statusEl, 'Menyimpan preset ke GitHub...', 'gh-status-pending');
+    const maxAttempts = 3;
+    for(let attempt=1; attempt<=maxAttempts; attempt++){
+      try{
+        let sha;
+        const getRes = await fetch(ghApiUrl()+'?ref='+GITHUB_CONFIG.branch+'&_='+Date.now(), {
+          headers:{ 'Authorization':'Bearer '+token, 'Accept':'application/vnd.github+json' },
+          cache:'no-store'
+        });
+        if(getRes.ok){
+          const info = await getRes.json();
+          sha = info.sha;
+        }else if(getRes.status!==404){
+          const errJson = await getRes.json().catch(()=>({}));
+          throw new Error(errJson.message || ('Gagal membaca file (status '+getRes.status+')'));
+        }
+        const body = {
+          message: 'Update preset MasterMamm ('+new Date().toLocaleString('id-ID')+')',
+          content: utf8ToBase64(JSON.stringify(presetsArr, null, 2)),
+          branch: GITHUB_CONFIG.branch
+        };
+        if(sha) body.sha = sha;
+        const putRes = await fetch(ghApiUrl(), {
+          method:'PUT',
+          headers:{ 'Authorization':'Bearer '+token, 'Accept':'application/vnd.github+json', 'Content-Type':'application/json' },
+          body: JSON.stringify(body),
+          cache:'no-store'
+        });
+        if(!putRes.ok){
+          const errJson = await putRes.json().catch(()=>({}));
+          const msg = errJson.message || ('Gagal menyimpan (status '+putRes.status+')');
+          const isShaConflict = putRes.status===409 || putRes.status===422 || /does not match|sha/i.test(msg);
+          if(isShaConflict && attempt<maxAttempts){
+            setGhLine(statusEl, 'Data di GitHub baru saja berubah, mencoba lagi... ('+attempt+'/'+maxAttempts+')', 'gh-status-pending');
+            await new Promise(r=>setTimeout(r,600));
+            continue;
+          }
+          throw new Error(msg);
+        }
+        setGhLine(statusEl, 'Preset tersimpan ke GitHub ✓ — bisa dibuka di device lain.', 'gh-status-ok');
+        return;
+      }catch(e){
+        if(attempt>=maxAttempts){
+          setGhLine(statusEl, 'Gagal simpan ke GitHub: '+e.message+' (tetap tersimpan di device ini).', 'gh-status-err');
+          return;
+        }
+      }
+    }
+  }
+
+  async function loadPresetsFromGitHub(){
+    const statusEl = $('mmGhSyncStatus');
+    try{
+      const res = await fetch(ghRawUrl()+'?_='+Date.now(), { cache:'no-store' });
+      if(!res.ok) return; // belum ada file / offline -> pakai data lokal saja
+      const text = await res.text();
+      const remote = JSON.parse(text);
+      if(Array.isArray(remote)){
+        localStorage.setItem(PRESETS_KEY, JSON.stringify(remote));
+        renderPresetList();
+        if(getGhToken()) setGhLine(statusEl, 'Preset terbaru dimuat dari GitHub ✓', 'gh-status-ok');
+      }
+    }catch(e){
+      // diamkan — tetap pakai preset lokal
+    }
+  }
+
+  $('btnGhEdit').addEventListener('click', openGhEdit);
+  $('btnGhCancel').addEventListener('click', cancelGhEdit);
+  $('btnGhSave').addEventListener('click', saveGhTokenAndTest);
+  $('btnGhClear').addEventListener('click', clearGhToken);
+  $('btnGhSyncNow').addEventListener('click', () => syncPresetsToGitHub(loadPresetsArray()));
+
+  dropzone.addEventListener('click', ()=>fileInput.click());
+  dropzone.addEventListener('dragover',(e)=>{e.preventDefault(); dropzone.classList.add('drag');});
+  dropzone.addEventListener('dragleave', ()=>dropzone.classList.remove('drag'));
+  dropzone.addEventListener('drop',(e)=>{ e.preventDefault(); dropzone.classList.remove('drag'); if(e.dataTransfer.files && e.dataTransfer.files[0]) handleFile(e.dataTransfer.files[0]); });
+  fileInput.addEventListener('change',(e)=>{ if(e.target.files && e.target.files[0]) handleFile(e.target.files[0]); });
+  delimSelect.addEventListener('change', () => { if (!isExcelMode && rawFileContent) processRawCSVContent(); });
+  $('btnReset').addEventListener('click', resetAll); 
+  $('btnDownload').addEventListener('click', exportWorkbook);
+  btnUndo.addEventListener('click', undo); 
+  btnRedo.addEventListener('click', redo);
+  $('btnCleanText').addEventListener('click', cleanTextRows);
+  optStrip.addEventListener('change', renderTableHeaderAndBody); 
+  optPad.addEventListener('input', renderTableHeaderAndBody);
+  $('btnSavePreset').addEventListener('click', savePreset);
+
+  renderPresetList();
+  renderGhUI();
+  loadPresetsFromGitHub();
+
+  // ==========================================
+  // VIRTUAL SELECTION SYSTEM 
+  // ==========================================
+  let isDragging = false;
+  let selStart = { r: -1, c: -1 };
+  let selEnd = { r: -1, c: -1 };
+  let savedSelection = []; 
+  let activeVirtualSelection = null; 
+
+  function getSelectedCellsCoords() {
+    if (activeVirtualSelection) return activeVirtualSelection;
+    
+    const coords = [];
+    dataTable.querySelectorAll('.selected-cell').forEach(td => {
+      const tr = td.parentElement;
+      const delBtn = tr.querySelector('.row-del-btn');
+      if (delBtn) {
+        const origIdx = parseInt(delBtn.getAttribute('data-idx'), 10);
+        const cellIdx = Array.from(tr.children).indexOf(td) - 1; 
+        if (origIdx >= 0 && cellIdx >= 0) {
+          coords.push({r: origIdx, c: cellIdx});
+        }
+      }
+    });
+    return coords;
+  }
+
+  // ==========================================
+  // COPY / PASTE / CUT LOGIC
+  // ==========================================
+  async function copySelection(isCut = false) {
+    const coords = getSelectedCellsCoords();
+    if (coords.length === 0) { showToast('Blok (pilih) sel terlebih dahulu.'); return; }
+    
+    let minR = Infinity, maxR = -Infinity, minC = Infinity, maxC = -Infinity;
+    coords.forEach(c => {
+      if (c.r < minR) minR = c.r;
+      if (c.r > maxR) maxR = c.r;
+      if (c.c < minC) minC = c.c;
+      if (c.c > maxC) maxC = c.c;
+    });
+
+    const grid = [];
+    for (let r = minR; r <= maxR; r++) {
+      const rowData = [];
+      for (let c = minC; c <= maxC; c++) {
+        const val = (state.rows[r] && state.rows[r][c] !== undefined) ? state.rows[r][c] : '';
+        rowData.push(val);
+      }
+      grid.push(rowData.join('\t'));
+    }
+    
+    const copyText = grid.join('\n');
+    
+    try {
+      await navigator.clipboard.writeText(copyText);
+      if (isCut) {
+        let count = 0;
+        coords.forEach(c => {
+          if (state.rows[c.r] && state.rows[c.r][c.c] !== undefined && String(state.rows[c.r][c.c]) !== '') {
+             state.rows[c.r][c.c] = '';
+             count++;
+          }
+        });
+        if (count > 0) {
+          commitChange();
+          refresh();
+          showToast(`✓ Berhasil memotong (Cut) data dari ${count} sel.`);
+        }
+      } else {
+        showToast(`✓ Berhasil menyalin (Copy) ${coords.length} sel ke clipboard.`);
+      }
+    } catch (err) {
+      showToast('Gagal mengakses clipboard browser. Pastikan izin diberikan.');
+    }
+  }
+
+  // Mendengarkan event Native Paste (Ctrl+V)
+  document.addEventListener('paste', (e) => {
+    if (e.target.tagName === 'INPUT' || e.target.tagName === 'SELECT' || e.target.tagName === 'TEXTAREA') return;
+
+    const coords = getSelectedCellsCoords();
+    if (!coords || coords.length === 0) return;
+
+    e.preventDefault();
+    const pasteData = (e.clipboardData || window.clipboardData).getData('text');
+    if (!pasteData) return;
+
+    let minR = Infinity, minC = Infinity;
+    coords.forEach(c => {
+      if (c.r < minR) minR = c.r;
+      if (c.c < minC) minC = c.c;
+    });
+
+    const rows = pasteData.split(/\r?\n/);
+    let count = 0;
+
+    rows.forEach((rowStr, rOffset) => {
+      if(!rowStr && rOffset === rows.length - 1) return;
+      const cols = rowStr.split('\t');
+      cols.forEach((val, cOffset) => {
+        const targetR = minR + rOffset;
+        const targetC = minC + cOffset;
+        
+        if (state.rows[targetR] && targetC < state.headers.length) {
+          state.rows[targetR][targetC] = val;
+          count++;
+        }
+      });
+    });
+
+    if (count > 0) {
+      commitChange();
+      refresh();
+      showToast(`✓ Berhasil menempelkan (Paste) data ke ${count} sel.`);
+    }
+  });
+
+  // Hubungkan ke tombol di UI
+  $('btnCopySel').addEventListener('click', () => copySelection(false));
+  $('btnCutSel').addEventListener('click', () => copySelection(true));
+
+  // ==========================================
+  // FITUR SELEKSI/BLOK (MOUSE & KEYBOARD)
+  // ==========================================
+
+  dataTable.addEventListener('mousedown', (e) => {
+    if (e.target.tagName === 'BUTTON' || e.target.tagName === 'SELECT' || e.target.tagName === 'INPUT' || e.target.closest('button')) return;
+    const td = e.target.closest('td, th');
+    if (!td) return;
+
+    activeVirtualSelection = null; 
+    isDragging = true;
+    dataTable.classList.add('is-selecting');
+    const tr = td.parentElement;
+    
+    if (e.ctrlKey || e.metaKey) {
+      let currentlySelected = Array.from(dataTable.querySelectorAll('.selected-cell'));
+      
+      if (td.classList.contains('selected-cell')) {
+        td.classList.remove('selected-cell');
+        const index = currentlySelected.indexOf(td);
+        if (index > -1) currentlySelected.splice(index, 1);
+      } else {
+        td.classList.add('selected-cell');
+        currentlySelected.push(td);
+      }
+      
+      savedSelection = currentlySelected;
+      selStart.r = selEnd.r = tr.rowIndex;
+      selStart.c = selEnd.c = Array.from(tr.children).indexOf(td);
+    } 
+    else if (e.shiftKey) {
+      savedSelection = [];
+      selEnd.r = tr.rowIndex;
+      selEnd.c = Array.from(tr.children).indexOf(td);
+      highlightSelection(selStart.r, selStart.c, selEnd.r, selEnd.c);
+    } 
+    else {
+      savedSelection = [];
+      selStart.r = selEnd.r = tr.rowIndex;
+      selStart.c = selEnd.c = Array.from(tr.children).indexOf(td);
+      clearSelection();
+      td.classList.add('selected-cell');
+    }
+  });
+
+  dataTable.addEventListener('mouseover', (e) => {
+    if (!isDragging) return;
+    const td = e.target.closest('td, th');
+    if (!td) return;
+
+    const tr = td.parentElement;
+    selEnd.r = tr.rowIndex;
+    selEnd.c = Array.from(tr.children).indexOf(td);
+    highlightSelection(selStart.r, selStart.c, selEnd.r, selEnd.c);
+  });
+
+  document.addEventListener('mouseup', () => {
+    isDragging = false;
+    dataTable.classList.remove('is-selecting');
+  });
+
+  function clearSelection() {
+    dataTable.querySelectorAll('.selected-cell').forEach(el => {
+      el.classList.remove('selected-cell');
+      el.classList.remove('pulse-highlight'); 
+    });
+  }
+
+  function highlightSelection(r1, c1, r2, c2) {
+    clearSelection();
+    
+    savedSelection.forEach(td => td.classList.add('selected-cell'));
+
+    const minRow = Math.min(r1, r2);
+    const maxRow = Math.max(r1, r2);
+    const minCol = Math.min(c1, c2);
+    const maxCol = Math.max(c1, c2);
+
+    const rows = dataTable.querySelectorAll('tr');
+    for (let r = minRow; r <= maxRow; r++) {
+      if (!rows[r]) continue;
+      const cells = rows[r].children;
+      for (let c = minCol; c <= maxCol; c++) {
+        if (cells[c]) cells[c].classList.add('selected-cell');
+      }
+    }
+  }
+
+  // ==========================================
+  // KEYBOARD SHORTCUTS PRO MODE
+  // ==========================================
+  document.addEventListener('keydown', (e) => {
+    if (e.target.tagName === 'INPUT' || e.target.tagName === 'SELECT') return;
+
+    const key = e.key.toLowerCase();
+    const isCtrl = e.ctrlKey || e.metaKey;
+    const isShift = e.shiftKey;
+
+    let maxRowIdx = dataTable.rows.length - 1;
+    let maxColIdx = dataTable.rows[0] ? dataTable.rows[0].cells.length - 1 : 0;
+
+    // Menangani Copy (Ctrl+C)
+    if (isCtrl && key === 'c') {
+      e.preventDefault();
+      copySelection(false);
+      return;
+    }
+
+    // Menangani Cut (Ctrl+X)
+    if (isCtrl && key === 'x') {
+      e.preventDefault();
+      copySelection(true);
+      return;
+    }
+
+    if (isCtrl && key === 'a') {
+      e.preventDefault();
+      activeVirtualSelection = null;
+      savedSelection = [];
+      selStart = { r: 1, c: 1 };
+      selEnd = { r: maxRowIdx, c: maxColIdx };
+      highlightSelection(selStart.r, selStart.c, selEnd.r, selEnd.c);
+      showToast('✓ Memblok seluruh data tabel.');
+      return;
+    }
+
+    if (isCtrl && key === 'f') {
+      e.preventDefault();
+      const findInput = $('findInput');
+      if (findInput) {
+        findInput.focus();
+        findInput.select();
+      }
+      return;
+    }
+
+    if (isCtrl && !isShift && key === 'z') { e.preventDefault(); undo(); return; }
+    if (isCtrl && !isShift && key === 'y') { e.preventDefault(); redo(); return; }
+
+    if (selStart.r === -1 && !activeVirtualSelection) return; 
+
+    if (isShift && e.code === 'Space') {
+      e.preventDefault();
+      activeVirtualSelection = null;
+      selStart.c = 1;
+      selEnd.c = maxColIdx;
+      highlightSelection(selStart.r, selStart.c, selEnd.r, selEnd.c);
+      return;
+    }
+
+    if (isCtrl && e.code === 'Space') {
+      e.preventDefault();
+      activeVirtualSelection = null;
+      selStart.r = 1;
+      selEnd.r = maxRowIdx;
+      highlightSelection(selStart.r, selStart.c, selEnd.r, maxRowIdx);
+      return;
+    }
+
+    if (key === 'delete' || key === 'backspace') {
+      e.preventDefault();
+      const coords = getSelectedCellsCoords();
+      let count = 0;
+
+      coords.forEach(c => {
+         if (state.rows[c.r] && state.rows[c.r][c.c] !== undefined && String(state.rows[c.r][c.c]) !== '') {
+             state.rows[c.r][c.c] = '';
+             count++;
+         }
+      });
+
+      if (count > 0) {
+        commitChange(); refresh(); 
+        showToast(`✓ Berhasil mengosongkan isi dari ${count} sel.`);
+        selStart = { r: -1, c: -1 }; selEnd = { r: -1, c: -1 }; savedSelection = []; activeVirtualSelection = null; clearSelection();
+      }
+      return;
+    }
+
+    if (['arrowup', 'arrowdown', 'arrowleft', 'arrowright'].includes(key)) {
+      e.preventDefault(); 
+      activeVirtualSelection = null;
+      
+      let targetR = isShift ? selEnd.r : selStart.r;
+      let targetC = isShift ? selEnd.c : selStart.c;
+
+      if (isCtrl) {
+        if (key === 'arrowup') targetR = 1; 
+        if (key === 'arrowdown') targetR = maxRowIdx; 
+        if (key === 'arrowleft') targetC = 1; 
+        if (key === 'arrowright') targetC = maxColIdx; 
+      } else {
+        if (key === 'arrowup') targetR = Math.max(1, targetR - 1);
+        if (key === 'arrowdown') targetR = Math.min(maxRowIdx, targetR + 1);
+        if (key === 'arrowleft') targetC = Math.max(1, targetC - 1);
+        if (key === 'arrowright') targetC = Math.min(maxColIdx, targetC + 1);
+      }
+
+      if (isShift) {
+        selEnd.r = targetR;
+        selEnd.c = targetC;
+      } else {
+        savedSelection = []; 
+        selStart.r = selEnd.r = targetR;
+        selStart.c = selEnd.c = targetC;
+      }
+      
+      highlightSelection(selStart.r, selStart.c, selEnd.r, selEnd.c);
+
+      const targetCell = dataTable.rows[targetR]?.cells[targetC];
+      if (targetCell) {
+        targetCell.scrollIntoView({ behavior: 'auto', block: 'nearest', inline: 'nearest' });
+      }
+    }
+  });
+
+  // ==========================================
+  // FITUR RAPIKAN, HAPUS & SISAKAN
+  // ==========================================
+
+  $('btnFillZero').addEventListener('click', () => {
+    const coords = getSelectedCellsCoords();
+    let count = 0;
+
+    if (coords.length > 0) {
+      coords.forEach(c => {
+         if (state.rows[c.r]) {
+            let val = state.rows[c.r][c.c];
+            if (val === undefined || val === null || String(val).trim() === '') {
+                state.rows[c.r][c.c] = 0;
+                count++;
+            }
+         }
+      });
+    } else {
+      state.rows.forEach(row => {
+        for (let c = 0; c < state.headers.length; c++) {
+          let val = row[c];
+          if (val === undefined || val === null || String(val).trim() === '') {
+             row[c] = 0;
+             count++;
+          }
+        }
+      });
+    }
+
+    if (count > 0) {
+      commitChange(); refresh();
+      showToast(`✓ Berhasil! ${count} sel kosong diubah menjadi 0.`);
+    } else {
+      showToast('Tidak ada sel kosong ditemukan di area tersebut.');
+    }
+  });
+
+  $('btnDelSelRows').addEventListener('click', () => {
+    const coords = getSelectedCellsCoords();
+    if (coords.length === 0) { showToast('Pilih sel dulu untuk menghapus baris.'); return; }
+    
+    const uniqueRows = Array.from(new Set(coords.map(c => c.r)));
+    if (uniqueRows.length > 0) {
+      const sortedRows = uniqueRows.sort((a,b) => b - a);
+      sortedRows.forEach(idx => state.rows.splice(idx, 1));
+      
+      commitChange(); refresh();
+      showToast(`✓ Berhasil menghapus ${sortedRows.length} baris.`);
+      selStart = { r: -1, c: -1 }; selEnd = { r: -1, c: -1 }; savedSelection = []; activeVirtualSelection = null; clearSelection();
+    }
+  });
+
+  $('btnDelSelCols').addEventListener('click', () => {
+    const coords = getSelectedCellsCoords();
+    if (coords.length === 0) { showToast('Pilih sel dulu untuk menghapus kolom.'); return; }
+    
+    const colsToDel = new Set(coords.map(c => c.c));
+    if (colsToDel.size > 0) {
+      const sortedCols = Array.from(colsToDel).sort((a,b) => b - a);
+      sortedCols.forEach(c => {
+        state.headers.splice(c, 1);
+        state.roles.splice(c, 1);
+        state.rows.forEach(row => row.splice(c, 1));
+      });
+      
+      state.filterSelections={}; state.filterSearchQueries={}; state.filterCacheItems={};
+      
+      commitChange(); refresh();
+      showToast(`✓ Berhasil menghapus ${sortedCols.length} kolom.`);
+      selStart = { r: -1, c: -1 }; selEnd = { r: -1, c: -1 }; savedSelection = []; activeVirtualSelection = null; clearSelection();
+    }
+  });
+
+  $('btnKeepSelCols').addEventListener('click', () => {
+    const coords = getSelectedCellsCoords();
+    if (coords.length === 0) { showToast('Pilih sel dulu untuk menyisakan kolom.'); return; }
+    
+    const colsToKeep = new Set(coords.map(c => c.c));
+    const colsToDel = [];
+    for (let i = 0; i < state.headers.length; i++) {
+       if (!colsToKeep.has(i)) colsToDel.push(i);
+    }
+
+    if (colsToDel.length > 0) {
+      colsToDel.sort((a,b) => b - a);
+      colsToDel.forEach(c => {
+        state.headers.splice(c, 1);
+        state.roles.splice(c, 1);
+        state.rows.forEach(row => row.splice(c, 1));
+      });
+      state.filterSelections={}; state.filterSearchQueries={}; state.filterCacheItems={};
+      
+      commitChange(); refresh();
+      showToast(`✓ Berhasil membuang ${colsToDel.length} kolom yang tidak diblok.`);
+      selStart = { r: -1, c: -1 }; selEnd = { r: -1, c: -1 }; savedSelection = []; activeVirtualSelection = null; clearSelection();
+    } else {
+      showToast('Semua kolom sudah diblok. Tidak ada yang dihapus.');
+    }
+  });
+
+  $('btnKeepSelRows').addEventListener('click', () => {
+    const coords = getSelectedCellsCoords();
+    if (coords.length === 0) { showToast('Pilih sel dulu untuk menyisakan baris.'); return; }
+
+    const rowsToKeep = new Set(coords.map(c => c.r));
+    let deletedCount = 0;
+    
+    for (let i = state.rows.length - 1; i >= 0; i--) {
+      if (!rowsToKeep.has(i)) {
+        state.rows.splice(i, 1);
+        deletedCount++;
+      }
+    }
+
+    if (deletedCount > 0) {
+      commitChange(); refresh();
+      showToast(`✓ Berhasil membuang ${deletedCount} baris yang tidak diblok.`);
+      selStart = { r: -1, c: -1 }; selEnd = { r: -1, c: -1 }; savedSelection = []; activeVirtualSelection = null; clearSelection();
+    } else {
+      showToast('Semua baris sudah diblok. Tidak ada yang dihapus.');
+    }
+  });
+
+  // ==========================================
+  // FITUR CARI DAN GANTI
+  // ==========================================
+  
+  $('btnFindAll').addEventListener('click', () => {
+    const findText = $('findInput').value.toLowerCase();
+    if (!findText) { showToast('Masukkan data yang ingin dicari terlebih dahulu.'); return; }
+
+    clearSelection();
+    savedSelection = [];
+    activeVirtualSelection = [];
+    let count = 0;
+    
+    const targetRows = state._filteredRowsOut || state._viewRows;
+
+    targetRows.forEach((row, viewIdx) => {
+      const origIdx = row.__origIdx;
+      for (let c = 0; c < state.headers.length; c++) {
+        let val = row[c];
+        if (val !== undefined && val !== null && String(val).toLowerCase().includes(findText)) {
+           activeVirtualSelection.push({r: origIdx, c: c, vIdx: viewIdx});
+           count++;
+        }
+      }
+    });
+
+    if (count > 0) {
+      const firstFoundViewIdx = activeVirtualSelection[0].vIdx;
+      
+      if (firstFoundViewIdx >= ROW_RENDER_LIMIT) {
+        ROW_RENDER_LIMIT = firstFoundViewIdx + 50; 
+        renderView(); 
+      }
+
+      showToast(`✓ Ditemukan & diblok ${count} sel.`);
+      
+      const renderedTrs = dataTable.querySelectorAll('tbody tr');
+      renderedTrs.forEach(tr => {
+        const delBtn = tr.querySelector('.row-del-btn');
+        if (delBtn) {
+          const origIdx = parseInt(delBtn.getAttribute('data-idx'), 10);
+          const cellsInRow = activeVirtualSelection.filter(coord => coord.r === origIdx);
+          cellsInRow.forEach(coord => {
+            const td = tr.children[coord.c + 1]; 
+            if (td) {
+              td.classList.add('selected-cell');
+              td.classList.add('pulse-highlight'); 
+              setTimeout(() => td.classList.remove('pulse-highlight'), 3000); 
+            }
+          });
+        }
+      });
+      
+      const firstSelected = dataTable.querySelector('.selected-cell');
+      if (firstSelected) {
+        firstSelected.scrollIntoView({ behavior: 'smooth', block: 'center', inline: 'center' });
+      }
+
+    } else {
+      activeVirtualSelection = null;
+      showToast(`Data "${findText}" tidak ditemukan.`);
+    }
+  });
+
+  function executeFindAndReplace(mode) {
+    const findText = $('findInput').value;
+    const replaceText = $('replaceInput').value;
+    
+    if (!findText) { showToast('Teks yang dicari tidak boleh kosong.'); return; }
+    
+    let count = 0;
+
+    if (mode === 'all') {
+      state.rows.forEach(row => {
+        for (let c = 0; c < state.headers.length; c++) {
+          if (row[c] !== undefined && row[c] !== null) {
+            let cellStr = String(row[c]);
+            if (cellStr.includes(findText)) {
+              row[c] = cellStr.split(findText).join(replaceText);
+              count++;
+            }
+          }
+        }
+      });
+    } else if (mode === 'selected') {
+      const coords = getSelectedCellsCoords();
+      if (coords.length === 0) { showToast('Blok sel terlebih dahulu untuk mengganti area terpilih (Atau gunakan tombol Cari).'); return; }
+
+      coords.forEach(c => {
+         if (state.rows[c.r] && state.rows[c.r][c.c] !== undefined) {
+             let cellStr = String(state.rows[c.r][c.c]);
+             if (cellStr.includes(findText)) {
+                 state.rows[c.r][c.c] = cellStr.split(findText).join(replaceText);
+                 count++;
+             }
+         }
+      });
+    }
+
+    if (count > 0) {
+      commitChange();
+      refresh();
+      showToast(`✓ Berhasil mengganti data pada ${count} sel.`);
+      if (mode === 'selected') {
+          selStart = { r: -1, c: -1 }; selEnd = { r: -1, c: -1 }; savedSelection = []; activeVirtualSelection = null; clearSelection();
+      }
+    } else {
+      showToast(`Teks "${findText}" tidak ditemukan di area bersangkutan.`);
+    }
+  }
+
+  $('btnReplaceAll').addEventListener('click', () => executeFindAndReplace('all'));
+  $('btnReplaceSel').addEventListener('click', () => executeFindAndReplace('selected'));
+
+})();
+</script>
+</body>
+</html>
