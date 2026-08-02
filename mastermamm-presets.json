@@ -661,6 +661,80 @@
     }
   },
   {
+    "name": "IB Bisnis - Ritel",
+    "mapping": {
+      "kolom_1": {
+        "role": "ignore",
+        "filterValues": []
+      },
+      "kolom_2": {
+        "role": "ignore",
+        "filterValues": []
+      },
+      "kolom_3": {
+        "role": "ignore",
+        "filterValues": []
+      },
+      "kolom_4": {
+        "role": "ignore",
+        "filterValues": []
+      },
+      "kolom_5": {
+        "role": "ignore",
+        "filterValues": []
+      },
+      "kolom_6": {
+        "role": "filter",
+        "filterValues": [
+          "3193 - UNIT KAPAS KRAMPUNG",
+          "3187 - UNIT MULYOSARI KAPAS KRAMPUNG",
+          "6549 - UNIT POGOT KAPAS KRAMPUNG",
+          "877 - UNIT DHARMAWANGSA KP KRAMPUNG",
+          "3191 - UNIT KENJERAN KAPAS KRAMPUNG",
+          "",
+          "3190 - UNIT PECINDILAN KAPAS KRAMPUNG",
+          "7616 - UNIT SETRO KAPAS KRAMPUNG",
+          "7594 - UNIT BRONGGALAN KAPAS KRAMPUNG",
+          "7614 - UNIT KEPUTIH KAPAS KRAMPUNG",
+          "7987 - UNIT BULAK BANTENG KP KRAMPUNG",
+          "Uker"
+        ]
+      },
+      "kolom_7": {
+        "role": "ignore",
+        "filterValues": []
+      },
+      "kolom_8": {
+        "role": "ignore",
+        "filterValues": []
+      },
+      "kolom_9": {
+        "role": "ignore",
+        "filterValues": []
+      },
+      "kolom_10": {
+        "role": "ignore",
+        "filterValues": []
+      },
+      "kolom_11": {
+        "role": "ignore",
+        "filterValues": []
+      },
+      "kolom_12": {
+        "role": "ignore",
+        "filterValues": []
+      },
+      "kolom_13": {
+        "role": "ignore",
+        "filterValues": []
+      },
+      "kolom_14": {
+        "role": "ignore",
+        "filterValues": []
+      }
+    }
+  },
+  {
     "name": "DI319",
     "mapping": {
       "kolom_1": {
@@ -765,80 +839,6 @@
       },
       "kolom_26": {
         "role": "saldo",
-        "filterValues": []
-      }
-    }
-  },
-  {
-    "name": "IB Bisnis - Ritel",
-    "mapping": {
-      "kolom_1": {
-        "role": "ignore",
-        "filterValues": []
-      },
-      "kolom_2": {
-        "role": "ignore",
-        "filterValues": []
-      },
-      "kolom_3": {
-        "role": "ignore",
-        "filterValues": []
-      },
-      "kolom_4": {
-        "role": "ignore",
-        "filterValues": []
-      },
-      "kolom_5": {
-        "role": "ignore",
-        "filterValues": []
-      },
-      "kolom_6": {
-        "role": "filter",
-        "filterValues": [
-          "3193 - UNIT KAPAS KRAMPUNG",
-          "3187 - UNIT MULYOSARI KAPAS KRAMPUNG",
-          "6549 - UNIT POGOT KAPAS KRAMPUNG",
-          "877 - UNIT DHARMAWANGSA KP KRAMPUNG",
-          "3191 - UNIT KENJERAN KAPAS KRAMPUNG",
-          "",
-          "3190 - UNIT PECINDILAN KAPAS KRAMPUNG",
-          "7616 - UNIT SETRO KAPAS KRAMPUNG",
-          "7594 - UNIT BRONGGALAN KAPAS KRAMPUNG",
-          "7614 - UNIT KEPUTIH KAPAS KRAMPUNG",
-          "7987 - UNIT BULAK BANTENG KP KRAMPUNG",
-          "Uker"
-        ]
-      },
-      "kolom_7": {
-        "role": "ignore",
-        "filterValues": []
-      },
-      "kolom_8": {
-        "role": "ignore",
-        "filterValues": []
-      },
-      "kolom_9": {
-        "role": "ignore",
-        "filterValues": []
-      },
-      "kolom_10": {
-        "role": "ignore",
-        "filterValues": []
-      },
-      "kolom_11": {
-        "role": "ignore",
-        "filterValues": []
-      },
-      "kolom_12": {
-        "role": "ignore",
-        "filterValues": []
-      },
-      "kolom_13": {
-        "role": "ignore",
-        "filterValues": []
-      },
-      "kolom_14": {
-        "role": "ignore",
         "filterValues": []
       }
     }
