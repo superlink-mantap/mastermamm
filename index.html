@@ -15,29 +15,37 @@
     --peach:#FF9472; --peach-tint:#FFF0E9; --peach-deep:#B85A35;
     --danger:#FF6B81; --danger-tint:#FFEAEF; --danger-deep:#C23A52;
     --t-norek:var(--peach-tint); --t-saldo:var(--mint-tint); --t-filter:var(--violet-tint); --t-date:var(--danger-tint);
+    --radius-lg:22px; --radius-md:16px; --radius-sm:12px;
   }
   *{box-sizing:border-box;}
   html,body{margin:0;padding:0;}
   body{
     background:linear-gradient(150deg,#F4F2FF 0%,#F1FBF7 55%,#FFF7F1 100%);
-    color:var(--ink);font-family:'Plus Jakarta Sans',sans-serif;-webkit-font-smoothing:antialiased;padding:20px 16px 60px;
+    background-attachment:fixed;
+    color:var(--ink);font-family:'Plus Jakarta Sans',sans-serif;-webkit-font-smoothing:antialiased;padding:24px 16px 70px;
   }
-  .wrap{max-width:100%; padding:0 10px; margin:0 auto;}
-  h1{font-family:'Sora',sans-serif;font-weight:700;font-size:23px;line-height:1.2;margin:0 0 4px;color:var(--ink);}
-  .sub{font-size:13.5px;color:var(--muted);line-height:1.5;margin:0 0 18px;}
-  .card{background:var(--card);border:none;border-radius:20px;padding:20px;box-shadow:0 4px 18px rgba(35,35,59,.06);}
-  #dropzone{border:1.5px dashed #D9D4F2;border-radius:18px;padding:36px 16px;text-align:center;cursor:pointer; max-width:600px; margin: 40px auto;}
+  .wrap{max-width:min(1680px, 97vw); padding:0 10px; margin:0 auto;}
+  .hero{display:flex;align-items:center;gap:14px;margin-bottom:18px;}
+  .hero-badge{width:46px;height:46px;border-radius:14px;background:linear-gradient(135deg,var(--violet),#9B8FFF);display:flex;align-items:center;justify-content:center;flex-shrink:0;box-shadow:0 6px 16px rgba(124,111,255,.35);}
+  h1{font-family:'Sora',sans-serif;font-weight:700;font-size:24px;line-height:1.2;margin:0 0 4px;color:var(--ink);}
+  .card{background:var(--card);border:none;border-radius:var(--radius-lg);padding:22px;box-shadow:0 4px 20px rgba(35,35,59,.06);}
+  #phaseUpload h2{font-family:'Sora',sans-serif;font-size:17px;margin:0 0 4px;}
+  #phaseUpload .hint{font-size:13px;color:var(--muted);margin:0 0 6px;}
+  #dropzone{border:2px dashed #D9D4F2;border-radius:var(--radius-md);padding:44px 20px;text-align:center;cursor:pointer;max-width:600px;margin:32px auto 4px;background:#FBFAFF;transition:border-color .18s, background-color .18s, transform .12s;}
+  #dropzone:hover{border-color:var(--violet);background:var(--violet-tint);transform:translateY(-1px);}
   #dropzone.drag{border-color:var(--violet);background:var(--violet-tint);}
-  #dropzone p{margin:0 0 4px;font-size:14px;color:var(--muted);}
-  #dropzone .pick{font-weight:700;color:var(--violet-deep);}
+  #dropzone .upload-icon{width:52px;height:52px;border-radius:50%;background:#fff;display:flex;align-items:center;justify-content:center;margin:0 auto 14px;box-shadow:0 4px 14px rgba(124,111,255,.18);color:var(--violet-deep);}
+  #dropzone p{margin:0 0 4px;font-size:14.5px;color:var(--muted);}
+  #dropzone .pick{font-weight:700;color:var(--violet-deep);text-decoration:underline;text-decoration-style:dotted;text-underline-offset:3px;}
   #fileInput{display:none;}
-  .file-types{font-size:12px;color:var(--muted);margin-top:10px;}
-  .err{color:var(--danger-deep);font-size:13px;margin-top:10px;}
+  .file-types{font-size:12px;color:var(--muted);margin-top:12px;display:flex;gap:6px;justify-content:center;flex-wrap:wrap;}
+  .file-types span{background:#fff;border:1px solid var(--line);padding:3px 9px;border-radius:20px;font-family:'Space Mono',monospace;}
+  .err{color:var(--danger-deep);font-size:13px;margin-top:10px;background:var(--danger-tint);padding:10px 14px;border-radius:12px;max-width:600px;margin-left:auto;margin-right:auto;}
   .hidden{display:none !important;}
 
   /* Layout */
-  .topbar{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;margin-bottom:16px;}
-  .file-pill{display:inline-flex;align-items:center;gap:6px;font-size:12.5px;background:#fff;color:var(--ink);padding:8px 14px;border-radius:20px;box-shadow:0 2px 10px rgba(124,111,255,.1);font-weight:600;}
+  .topbar{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;margin-bottom:18px;background:var(--card);padding:12px 14px;border-radius:var(--radius-md);box-shadow:0 4px 18px rgba(35,35,59,.05);}
+  .file-pill{display:inline-flex;align-items:center;gap:6px;font-size:12.5px;background:var(--violet-tint);color:var(--violet-deep);padding:8px 14px;border-radius:20px;font-weight:700;}
   .topbar-actions{display:flex;gap:8px;flex-wrap:wrap;align-items:center;}
   .delim-box {font-size:13px; background:#fff; padding:6px 12px; border-radius:20px; border:1px solid var(--line); display:flex; align-items:center; gap:8px;}
   .delim-box select {border:none; outline:none; font-family:inherit; font-weight:600; color:var(--violet-deep); cursor:pointer;}
@@ -46,13 +54,14 @@
   button{display:inline-flex;align-items:center;justify-content:center;gap:6px;font-family:'Plus Jakarta Sans',sans-serif;font-weight:700;font-size:13.5px;border:none;border-radius:12px;padding:10px 14px;cursor:pointer;transition:transform .1s, opacity .15s, box-shadow .15s, background-color .15s;}
   button:active{transform:scale(.96);}
   button:disabled{opacity:.4;cursor:not-allowed;}
+  button:focus-visible{outline:2px solid var(--violet);outline-offset:2px;}
   button svg {flex-shrink:0;}
   .btn-primary{background:var(--violet);color:#fff;box-shadow:0 4px 14px rgba(124,111,255,.35);border-radius:16px;}
-  .btn-primary:hover{box-shadow:0 6px 18px rgba(124,111,255,.45);}
+  .btn-primary:hover{box-shadow:0 6px 18px rgba(124,111,255,.45);background:var(--violet-deep);}
   .btn-secondary{background:var(--violet-tint);color:var(--violet-deep);}
   .btn-secondary:hover{background:#E2DBFF;}
   .btn-icon{background:#fff;color:var(--ink);width:38px;height:38px;padding:0;border-radius:50%;box-shadow:0 2px 8px rgba(35,35,59,.08);}
-  .btn-icon:hover{box-shadow:0 4px 12px rgba(35,35,59,.12);}
+  .btn-icon:hover{box-shadow:0 4px 12px rgba(35,35,59,.12);background:var(--violet-tint);color:var(--violet-deep);}
   .btn-row{display:flex;gap:8px;flex-wrap:wrap;}
   .btn-row button{flex:1; justify-content:flex-start; text-align:left;}
   .btn-row.center-btns button {justify-content:center; text-align:center;}
@@ -63,25 +72,42 @@
   
   @media (min-width:880px){
     .workspace{display:grid;grid-template-columns:250px 1fr;gap:16px;align-items:start;}
-    .sidebar{position:sticky;top:16px;max-height:calc(100vh - 32px);overflow-y:auto;padding-right:4px;}
+    .sidebar{position:sticky;top:16px;}
+  }
+  @media (min-width:1300px){
+    .workspace{grid-template-columns:260px 1fr;}
   }
 
-  .tool-group{background:var(--card);border-radius:20px;padding:16px;box-shadow:0 4px 18px rgba(35,35,59,.05);}
-  .tool-group h3{font-family:'Sora',sans-serif;font-size:12.5px;color:var(--muted);margin:0 0 12px;font-weight:600;}
+  /* Accordion tool groups: shrinks sidebar height so the worksheet is reachable
+     without scrolling through every tool first */
+  details.tool-group{background:var(--card);border-radius:var(--radius-md);padding:0;box-shadow:0 4px 18px rgba(35,35,59,.05);overflow:hidden;}
+  details.tool-group[open]{padding-bottom:16px;}
+  details.tool-group summary{list-style:none;cursor:pointer;padding:14px 16px;display:flex;align-items:center;justify-content:space-between;gap:8px;font-family:'Sora',sans-serif;font-size:12px;color:var(--violet-deep);font-weight:700;text-transform:uppercase;letter-spacing:.03em;}
+  details.tool-group summary::-webkit-details-marker{display:none;}
+  details.tool-group summary::after{content:'';width:8px;height:8px;border-right:2px solid var(--violet-deep);border-bottom:2px solid var(--violet-deep);transform:rotate(45deg);transition:transform .18s;flex-shrink:0;margin-right:2px;}
+  details.tool-group[open] summary::after{transform:rotate(-135deg);margin-top:4px;}
+  details.tool-group summary:hover{background:var(--violet-tint);}
+  details.tool-group > summary + *{margin-top:0;}
+  details.tool-group .tg-body{padding:0 16px;}
+  details.tool-group.panel summary{padding:12px 14px;}
+  .sidebar .quick-hint{font-size:11.5px;color:var(--muted);background:#fff;border-radius:12px;padding:8px 12px;margin-bottom:2px;box-shadow:0 4px 18px rgba(35,35,59,.05);}
+
+  .tool-group{background:var(--card);border-radius:var(--radius-md);padding:16px;box-shadow:0 4px 18px rgba(35,35,59,.05);}
+  .tool-group h3{font-family:'Sora',sans-serif;font-size:12px;color:var(--violet-deep);margin:0 0 12px;font-weight:700;text-transform:uppercase;letter-spacing:.03em;display:flex;align-items:center;gap:6px;}
   .tool-group .btn-secondary.tool-mint{background:var(--mint-tint);color:var(--mint-deep);}
   .tool-group .btn-secondary.tool-mint:hover{background:#D1F8E8;}
-  .tool-note{font-size:11.5px;color:var(--muted);margin:6px 0 0;line-height:1.4;}
+  .tool-note{font-size:11.5px;color:var(--muted);margin:6px 0 0;line-height:1.45;}
   
-  .input-field{width:100%;padding:8px 11px;border:1px solid var(--line);border-radius:12px;font-size:12.5px;font-family:inherit;outline:none;}
+  .input-field{width:100%;padding:9px 12px;border:1.5px solid var(--line);border-radius:12px;font-size:12.5px;font-family:inherit;outline:none;transition:border-color .15s;}
   .input-field:focus{border-color:var(--violet);}
   .input-group {display:flex; gap:8px;}
 
   .opts{display:flex;flex-wrap:wrap;gap:10px;align-items:center;font-size:13px;}
   .opts label{display:flex;align-items:center;gap:7px;cursor:pointer;}
-  .opts input[type="number"]{width:54px;padding:6px 9px;border:1px solid var(--line);border-radius:10px;}
+  .opts input[type="number"]{width:54px;padding:6px 9px;border:1.5px solid var(--line);border-radius:10px;}
 
   /* MAP SCROLL & TABLE ANIMATIONS */
-  .map-scroll{overflow:auto;border-radius:18px;max-height:650px;box-shadow:0 4px 18px rgba(35,35,59,.05); border:1px solid var(--line); transition: box-shadow 0.3s;}
+  .map-scroll{overflow:auto;border-radius:18px;max-height:min(78vh, 900px);min-height:320px;box-shadow:0 4px 18px rgba(35,35,59,.05); border:1px solid var(--line); transition: box-shadow 0.3s;}
   
   @keyframes tableFlashAnim {
     0% { box-shadow: inset 0 0 0 5px var(--violet); filter: brightness(0.95); }
@@ -92,35 +118,47 @@
   table{border-collapse:collapse;width:100%;font-size:12.5px;background:var(--card);}
   th,td{padding:10px 12px;border-bottom:1px solid var(--line);text-align:left;white-space:nowrap; transition: background-color 0.15s;}
   td{font-family:'Space Mono',monospace;}
-  thead th{background:#fff;position:sticky;top:0;z-index:2;font-family:'Sora',sans-serif;}
-  .col-head{display:flex;flex-direction:column;gap:6px;min-width:145px;}
+  tbody tr:hover td{filter:brightness(0.97);}
+  thead th{background:#fff;position:sticky;top:0;z-index:2;font-family:'Sora',sans-serif;box-shadow:0 2px 6px rgba(35,35,59,.05);}
+  .col-head{display:flex;flex-direction:column;gap:6px;min-width:150px;}
   .col-head-row{display:flex;align-items:center;gap:6px;}
   .hdr-name{font-size:12.5px;font-weight:700;flex:1;}
-  select.role-select{font-family:inherit;font-size:12px;padding:6px 8px;border:1px solid var(--line);border-radius:10px;background:#fff;width:100%;}
-  .del-col-btn{width:24px;height:24px;border-radius:50%;border:none;background:var(--danger-tint);color:var(--danger-deep);font-size:13px;cursor:pointer;padding:0;display:flex;align-items:center;justify-content:center;}
+  select.role-select{font-family:inherit;font-size:12px;padding:7px 8px;border:1.5px solid var(--line);border-radius:10px;background:#fff;width:100%;cursor:pointer;}
+  .del-col-btn{width:24px;height:24px;border-radius:50%;border:none;background:var(--danger-tint);color:var(--danger-deep);font-size:13px;cursor:pointer;padding:0;display:flex;align-items:center;justify-content:center;transition:background-color .15s;}
+  .del-col-btn:hover{background:var(--danger);color:#fff;}
   .act-col{width:30px;text-align:center;}
-  .row-del-btn{width:24px;height:24px;border-radius:50%;border:none;background:var(--danger-tint);color:var(--danger-deep);font-size:13px;cursor:pointer;padding:0;display:flex;align-items:center;justify-content:center;}
+  .row-del-btn{width:24px;height:24px;border-radius:50%;border:none;background:var(--danger-tint);color:var(--danger-deep);font-size:13px;cursor:pointer;padding:0;display:flex;align-items:center;justify-content:center;transition:background-color .15s;}
+  .row-del-btn:hover{background:var(--danger);color:#fff;}
   
   th.r-norek,td.r-norek{background:var(--t-norek);}
   th.r-saldo,td.r-saldo{background:var(--t-saldo);}
   th.r-filter,td.r-filter{background:var(--t-filter);}
   th.r-date,td.r-date{background:var(--t-date);}
   
-  .row-empty{color:var(--muted);font-family:'Plus Jakarta Sans',sans-serif;}
+  .row-empty{color:var(--muted);font-family:'Plus Jakarta Sans',sans-serif;text-align:center;padding:28px 12px !important;}
 
-  .panel{border-radius:18px;padding:16px;}
-  .panel-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;gap:8px;flex-wrap:wrap;}
-  .panel-title{font-weight:700;font-size:13px;font-family:'Sora',sans-serif; max-width: 100%; word-break: break-all;}
-  .mini-btns{display:flex;gap:4px; margin-top: 4px; width: 100%; justify-content: flex-start;}
+  .role-legend{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 12px;}
+  .role-legend .tag{display:inline-flex;align-items:center;gap:6px;font-size:11.5px;font-weight:600;padding:5px 11px;border-radius:20px;color:var(--ink);}
+  .role-legend .dot{width:8px;height:8px;border-radius:50%;}
+
+  details.tool-group.panel{padding:0;}
+  details.tool-group.panel[open]{padding-bottom:14px;}
+  .panel-title{list-style:none;cursor:pointer;display:flex;align-items:center;justify-content:space-between;gap:8px;padding:12px 14px;font-weight:700;font-size:12.5px;font-family:'Sora',sans-serif;word-break:break-word;}
+  .panel-title::-webkit-details-marker{display:none;}
+  .panel-title::after{content:'';width:8px;height:8px;border-right:2px solid var(--violet-deep);border-bottom:2px solid var(--violet-deep);transform:rotate(45deg);transition:transform .18s;flex-shrink:0;}
+  details[open] > .panel-title::after{transform:rotate(-135deg);margin-top:4px;}
+  .panel-title:hover{background:var(--violet-tint);}
+  .mini-btns{display:flex;gap:4px; width: 100%; justify-content: flex-start;}
   .mini-btns button{padding:4px 8px;font-size:11px;border-radius:10px; flex: 1; justify-content:center;}
-  .search-box input{width:100%;padding:8px 11px;border:1px solid var(--line);border-radius:12px;font-size:12.5px;margin-bottom:8px;}
+  .search-box input{width:100%;padding:9px 12px;border:1.5px solid var(--line);border-radius:12px;font-size:12.5px;margin-bottom:8px;}
   .opt-list{max-height:190px;overflow-y:auto;border-top:1px solid var(--line);padding-top:6px;}
-  .opt-row{display:flex;align-items:center;gap:8px;padding:4px 2px;font-size:12.5px;}
+  .opt-row{display:flex;align-items:center;gap:8px;padding:5px 3px;font-size:12.5px;border-radius:8px;transition:background-color .12s;}
+  .opt-row:hover{background:var(--violet-tint);}
   .opt-row .cnt{margin-left:auto;color:var(--muted);font-family:'Space Mono',monospace;font-size:11px;}
 
   .summary{font-size:13px;color:var(--muted);margin:0 0 10px;line-height:1.6;}
-  .clean-badge{display:flex;align-items:center;gap:14px;background:#fff;border-radius:18px;padding:14px 16px;box-shadow:0 4px 18px rgba(35,35,59,.05);margin-bottom:14px;}
-  .ring{width:50px;height:50px;border-radius:50%;display:flex;align-items:center;justify-content:center;}
+  .clean-badge{display:flex;align-items:center;gap:14px;background:linear-gradient(120deg,#fff,var(--mint-tint));border-radius:var(--radius-md);padding:14px 16px;box-shadow:0 4px 18px rgba(35,35,59,.05);margin-bottom:14px;}
+  .ring{width:50px;height:50px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
   .ring span{width:39px;height:39px;border-radius:50%;background:#fff;display:flex;align-items:center;justify-content:center;font-family:'Sora',sans-serif;font-weight:700;font-size:11.5px;color:var(--mint-deep);}
   .clean-text{font-size:13px;color:var(--muted);}
 
@@ -132,7 +170,6 @@
   }
   #toast.show { opacity: 1; transform: translateY(0); }
 
-  footer{text-align:center;font-size:12px;color:var(--muted);margin-top:18px;}
 
   /* --- FITUR BLOK EXCEL STYLE --- */
   .selected-cell {
@@ -185,16 +222,25 @@
 <body>
 <div class="wrap">
 
-  <h1>MasterMamm (Manual Mode)</h1>
-  <p class="sub">Mendukung file Excel (.xlsx/.xls) &amp; CSV dengan sistem <b>Filter Berantai (Cascade)</b>.</p>
+  <div class="hero">
+    <div class="hero-badge">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="4"></rect><path d="M3 9h18"></path><path d="M9 21V9"></path></svg>
+    </div>
+    <div>
+      <h1>MasterMamm</h1>
+    </div>
+  </div>
 
   <section class="card" id="phaseUpload">
-    <h2>Unggah file</h2>
+    <h2>📤 Unggah file</h2>
     <p class="hint">Mendukung dokumen format Excel (.xlsx, .xls) atau teks terstruktur (.csv, .txt).</p>
     <div id="dropzone">
+      <div class="upload-icon">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="17 8 12 3 7 8"></polyline><line x1="12" y1="3" x2="12" y2="15"></line></svg>
+      </div>
       <p>Tarik file ke sini, atau <span class="pick">pilih dari perangkat</span></p>
       <input type="file" id="fileInput" accept=".xlsx,.xls,.csv,.txt">
-      <div class="file-types">.xlsx · .xls · .csv · .txt</div>
+      <div class="file-types"><span>.xlsx</span><span>.xls</span><span>.csv</span><span>.txt</span></div>
     </div>
     <div class="err hidden" id="uploadErr"></div>
   </section>
@@ -234,8 +280,9 @@
     <div class="workspace">
       <div class="sidebar">
 
-        <div class="tool-group">
-          <h3>Preset Peran Kolom</h3>
+        <details class="tool-group">
+          <summary>🧩 Preset Peran Kolom</summary>
+          <div class="tg-body">
           <div class="input-group" style="margin-bottom:8px;">
             <input type="text" id="presetNameInput" class="input-field" placeholder="Nama preset baru...">
             <button class="btn-primary" id="btnSavePreset" style="font-size:12.5px; padding:8px 12px;" title="Simpan konfigurasi peran dan pilihan filter saat ini">Simpan</button>
@@ -269,10 +316,12 @@
 
             <p class="gh-status-line" id="mmGhSyncStatus"></p>
           </div>
-        </div>
+          </div>
+        </details>
 
-        <div class="tool-group">
-          <h3>Cari &amp; Ganti</h3>
+        <details class="tool-group">
+          <summary>🔎 Cari &amp; Ganti</summary>
+          <div class="tg-body">
           <div class="input-group" style="margin-bottom:12px;">
             <input type="text" id="findInput" class="input-field" placeholder="Cari data...">
             <button class="btn-secondary" id="btnFindAll" style="font-size:12.5px; padding:8px 14px;" title="Cari & gulir ke data yang tepat">
@@ -292,10 +341,12 @@
               </button>
             </div>
           </div>
-        </div>
+          </div>
+        </details>
 
-        <div class="tool-group">
-          <h3>Rapikan Data</h3>
+        <details class="tool-group" open>
+          <summary>🧹 Rapikan Data</summary>
+          <div class="tg-body">
           <div class="btn-row">
             <button class="btn-secondary tool-mint" id="btnFillZero" title="Jika ada sel yang diblok, hanya sel diblok yang akan terisi 0.">
               <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><circle cx="12" cy="12" r="4"></circle><line x1="12" y1="8" x2="12" y2="16"></line></svg>
@@ -308,10 +359,12 @@
               ✨ Bersihkan Teks
             </button>
           </div>
-        </div>
+          </div>
+        </details>
         
-        <div class="tool-group">
-          <h3>Area Terpilih (Blok)</h3>
+        <details class="tool-group" open>
+          <summary>🖱️ Area Terpilih (Blok)</summary>
+          <div class="tg-body">
           <div style="display:flex; flex-direction:column; gap:8px;">
 
             <div style="display:flex; align-items:center; gap:8px; background:var(--violet-tint); padding:6px 8px; border-radius:12px;">
@@ -337,17 +390,20 @@
             Tahan <b>Ctrl</b> + Klik untuk blok banyak sel.<br>
             Gunakan <b>Ctrl+C</b>/<b>V</b>/<b>X</b> untuk Salin Tempel.
           </p>
-        </div>
+          </div>
+        </details>
 
-        <div class="tool-group hidden" id="norekToolGroup">
-          <h3>Opsi Number</h3>
+        <details class="tool-group hidden" id="norekToolGroup" open>
+          <summary>🔢 Opsi Number</summary>
+          <div class="tg-body">
           <div class="opts">
             <label><input type="checkbox" id="optStrip" checked> Buang karakter selain angka</label>
           </div>
           <div class="opts" style="margin-top:8px;">
             Panjang digit (opsional): <input type="number" id="optPad" min="0" max="30" placeholder="-">
           </div>
-        </div>
+          </div>
+        </details>
 
         <div id="filterPanelsContainer"></div>
 
@@ -355,6 +411,12 @@
 
       <div class="main-area">
         <div class="card" style="padding:16px;">
+          <div class="role-legend">
+            <span class="tag" style="background:var(--t-norek);"><span class="dot" style="background:var(--peach-deep);"></span>Number</span>
+            <span class="tag" style="background:var(--t-saldo);"><span class="dot" style="background:var(--mint-deep);"></span>Currency</span>
+            <span class="tag" style="background:var(--t-filter);"><span class="dot" style="background:var(--violet-deep);"></span>Filter</span>
+            <span class="tag" style="background:var(--t-date);"><span class="dot" style="background:var(--danger-deep);"></span>Date</span>
+          </div>
           <div class="summary" id="resultSummary"></div>
           <div id="tallyWrap" class="hidden clean-badge">
             <div class="ring" id="tallyRing"><span id="tallyPct"></span></div>
@@ -368,8 +430,6 @@
   </section>
 
   <div id="toast"></div>
-
-  <footer>Semua pemrosesan berjalan di browser kamu — file tidak dikirim ke server manapun.</footer>
 </div>
 
 <script>
@@ -743,16 +803,16 @@
 
     filterPanelsContainer.innerHTML = state._filterCols.map(c=>{
       const headerName = state.headers[c]===''?('Kolom '+(c+1)):escapeHtml(String(state.headers[c]));
-      return '<div class="tool-group panel" style="margin-bottom:14px;">'
-           + '<div class="panel-head">'
-           + '<span class="panel-title">'+headerName+'</span>'
-           + '<div class="mini-btns">'
+      return '<details class="tool-group panel" style="margin-bottom:12px;" open>'
+           + '<summary class="panel-title">🎛️ '+headerName+'</summary>'
+           + '<div class="tg-body">'
+           + '<div class="mini-btns" style="margin-bottom:8px;">'
            + '<button class="btn-secondary" data-act="all" data-col="'+c+'">Semua</button>'
            + '<button class="btn-secondary" data-act="none" data-col="'+c+'">Kosongkan</button>'
-           + '</div></div>'
+           + '</div>'
            + '<div class="search-box"><input type="text" data-searchcol="'+c+'" value="'+escapeHtml(state.filterSearchQueries[c])+'" placeholder="Cari nilai…"></div>'
            + '<div class="opt-list" data-listcol="'+c+'"></div>'
-           + '</div>';
+           + '</div></details>';
     }).join('');
 
     state._filterCols.forEach(targetCol => {
