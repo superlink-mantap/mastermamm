@@ -316,6 +316,218 @@
     }
   },
   {
+    "name": "LW321 - Ritel",
+    "mapping": {
+      "lw321 - laporan kolektibilitas dan tunggakan per ao": {
+        "role": "ignore",
+        "filterValues": []
+      },
+      "kolom_2": {
+        "role": "ignore",
+        "filterValues": []
+      },
+      "kolom_3": {
+        "role": "ignore",
+        "filterValues": []
+      },
+      "kolom_4": {
+        "role": "ignore",
+        "filterValues": []
+      },
+      "kolom_5": {
+        "role": "ignore",
+        "filterValues": []
+      },
+      "kolom_6": {
+        "role": "ignore",
+        "filterValues": []
+      },
+      "kolom_7": {
+        "role": "ignore",
+        "filterValues": []
+      },
+      "kolom_8": {
+        "role": "ignore",
+        "filterValues": []
+      },
+      "kolom_9": {
+        "role": "ignore",
+        "filterValues": []
+      },
+      "kolom_10": {
+        "role": "ignore",
+        "filterValues": []
+      },
+      "kolom_11": {
+        "role": "ignore",
+        "filterValues": []
+      },
+      "kolom_12": {
+        "role": "ignore",
+        "filterValues": []
+      },
+      "kolom_13": {
+        "role": "ignore",
+        "filterValues": []
+      },
+      "kolom_14": {
+        "role": "ignore",
+        "filterValues": []
+      },
+      "kolom_15": {
+        "role": "ignore",
+        "filterValues": []
+      },
+      "kolom_16": {
+        "role": "ignore",
+        "filterValues": []
+      },
+      "kolom_17": {
+        "role": "ignore",
+        "filterValues": []
+      },
+      "kolom_18": {
+        "role": "ignore",
+        "filterValues": []
+      },
+      "kolom_19": {
+        "role": "ignore",
+        "filterValues": []
+      },
+      "kolom_20": {
+        "role": "ignore",
+        "filterValues": []
+      },
+      "kolom_21": {
+        "role": "ignore",
+        "filterValues": []
+      },
+      "kolom_22": {
+        "role": "ignore",
+        "filterValues": []
+      },
+      "kolom_23": {
+        "role": "ignore",
+        "filterValues": []
+      },
+      "kolom_24": {
+        "role": "ignore",
+        "filterValues": []
+      },
+      "kolom_25": {
+        "role": "ignore",
+        "filterValues": []
+      },
+      "kolom_26": {
+        "role": "ignore",
+        "filterValues": []
+      },
+      "kolom_27": {
+        "role": "ignore",
+        "filterValues": []
+      },
+      "kolom_28": {
+        "role": "ignore",
+        "filterValues": []
+      },
+      "kolom_29": {
+        "role": "ignore",
+        "filterValues": []
+      },
+      "kolom_30": {
+        "role": "ignore",
+        "filterValues": []
+      },
+      "kolom_31": {
+        "role": "ignore",
+        "filterValues": []
+      },
+      "kolom_32": {
+        "role": "ignore",
+        "filterValues": []
+      },
+      "kolom_33": {
+        "role": "ignore",
+        "filterValues": []
+      },
+      "kolom_34": {
+        "role": "filter",
+        "filterValues": [
+          "05. RITKOM - > Rp 500 JUTA S/D Rp 1 M",
+          "06. RITKOM - > Rp 1 M S/D Rp 2 M",
+          "07. RITKOM - > Rp 2 M S/D Rp 3 M",
+          "04. RITKOM - > Rp 350 JUTA S/D Rp 500 JUTA",
+          "09. RITKOM - > Rp 4 M S/D Rp 5 M",
+          "08. RITKOM - > Rp 3 M S/D Rp 4 M",
+          "03. RITKOM - > Rp 100 JUTA S/D Rp 350 JUTA",
+          "CASHCOLL KREDIT SMALL"
+        ]
+      },
+      "kolom_35": {
+        "role": "ignore",
+        "filterValues": []
+      },
+      "kolom_36": {
+        "role": "filter",
+        "filterValues": [
+          "RITEL"
+        ]
+      },
+      "kolom_37": {
+        "role": "ignore",
+        "filterValues": []
+      },
+      "kolom_38": {
+        "role": "ignore",
+        "filterValues": []
+      },
+      "kolom_39": {
+        "role": "ignore",
+        "filterValues": []
+      },
+      "kolom_40": {
+        "role": "ignore",
+        "filterValues": []
+      },
+      "kolom_41": {
+        "role": "ignore",
+        "filterValues": []
+      },
+      "kolom_42": {
+        "role": "ignore",
+        "filterValues": []
+      },
+      "kolom_43": {
+        "role": "ignore",
+        "filterValues": []
+      },
+      "kolom_44": {
+        "role": "ignore",
+        "filterValues": []
+      },
+      "kolom_45": {
+        "role": "ignore",
+        "filterValues": []
+      },
+      "kolom_46": {
+        "role": "ignore",
+        "filterValues": []
+      },
+      "kolom_47": {
+        "role": "ignore",
+        "filterValues": []
+      },
+      "kolom_48": {
+        "role": "ignore",
+        "filterValues": []
+      },
+      "kolom_49": {
+        "role": "ignore",
+        "filterValues": []
+      }
+    }
+  },
+  {
     "name": "DI321",
     "mapping": {
       "di321 - current account monthly trial balance - active": {
@@ -553,218 +765,6 @@
       },
       "kolom_26": {
         "role": "saldo",
-        "filterValues": []
-      }
-    }
-  },
-  {
-    "name": "LW321 - Ritel",
-    "mapping": {
-      "lw321 - laporan kolektibilitas dan tunggakan per ao": {
-        "role": "ignore",
-        "filterValues": []
-      },
-      "kolom_2": {
-        "role": "ignore",
-        "filterValues": []
-      },
-      "kolom_3": {
-        "role": "ignore",
-        "filterValues": []
-      },
-      "kolom_4": {
-        "role": "ignore",
-        "filterValues": []
-      },
-      "kolom_5": {
-        "role": "ignore",
-        "filterValues": []
-      },
-      "kolom_6": {
-        "role": "ignore",
-        "filterValues": []
-      },
-      "kolom_7": {
-        "role": "ignore",
-        "filterValues": []
-      },
-      "kolom_8": {
-        "role": "ignore",
-        "filterValues": []
-      },
-      "kolom_9": {
-        "role": "ignore",
-        "filterValues": []
-      },
-      "kolom_10": {
-        "role": "ignore",
-        "filterValues": []
-      },
-      "kolom_11": {
-        "role": "ignore",
-        "filterValues": []
-      },
-      "kolom_12": {
-        "role": "ignore",
-        "filterValues": []
-      },
-      "kolom_13": {
-        "role": "ignore",
-        "filterValues": []
-      },
-      "kolom_14": {
-        "role": "ignore",
-        "filterValues": []
-      },
-      "kolom_15": {
-        "role": "ignore",
-        "filterValues": []
-      },
-      "kolom_16": {
-        "role": "ignore",
-        "filterValues": []
-      },
-      "kolom_17": {
-        "role": "ignore",
-        "filterValues": []
-      },
-      "kolom_18": {
-        "role": "ignore",
-        "filterValues": []
-      },
-      "kolom_19": {
-        "role": "ignore",
-        "filterValues": []
-      },
-      "kolom_20": {
-        "role": "ignore",
-        "filterValues": []
-      },
-      "kolom_21": {
-        "role": "ignore",
-        "filterValues": []
-      },
-      "kolom_22": {
-        "role": "ignore",
-        "filterValues": []
-      },
-      "kolom_23": {
-        "role": "ignore",
-        "filterValues": []
-      },
-      "kolom_24": {
-        "role": "ignore",
-        "filterValues": []
-      },
-      "kolom_25": {
-        "role": "ignore",
-        "filterValues": []
-      },
-      "kolom_26": {
-        "role": "ignore",
-        "filterValues": []
-      },
-      "kolom_27": {
-        "role": "ignore",
-        "filterValues": []
-      },
-      "kolom_28": {
-        "role": "ignore",
-        "filterValues": []
-      },
-      "kolom_29": {
-        "role": "ignore",
-        "filterValues": []
-      },
-      "kolom_30": {
-        "role": "ignore",
-        "filterValues": []
-      },
-      "kolom_31": {
-        "role": "ignore",
-        "filterValues": []
-      },
-      "kolom_32": {
-        "role": "ignore",
-        "filterValues": []
-      },
-      "kolom_33": {
-        "role": "ignore",
-        "filterValues": []
-      },
-      "kolom_34": {
-        "role": "filter",
-        "filterValues": [
-          "05. RITKOM - > Rp 500 JUTA S/D Rp 1 M",
-          "06. RITKOM - > Rp 1 M S/D Rp 2 M",
-          "07. RITKOM - > Rp 2 M S/D Rp 3 M",
-          "04. RITKOM - > Rp 350 JUTA S/D Rp 500 JUTA",
-          "09. RITKOM - > Rp 4 M S/D Rp 5 M",
-          "08. RITKOM - > Rp 3 M S/D Rp 4 M",
-          "03. RITKOM - > Rp 100 JUTA S/D Rp 350 JUTA",
-          "CASHCOLL KREDIT SMALL"
-        ]
-      },
-      "kolom_35": {
-        "role": "ignore",
-        "filterValues": []
-      },
-      "kolom_36": {
-        "role": "filter",
-        "filterValues": [
-          "RITEL"
-        ]
-      },
-      "kolom_37": {
-        "role": "ignore",
-        "filterValues": []
-      },
-      "kolom_38": {
-        "role": "ignore",
-        "filterValues": []
-      },
-      "kolom_39": {
-        "role": "ignore",
-        "filterValues": []
-      },
-      "kolom_40": {
-        "role": "ignore",
-        "filterValues": []
-      },
-      "kolom_41": {
-        "role": "ignore",
-        "filterValues": []
-      },
-      "kolom_42": {
-        "role": "ignore",
-        "filterValues": []
-      },
-      "kolom_43": {
-        "role": "ignore",
-        "filterValues": []
-      },
-      "kolom_44": {
-        "role": "ignore",
-        "filterValues": []
-      },
-      "kolom_45": {
-        "role": "ignore",
-        "filterValues": []
-      },
-      "kolom_46": {
-        "role": "ignore",
-        "filterValues": []
-      },
-      "kolom_47": {
-        "role": "ignore",
-        "filterValues": []
-      },
-      "kolom_48": {
-        "role": "ignore",
-        "filterValues": []
-      },
-      "kolom_49": {
-        "role": "ignore",
         "filterValues": []
       }
     }
