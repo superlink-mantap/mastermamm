@@ -131,11 +131,14 @@
   td.r-norek,td.r-saldo,td.r-date{font-family:'Space Mono',monospace;}
   tbody tr:hover td{filter:brightness(0.97);}
   thead th{background:#fff;position:sticky;top:0;z-index:2;font-family:'Sora',sans-serif;box-shadow:0 2px 6px rgba(35,35,59,.05);padding:8px 9px;}
-  .col-head{display:flex;flex-direction:column;gap:5px;min-width:135px;}
-  .col-head-row{display:flex;align-items:center;gap:6px;}
+  .col-head{display:flex;flex-direction:column;gap:5px;min-width:172px;}
+  .col-head-row{display:flex;align-items:center;gap:4px;flex-wrap:wrap;}
   .hdr-name{font-size:12px;font-weight:700;flex:1;white-space:normal;word-break:break-word;line-height:1.25;}
   select.role-select{font-family:inherit;font-size:11.5px;padding:6px 7px;border:1.5px solid var(--line);border-radius:9px;background:#fff;width:100%;cursor:pointer;}
-  .del-col-btn{width:24px;height:24px;border-radius:50%;border:none;background:var(--danger-tint);color:var(--danger-deep);font-size:13px;cursor:pointer;padding:0;display:flex;align-items:center;justify-content:center;transition:background-color .15s;}
+  .mini-icon-btn{width:22px;height:22px;border-radius:7px;border:none;background:#fff;color:var(--muted);font-size:11px;cursor:pointer;padding:0;display:flex;align-items:center;justify-content:center;transition:background-color .15s, color .15s;flex-shrink:0;box-shadow:0 1px 4px rgba(35,35,59,.08);}
+  .mini-icon-btn:hover{background:var(--violet-tint);color:var(--violet-deep);}
+  .sort-btn.active{background:var(--violet);color:#fff;}
+  .del-col-btn{width:24px;height:24px;border-radius:50%;border:none;background:var(--danger-tint);color:var(--danger-deep);font-size:13px;cursor:pointer;padding:0;display:flex;align-items:center;justify-content:center;transition:background-color .15s;flex-shrink:0;}
   .del-col-btn:hover{background:var(--danger);color:#fff;}
   .act-col{width:30px;text-align:center;}
   .row-del-btn{width:24px;height:24px;border-radius:50%;border:none;background:var(--danger-tint);color:var(--danger-deep);font-size:13px;cursor:pointer;padding:0;display:flex;align-items:center;justify-content:center;transition:background-color .15s;}
@@ -145,8 +148,14 @@
   th.r-saldo,td.r-saldo{background:var(--t-saldo);}
   th.r-filter,td.r-filter{background:var(--t-filter);}
   th.r-date,td.r-date{background:var(--t-date);}
+
+  td.cell-invalid{background:var(--danger-tint) !important;outline:1px dashed var(--danger);outline-offset:-2px;cursor:help;}
   
   .row-empty{color:var(--muted);font-family:'Plus Jakarta Sans',sans-serif;text-align:center;padding:28px 12px !important;}
+
+  #sessionRecoverBanner{max-width:600px;margin:0 auto 18px;background:var(--violet-tint);border-radius:var(--radius-md);padding:14px 18px;display:flex;align-items:center;gap:14px;flex-wrap:wrap;}
+  #sessionRecoverBanner p{margin:0;font-size:13px;color:var(--violet-deep);flex:1;min-width:200px;}
+  #sessionRecoverBanner .btn-row-inline{display:flex;gap:8px;}
 
   .role-legend{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 12px;}
   .role-legend .tag{display:inline-flex;align-items:center;gap:6px;font-size:11.5px;font-weight:600;padding:5px 11px;border-radius:20px;color:var(--ink);}
@@ -286,6 +295,14 @@
     </div>
   </div>
 
+  <div id="sessionRecoverBanner" class="hidden">
+    <p id="sessionRecoverText"></p>
+    <div class="btn-row-inline">
+      <button class="btn-primary" id="btnRecoverSession" style="padding:8px 14px;font-size:12.5px;">Lanjutkan Sesi</button>
+      <button class="btn-secondary" id="btnDiscardSession" style="padding:8px 14px;font-size:12.5px;">Hapus</button>
+    </div>
+  </div>
+
   <section class="card" id="phaseUpload">
     <h2>📤 Unggah file</h2>
     <p class="hint">Mendukung dokumen format Excel (.xlsx, .xls) atau teks terstruktur (.csv, .txt).</p>
@@ -331,7 +348,16 @@
           <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg> 
           Unduh Excel
         </button>
+        <button class="btn-secondary" id="btnDownloadCsv" style="border-radius:16px;">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+          CSV
+        </button>
         <div class="topbar-divider"></div>
+        <button class="btn-secondary" id="btnMergeFile" style="border-radius:16px;" title="Tambahkan baris dari file lain (jumlah kolom harus sama)">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+          Gabung File
+        </button>
+        <input type="file" id="mergeFileInput" class="hidden" accept=".xlsx,.xls,.csv,.txt">
         <button class="btn-secondary" id="btnReset" style="border-radius:16px;color:var(--danger-deep);">
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 2v6h-6"></path><path d="M3 12a9 9 0 0 1 15-6.7L21 8"></path><path d="M3 22v-6h6"></path><path d="M21 12a9 9 0 0 1-15 6.7L3 16"></path></svg>
           Ganti File
@@ -568,6 +594,8 @@
   function maskToken(t){ return t ? '••••••••••••'+t.slice(-4) : ''; }
   let ROW_RENDER_LIMIT = 150;
   let hasUnsavedWork = false;
+  let sortState = { col: -1, dir: 1 };
+  const SESSION_KEY = 'mastermamm_session_v1';
   const FILTER_RENDER_LIMIT = 100; 
   
   // -- UPDATE DISINI: Tambahan opsi 'date' --
@@ -666,6 +694,7 @@
     state.history = [snapshotCurrent()];
     state.historyIndex = 0;
     updateUndoRedoButtons();
+    saveSession();
   }
   function commitChange(){
     hasUnsavedWork = true;
@@ -673,6 +702,61 @@
     state.history.push(snapshotCurrent());
     state.historyIndex++;
     updateUndoRedoButtons();
+    saveSession();
+  }
+
+  function saveSession(){
+    clearTimeout(saveSession._t);
+    saveSession._t = setTimeout(() => {
+      try{
+        if(!state.headers.length){ return; }
+        const payload = {
+          fileBase: state.fileBase,
+          headers: state.headers,
+          roles: state.roles,
+          rows: state.rows,
+          savedAt: Date.now()
+        };
+        localStorage.setItem(SESSION_KEY, JSON.stringify(payload));
+      }catch(e){
+        // Kemungkinan localStorage penuh (dataset terlalu besar) — lewati diam-diam, tidak fatal.
+      }
+    }, 600);
+  }
+
+  function clearSavedSession(){
+    try{ localStorage.removeItem(SESSION_KEY); }catch(e){}
+  }
+
+  function checkSessionRecovery(){
+    let saved;
+    try{ saved = JSON.parse(localStorage.getItem(SESSION_KEY) || 'null'); }catch(e){ saved = null; }
+    if(!saved || !saved.headers || !saved.headers.length || !saved.rows){ return; }
+
+    const mins = Math.max(1, Math.round((Date.now() - (saved.savedAt||0)) / 60000));
+    const whenText = mins < 60 ? `${mins} menit lalu` : `${Math.round(mins/60)} jam lalu`;
+    $('sessionRecoverText').textContent = `Ditemukan sesi kerja yang belum selesai: "${saved.fileBase}" (${saved.rows.length} baris, disimpan ${whenText}). Lanjutkan dari sana?`;
+    $('sessionRecoverBanner').classList.remove('hidden');
+
+    $('btnRecoverSession').addEventListener('click', () => {
+      state.fileBase = saved.fileBase;
+      state.headers = saved.headers;
+      state.roles = saved.roles;
+      state.rows = saved.rows;
+      state.filterSelections={}; state.filterSearchQueries={}; state.filterCacheItems={};
+      isExcelMode = true; 
+      commitInitialHistory();
+      phaseUpload.classList.add('hidden');
+      phaseWork.classList.remove('hidden');
+      $('sessionRecoverBanner').classList.add('hidden');
+      refresh();
+      showToast('✓ Sesi sebelumnya berhasil dipulihkan.', 'success');
+    }, { once:true });
+
+    $('btnDiscardSession').addEventListener('click', () => {
+      clearSavedSession();
+      $('sessionRecoverBanner').classList.add('hidden');
+    }, { once:true });
   }
   function restoreSnapshot(snap){
     state.headers = snap.headers.slice();
@@ -751,6 +835,87 @@
     return val;
   }
 
+  function getSortValue(val, role){
+    if(val===null||val===undefined) return '';
+    if(role==='saldo') return parseIndoNumber(val);
+    if(role==='norek'){
+      const digits = String(val).replace(/[^\d]/g,'');
+      return digits === '' ? String(val).toLowerCase() : parseFloat(digits);
+    }
+    if(role==='date'){
+      if(typeof val==='number') return val;
+      const d = new Date(val);
+      return isNaN(d.getTime()) ? String(val).toLowerCase() : d.getTime();
+    }
+    const s = String(val).trim();
+    if(s !== '' && /^-?\d+(\.\d+)?$/.test(s)) return parseFloat(s);
+    return s.toLowerCase();
+  }
+
+  function sortByColumn(colIdx){
+    if(sortState.col === colIdx && sortState.dir === 1){
+      sortState.dir = -1;
+    } else {
+      sortState.col = colIdx;
+      sortState.dir = 1;
+    }
+    const role = state.roles[colIdx];
+    state.rows.sort((a,b) => {
+      const va = getSortValue(a[colIdx], role), vb = getSortValue(b[colIdx], role);
+      if(va < vb) return -1 * sortState.dir;
+      if(va > vb) return 1 * sortState.dir;
+      return 0;
+    });
+    commitChange();
+    refresh();
+    showToast(`✓ Kolom diurutkan ${sortState.dir===1 ? 'naik (A→Z / kecil→besar)' : 'turun (Z→A / besar→kecil)'}.`);
+  }
+
+  function swapColIndexKeyedProps(a, b){
+    const tmpSel = state.filterSelections[a]; state.filterSelections[a] = state.filterSelections[b]; state.filterSelections[b] = tmpSel;
+    const tmpQ = state.filterSearchQueries[a]; state.filterSearchQueries[a] = state.filterSearchQueries[b]; state.filterSearchQueries[b] = tmpQ;
+    const tmpC = state.filterCacheItems[a]; state.filterCacheItems[a] = state.filterCacheItems[b]; state.filterCacheItems[b] = tmpC;
+    if(state.filterSelections[a]===undefined) delete state.filterSelections[a];
+    if(state.filterSelections[b]===undefined) delete state.filterSelections[b];
+    if(state.filterSearchQueries[a]===undefined) delete state.filterSearchQueries[a];
+    if(state.filterSearchQueries[b]===undefined) delete state.filterSearchQueries[b];
+    if(state.filterCacheItems[a]===undefined) delete state.filterCacheItems[a];
+    if(state.filterCacheItems[b]===undefined) delete state.filterCacheItems[b];
+  }
+
+  function moveColumn(colIdx, dir){
+    const target = colIdx + dir;
+    if(target < 0 || target >= state.headers.length) return;
+    const h = state.headers[colIdx]; state.headers[colIdx] = state.headers[target]; state.headers[target] = h;
+    const r = state.roles[colIdx]; state.roles[colIdx] = state.roles[target]; state.roles[target] = r;
+    state.rows.forEach(row => {
+      const v = row[colIdx]; row[colIdx] = row[target]; row[target] = v;
+    });
+    swapColIndexKeyedProps(colIdx, target);
+    if(sortState.col === colIdx) sortState.col = target;
+    else if(sortState.col === target) sortState.col = colIdx;
+    commitChange();
+    refresh();
+  }
+
+  function isCellInvalid(raw, role){
+    if(raw===undefined || raw===null || String(raw).trim()==='') return false;
+    if(role==='norek'){
+      return String(raw).replace(/[^\d]/g,'') === '';
+    }
+    if(role==='saldo'){
+      if(typeof raw === 'number') return false;
+      const s = String(raw).replace(/Rp\.?|IDR/gi,'').trim();
+      return !/^-?[\d.,\s]+$/.test(s);
+    }
+    if(role==='date'){
+      if(typeof raw === 'number') return false;
+      const s = String(raw).trim();
+      return !/^\d{1,4}[-\/]\d{1,2}[-\/]\d{1,4}/.test(s);
+    }
+    return false;
+  }
+
   function cleanTextRows(){
     let count = 0;
     state.rows.forEach(row => {
@@ -805,6 +970,7 @@
 
   function resetAll(){
     hasUnsavedWork = false;
+    clearSavedSession();
     state.headers=[]; state.rows=[]; state.roles=[];
     state.filterSelections={}; state.filterSearchQueries={}; state.filterCacheItems={};
     state.history=[]; state.historyIndex=-1; rawFileContent = null; isExcelMode = false;
@@ -893,6 +1059,52 @@
     refresh();
   }
 
+  function handleMergeFile(file){
+    const name = file.name;
+    const ext = name.split('.').pop().toLowerCase();
+    showLoading('Menggabungkan berkas ' + name + '...');
+
+    function finishMerge(newHeaders, newRows){
+      hideLoading();
+      if(newHeaders.length !== state.headers.length){
+        showToast(`Gagal gabung: jumlah kolom berbeda (file ini ${newHeaders.length} kolom, data saat ini ${state.headers.length} kolom).`, 'danger');
+        return;
+      }
+      state.rows = state.rows.concat(newRows);
+      commitChange();
+      refresh();
+      showToast(`✓ Berhasil menggabungkan ${newRows.length} baris dari "${name}".`, 'success');
+    }
+
+    if(ext === 'xlsx' || ext === 'xls'){
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        try{
+          const data = new Uint8Array(e.target.result);
+          const wb = XLSX.read(data, {type:'array', defval:''});
+          const sheetName = wb.SheetNames[0];
+          const rawData = XLSX.utils.sheet_to_json(wb.Sheets[sheetName], {header:1, defval:''});
+          if(!rawData.length){ hideLoading(); showToast('File yang digabung kosong.'); return; }
+          const hdrs = rawData[0].map(h => String(h).trim());
+          finishMerge(hdrs, rawData.slice(1));
+        }catch(err){ hideLoading(); showToast('Gagal membaca file untuk digabung.'); }
+      };
+      reader.onerror = () => { hideLoading(); showToast('Gagal membaca berkas.'); };
+      reader.readAsArrayBuffer(file);
+    } else {
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        const text = String(e.target.result);
+        const parsed = parseCSV(text, delimSelect.value);
+        if(!parsed.length){ hideLoading(); showToast('File yang digabung kosong.'); return; }
+        finishMerge(parsed[0], parsed.slice(1));
+      };
+      reader.onerror = () => { hideLoading(); showToast('Gagal membaca berkas.'); };
+      reader.readAsText(file, 'UTF-8');
+    }
+  }
+
+
   function refresh(){
     filePill.textContent = '📄 ' + state.fileBase + ' · ' + state.rows.length + ' baris';
     norekToolGroup.classList.toggle('hidden', !state.roles.includes('norek'));
@@ -942,8 +1154,13 @@
   function renderColumnHeaders(){
     let thead='<thead><tr><th class="act-col"></th>';
     state.headers.forEach((h,i)=>{
+      const sortActive = sortState.col === i;
+      const sortIcon = sortActive ? (sortState.dir===1 ? '▲' : '▼') : '⇅';
       thead += '<th class="r-'+state.roles[i]+'"><div class="col-head">'
              + '<div class="col-head-row"><span class="hdr-name">'+(h===''?('Kolom '+(i+1)):escapeHtml(String(h)))+'</span>'
+             + '<button class="mini-icon-btn" data-col="'+i+'" data-dir="-1" title="Pindah kolom ke kiri">◀</button>'
+             + '<button class="mini-icon-btn" data-col="'+i+'" data-dir="1" title="Pindah kolom ke kanan">▶</button>'
+             + '<button class="mini-icon-btn sort-btn'+(sortActive?' active':'')+'" data-col="'+i+'" title="Urutkan berdasarkan kolom ini">'+sortIcon+'</button>'
              + '<button class="del-col-btn" data-col="'+i+'"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg></button></div>'
              + '<select class="role-select" data-col="'+i+'">'
              + Object.keys(roleLabel).map(k=>'<option value="'+k+'"'+(state.roles[i]===k?' selected':'')+'>'+roleLabel[k]+'</option>').join('')
@@ -963,6 +1180,16 @@
     });
     dataTable.querySelectorAll('.del-col-btn').forEach(btn=>{
       btn.addEventListener('click',(e)=>{ deleteColumn(parseInt(e.currentTarget.getAttribute('data-col'),10)); });
+    });
+    dataTable.querySelectorAll('.mini-icon-btn.sort-btn').forEach(btn=>{
+      btn.addEventListener('click',(e)=>{ sortByColumn(parseInt(e.currentTarget.getAttribute('data-col'),10)); });
+    });
+    dataTable.querySelectorAll('.mini-icon-btn:not(.sort-btn)').forEach(btn=>{
+      btn.addEventListener('click',(e)=>{
+        const c = parseInt(e.currentTarget.getAttribute('data-col'),10);
+        const dir = parseInt(e.currentTarget.getAttribute('data-dir'),10);
+        moveColumn(c, dir);
+      });
     });
   }
 
@@ -1143,7 +1370,18 @@
     if(state._saldoCols.length) bits.push('<b>'+state._saldoCols.length+'</b> kolom Currency');
     // -- UPDATE DISINI: Menampilkan info kolom Date --
     if(state._dateCols && state._dateCols.length) bits.push('<b>'+state._dateCols.length+'</b> kolom Date');
-    
+
+    let invalidCount = 0;
+    const checkCols = [...state._norekCols, ...state._saldoCols, ...state._dateCols];
+    if(checkCols.length){
+      filteredRows.forEach(row => {
+        const raw = state.rows[row.__origIdx];
+        if(!raw) return;
+        checkCols.forEach(c => { if(isCellInvalid(raw[c], state.roles[c])) invalidCount++; });
+      });
+    }
+    if(invalidCount > 0) bits.push('<b style="color:var(--danger-deep);">⚠ '+invalidCount+'</b> sel format tidak sesuai');
+
     resultSummary.innerHTML = bits.length ? bits.join(' · ') : 'Atur peran kolom di atas judul tabel untuk mengolah berkas.';
 
     state._filteredRowsOut = filteredRows;
@@ -1156,7 +1394,9 @@
         state.headers.forEach((h,i)=>{
           let v=r[i]==null?'':r[i]; 
           if(state.roles[i]==='saldo' && typeof v==='number') v=fmtRp(v);
-          cells += '<td class="r-'+state.roles[i]+'">'+escapeHtml(v)+'</td>';
+          const rawOrig = state.rows[r.__origIdx] ? state.rows[r.__origIdx][i] : undefined;
+          const invalid = isCellInvalid(rawOrig, state.roles[i]);
+          cells += '<td class="r-'+state.roles[i]+(invalid?' cell-invalid':'')+'"'+(invalid?' title="Nilai tidak sesuai format '+roleLabel[state.roles[i]]+': \''+escapeHtml(String(rawOrig))+'\'"':'')+'>'+escapeHtml(v)+'</td>';
         });
         return '<tr>'+cells+'</tr>';
       }).join('');
@@ -1194,6 +1434,33 @@
       hideLoading();
       hasUnsavedWork = false;
       showToast('✓ File Excel berhasil diunduh.', 'success');
+    }, 30);
+  }
+
+  function exportCSV(){
+    if(!state._filteredRowsOut || !state._filteredRowsOut.length) { showToast('Tidak ada data yang bisa diekspor.'); return; }
+    showLoading('Menyiapkan file CSV...');
+    setTimeout(() => {
+      const escapeCsv = (v) => {
+        let s = v===null||v===undefined ? '' : String(v);
+        if(/[",\n;]/.test(s)) s = '"'+s.replace(/"/g,'""')+'"';
+        return s;
+      };
+      const lines = [state.headers.map(escapeCsv).join(',')];
+      state._filteredRowsOut.forEach(r => {
+        const cells = state.headers.map((h,i) => escapeCsv(r[i]==null ? '' : r[i]));
+        lines.push(cells.join(','));
+      });
+      const csvContent = '\uFEFF' + lines.join('\r\n');
+      const blob = new Blob([csvContent], {type:'text/csv;charset=utf-8;'});
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url; a.download = state.fileBase + '_hasil.csv';
+      document.body.appendChild(a); a.click(); document.body.removeChild(a);
+      URL.revokeObjectURL(url);
+      hideLoading();
+      hasUnsavedWork = false;
+      showToast('✓ File CSV berhasil diunduh.', 'success');
     }, 30);
   }
 
@@ -1526,7 +1793,16 @@
       return '';
     }
   });
+
+  $('btnMergeFile').addEventListener('click', () => $('mergeFileInput').click());
+  $('mergeFileInput').addEventListener('change', (e) => {
+    if(e.target.files && e.target.files[0]){
+      handleMergeFile(e.target.files[0]);
+      e.target.value = '';
+    }
+  });
   $('btnDownload').addEventListener('click', exportWorkbook);
+  $('btnDownloadCsv').addEventListener('click', exportCSV);
   btnLoadMore.addEventListener('click', () => { ROW_RENDER_LIMIT += 150; renderView(); });
   btnUndo.addEventListener('click', undo);
   $('btnShortcutHelp').addEventListener('click', () => { $('shortcutOverlay').classList.add('show'); });
@@ -1542,6 +1818,7 @@
   renderPresetList();
   renderGhUI();
   loadPresetsFromGitHub();
+  checkSessionRecovery();
 
   // ==========================================
   // VIRTUAL SELECTION SYSTEM 
