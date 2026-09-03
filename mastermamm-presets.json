@@ -938,7 +938,7 @@
   {
     "name": "IB Bisnis - Mikro",
     "mapping": {
-      "di321 - current account monthly trial balance - active": {
+      "kolom_1": {
         "role": "ignore",
         "filterValues": []
       },
@@ -959,29 +959,29 @@
         "filterValues": []
       },
       "kolom_6": {
-        "role": "ignore",
-        "filterValues": []
+        "role": "filter",
+        "filterValues": [
+          "3193 - UNIT KAPAS KRAMPUNG",
+          "3187 - UNIT MULYOSARI KAPAS KRAMPUNG",
+          "6549 - UNIT POGOT KAPAS KRAMPUNG",
+          "877 - UNIT DHARMAWANGSA KP KRAMPUNG",
+          "3191 - UNIT KENJERAN KAPAS KRAMPUNG",
+          "",
+          "3190 - UNIT PECINDILAN KAPAS KRAMPUNG",
+          "7616 - UNIT SETRO KAPAS KRAMPUNG",
+          "7594 - UNIT BRONGGALAN KAPAS KRAMPUNG",
+          "7614 - UNIT KEPUTIH KAPAS KRAMPUNG",
+          "7987 - UNIT BULAK BANTENG KP KRAMPUNG",
+          "Uker"
+        ]
       },
       "kolom_7": {
         "role": "ignore",
         "filterValues": []
       },
       "kolom_8": {
-        "role": "filter",
-        "filterValues": [
-          "UNIT PECINDILAN KAPAS KRAMPUNG",
-          "UNIT BRONGGALAN KAPAS KRAMPUNG",
-          "UNIT MULYOSARI KAPAS KRAMPUNG",
-          "UNIT POGOT KAPAS KRAMPUNG",
-          "UNIT BULAK BANTENG KP KRAMPUNG",
-          "UNIT KENJERAN KAPAS KRAMPUNG",
-          "UNIT KAPAS KRAMPUNG",
-          "UNIT DHARMAWANGSA KP KRAMPUNG",
-          "UNIT KEPUTIH KAPAS KRAMPUNG",
-          "UNIT SETRO KAPAS KRAMPUNG",
-          "",
-          "UKER"
-        ]
+        "role": "ignore",
+        "filterValues": []
       },
       "kolom_9": {
         "role": "ignore",
@@ -1004,78 +1004,6 @@
         "filterValues": []
       },
       "kolom_14": {
-        "role": "ignore",
-        "filterValues": []
-      },
-      "kolom_15": {
-        "role": "ignore",
-        "filterValues": []
-      },
-      "kolom_16": {
-        "role": "ignore",
-        "filterValues": []
-      },
-      "kolom_17": {
-        "role": "ignore",
-        "filterValues": []
-      },
-      "kolom_18": {
-        "role": "ignore",
-        "filterValues": []
-      },
-      "kolom_19": {
-        "role": "ignore",
-        "filterValues": []
-      },
-      "kolom_20": {
-        "role": "ignore",
-        "filterValues": []
-      },
-      "kolom_21": {
-        "role": "ignore",
-        "filterValues": []
-      },
-      "kolom_22": {
-        "role": "ignore",
-        "filterValues": []
-      },
-      "kolom_23": {
-        "role": "ignore",
-        "filterValues": []
-      },
-      "kolom_24": {
-        "role": "ignore",
-        "filterValues": []
-      },
-      "kolom_25": {
-        "role": "ignore",
-        "filterValues": []
-      },
-      "kolom_26": {
-        "role": "ignore",
-        "filterValues": []
-      },
-      "kolom_27": {
-        "role": "ignore",
-        "filterValues": []
-      },
-      "kolom_28": {
-        "role": "ignore",
-        "filterValues": []
-      },
-      "kolom_29": {
-        "role": "ignore",
-        "filterValues": []
-      },
-      "kolom_30": {
-        "role": "ignore",
-        "filterValues": []
-      },
-      "kolom_31": {
-        "role": "ignore",
-        "filterValues": []
-      },
-      "kolom_32": {
         "role": "ignore",
         "filterValues": []
       }
