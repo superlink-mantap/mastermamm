@@ -771,7 +771,7 @@
     }
   },
   {
-    "name": "IB Bisnis - Mikro",
+    "name": "IB Bisnis - Ritel",
     "mapping": {
       "kolom_1": {
         "role": "ignore",
@@ -796,18 +796,9 @@
       "kolom_6": {
         "role": "filter",
         "filterValues": [
-          "3193 - UNIT KAPAS KRAMPUNG",
-          "3187 - UNIT MULYOSARI KAPAS KRAMPUNG",
-          "6549 - UNIT POGOT KAPAS KRAMPUNG",
-          "877 - UNIT DHARMAWANGSA KP KRAMPUNG",
-          "3191 - UNIT KENJERAN KAPAS KRAMPUNG",
-          "",
-          "3190 - UNIT PECINDILAN KAPAS KRAMPUNG",
-          "7616 - UNIT SETRO KAPAS KRAMPUNG",
-          "7594 - UNIT BRONGGALAN KAPAS KRAMPUNG",
-          "7614 - UNIT KEPUTIH KAPAS KRAMPUNG",
-          "7987 - UNIT BULAK BANTENG KP KRAMPUNG",
-          "Uker"
+          "394 - KC Kapas Krampung",
+          "2017 - KK KAPASAN",
+          "1051 - KK AMPEL"
         ]
       },
       "kolom_7": {
@@ -845,7 +836,7 @@
     }
   },
   {
-    "name": "IB Bisnis - Ritel",
+    "name": "IB Bisnis - Mikro",
     "mapping": {
       "kolom_1": {
         "role": "ignore",
@@ -870,9 +861,18 @@
       "kolom_6": {
         "role": "filter",
         "filterValues": [
-          "394 - KC Kapas Krampung",
-          "2017 - KK KAPASAN",
-          "1051 - KK AMPEL"
+          "3193 - UNIT KAPAS KRAMPUNG",
+          "3187 - UNIT MULYOSARI KAPAS KRAMPUNG",
+          "6549 - UNIT POGOT KAPAS KRAMPUNG",
+          "877 - UNIT DHARMAWANGSA KP KRAMPUNG",
+          "3191 - UNIT KENJERAN KAPAS KRAMPUNG",
+          "",
+          "3190 - UNIT PECINDILAN KAPAS KRAMPUNG",
+          "7616 - UNIT SETRO KAPAS KRAMPUNG",
+          "7594 - UNIT BRONGGALAN KAPAS KRAMPUNG",
+          "7614 - UNIT KEPUTIH KAPAS KRAMPUNG",
+          "7987 - UNIT BULAK BANTENG KP KRAMPUNG",
+          "Uker"
         ]
       },
       "kolom_7": {
