@@ -325,139 +325,6 @@
     }
   },
   {
-    "name": "DI321",
-    "mapping": {
-      "di321 - current account monthly trial balance - active": {
-        "role": "ignore",
-        "filterValues": []
-      },
-      "kolom_2": {
-        "role": "ignore",
-        "filterValues": []
-      },
-      "kolom_3": {
-        "role": "ignore",
-        "filterValues": []
-      },
-      "kolom_4": {
-        "role": "ignore",
-        "filterValues": []
-      },
-      "kolom_5": {
-        "role": "ignore",
-        "filterValues": []
-      },
-      "kolom_6": {
-        "role": "ignore",
-        "filterValues": []
-      },
-      "kolom_7": {
-        "role": "ignore",
-        "filterValues": []
-      },
-      "kolom_8": {
-        "role": "ignore",
-        "filterValues": []
-      },
-      "kolom_9": {
-        "role": "ignore",
-        "filterValues": []
-      },
-      "kolom_10": {
-        "role": "ignore",
-        "filterValues": []
-      },
-      "kolom_11": {
-        "role": "ignore",
-        "filterValues": []
-      },
-      "kolom_12": {
-        "role": "norek",
-        "filterValues": []
-      },
-      "kolom_13": {
-        "role": "ignore",
-        "filterValues": []
-      },
-      "kolom_14": {
-        "role": "ignore",
-        "filterValues": []
-      },
-      "kolom_15": {
-        "role": "ignore",
-        "filterValues": []
-      },
-      "kolom_16": {
-        "role": "ignore",
-        "filterValues": []
-      },
-      "kolom_17": {
-        "role": "saldo",
-        "filterValues": []
-      },
-      "kolom_18": {
-        "role": "ignore",
-        "filterValues": []
-      },
-      "kolom_19": {
-        "role": "ignore",
-        "filterValues": []
-      },
-      "kolom_20": {
-        "role": "ignore",
-        "filterValues": []
-      },
-      "kolom_21": {
-        "role": "ignore",
-        "filterValues": []
-      },
-      "kolom_22": {
-        "role": "ignore",
-        "filterValues": []
-      },
-      "kolom_23": {
-        "role": "ignore",
-        "filterValues": []
-      },
-      "kolom_24": {
-        "role": "ignore",
-        "filterValues": []
-      },
-      "kolom_25": {
-        "role": "ignore",
-        "filterValues": []
-      },
-      "kolom_26": {
-        "role": "ignore",
-        "filterValues": []
-      },
-      "kolom_27": {
-        "role": "ignore",
-        "filterValues": []
-      },
-      "kolom_28": {
-        "role": "ignore",
-        "filterValues": []
-      },
-      "kolom_29": {
-        "role": "ignore",
-        "filterValues": []
-      },
-      "kolom_30": {
-        "role": "ignore",
-        "filterValues": []
-      },
-      "kolom_31": {
-        "role": "ignore",
-        "filterValues": []
-      },
-      "kolom_32": {
-        "role": "ignore",
-        "filterValues": []
-      }
-    }
-  },
-  {
     "name": "LW321 - Mikro",
     "mapping": {
       "lw321 - laporan kolektibilitas dan tunggakan per ao": {
@@ -656,6 +523,139 @@
         "filterValues": []
       },
       "kolom_49": {
+        "role": "ignore",
+        "filterValues": []
+      }
+    }
+  },
+  {
+    "name": "DI321",
+    "mapping": {
+      "di321 - current account monthly trial balance - active": {
+        "role": "ignore",
+        "filterValues": []
+      },
+      "kolom_2": {
+        "role": "ignore",
+        "filterValues": []
+      },
+      "kolom_3": {
+        "role": "ignore",
+        "filterValues": []
+      },
+      "kolom_4": {
+        "role": "ignore",
+        "filterValues": []
+      },
+      "kolom_5": {
+        "role": "ignore",
+        "filterValues": []
+      },
+      "kolom_6": {
+        "role": "ignore",
+        "filterValues": []
+      },
+      "kolom_7": {
+        "role": "ignore",
+        "filterValues": []
+      },
+      "kolom_8": {
+        "role": "ignore",
+        "filterValues": []
+      },
+      "kolom_9": {
+        "role": "ignore",
+        "filterValues": []
+      },
+      "kolom_10": {
+        "role": "ignore",
+        "filterValues": []
+      },
+      "kolom_11": {
+        "role": "ignore",
+        "filterValues": []
+      },
+      "kolom_12": {
+        "role": "norek",
+        "filterValues": []
+      },
+      "kolom_13": {
+        "role": "ignore",
+        "filterValues": []
+      },
+      "kolom_14": {
+        "role": "ignore",
+        "filterValues": []
+      },
+      "kolom_15": {
+        "role": "ignore",
+        "filterValues": []
+      },
+      "kolom_16": {
+        "role": "ignore",
+        "filterValues": []
+      },
+      "kolom_17": {
+        "role": "saldo",
+        "filterValues": []
+      },
+      "kolom_18": {
+        "role": "ignore",
+        "filterValues": []
+      },
+      "kolom_19": {
+        "role": "ignore",
+        "filterValues": []
+      },
+      "kolom_20": {
+        "role": "ignore",
+        "filterValues": []
+      },
+      "kolom_21": {
+        "role": "ignore",
+        "filterValues": []
+      },
+      "kolom_22": {
+        "role": "ignore",
+        "filterValues": []
+      },
+      "kolom_23": {
+        "role": "ignore",
+        "filterValues": []
+      },
+      "kolom_24": {
+        "role": "ignore",
+        "filterValues": []
+      },
+      "kolom_25": {
+        "role": "ignore",
+        "filterValues": []
+      },
+      "kolom_26": {
+        "role": "ignore",
+        "filterValues": []
+      },
+      "kolom_27": {
+        "role": "ignore",
+        "filterValues": []
+      },
+      "kolom_28": {
+        "role": "ignore",
+        "filterValues": []
+      },
+      "kolom_29": {
+        "role": "ignore",
+        "filterValues": []
+      },
+      "kolom_30": {
+        "role": "ignore",
+        "filterValues": []
+      },
+      "kolom_31": {
+        "role": "ignore",
+        "filterValues": []
+      },
+      "kolom_32": {
         "role": "ignore",
         "filterValues": []
       }
