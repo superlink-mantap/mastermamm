@@ -706,171 +706,6 @@
     }
   },
   {
-    "name": "QRIS Detail",
-    "mapping": {
-      "periode": {
-        "role": "ignore",
-        "filterValues": []
-      },
-      "posisi": {
-        "role": "ignore",
-        "filterValues": []
-      },
-      "region": {
-        "role": "ignore",
-        "filterValues": []
-      },
-      "rgdesc": {
-        "role": "ignore",
-        "filterValues": []
-      },
-      "mainbr": {
-        "role": "ignore",
-        "filterValues": []
-      },
-      "mbdesc": {
-        "role": "ignore",
-        "filterValues": []
-      },
-      "branch": {
-        "role": "ignore",
-        "filterValues": []
-      },
-      "brdesc": {
-        "role": "ignore",
-        "filterValues": []
-      },
-      "merchant_pan": {
-        "role": "ignore",
-        "filterValues": []
-      },
-      "storeid": {
-        "role": "ignore",
-        "filterValues": []
-      },
-      "nama_merchant": {
-        "role": "ignore",
-        "filterValues": []
-      },
-      "kriteria": {
-        "role": "ignore",
-        "filterValues": []
-      },
-      "jenis_usaha": {
-        "role": "ignore",
-        "filterValues": []
-      },
-      "kode_mcc": {
-        "role": "ignore",
-        "filterValues": []
-      },
-      "mcc": {
-        "role": "ignore",
-        "filterValues": []
-      },
-      "alamat": {
-        "role": "ignore",
-        "filterValues": []
-      },
-      "kode_pos": {
-        "role": "ignore",
-        "filterValues": []
-      },
-      "kota": {
-        "role": "ignore",
-        "filterValues": []
-      },
-      "provinsi": {
-        "role": "ignore",
-        "filterValues": []
-      },
-      "no_rek": {
-        "role": "ignore",
-        "filterValues": []
-      },
-      "cif": {
-        "role": "ignore",
-        "filterValues": []
-      },
-      "pn": {
-        "role": "ignore",
-        "filterValues": []
-      },
-      "pn_pemrakasa": {
-        "role": "ignore",
-        "filterValues": []
-      },
-      "jabatan": {
-        "role": "ignore",
-        "filterValues": []
-      },
-      "tgl_balikan_pten": {
-        "role": "ignore",
-        "filterValues": []
-      },
-      "status": {
-        "role": "ignore",
-        "filterValues": []
-      },
-      "merchant_type": {
-        "role": "ignore",
-        "filterValues": []
-      },
-      "akumulasi_sv_onus": {
-        "role": "ignore",
-        "filterValues": []
-      },
-      "akumulasi_sv_offus": {
-        "role": "ignore",
-        "filterValues": []
-      },
-      "akumulasi_sv_linkaja": {
-        "role": "ignore",
-        "filterValues": []
-      },
-      "akumulasi_sv_total": {
-        "role": "ignore",
-        "filterValues": []
-      },
-      "posisi_sv_total": {
-        "role": "saldo",
-        "filterValues": []
-      },
-      "akumulasi_trx_onus": {
-        "role": "ignore",
-        "filterValues": []
-      },
-      "akumulasi_trx_offus": {
-        "role": "ignore",
-        "filterValues": []
-      },
-      "akumulasi_trx_linkaja": {
-        "role": "ignore",
-        "filterValues": []
-      },
-      "akumulasi_trx_total": {
-        "role": "ignore",
-        "filterValues": []
-      },
-      "posisi_trx_total": {
-        "role": "ignore",
-        "filterValues": []
-      },
-      "saldo_posisi": {
-        "role": "ignore",
-        "filterValues": []
-      },
-      "ratas_saldo": {
-        "role": "ignore",
-        "filterValues": []
-      },
-      "flagging_bri_merchant": {
-        "role": "ignore",
-        "filterValues": []
-      }
-    }
-  },
-  {
     "name": "LW321 - Mikro",
     "mapping": {
       "lw321 - laporan kolektibilitas dan tunggakan per ao": {
@@ -1069,6 +904,171 @@
         "filterValues": []
       },
       "kolom_49": {
+        "role": "ignore",
+        "filterValues": []
+      }
+    }
+  },
+  {
+    "name": "QRIS Detail",
+    "mapping": {
+      "periode": {
+        "role": "ignore",
+        "filterValues": []
+      },
+      "posisi": {
+        "role": "ignore",
+        "filterValues": []
+      },
+      "region": {
+        "role": "ignore",
+        "filterValues": []
+      },
+      "rgdesc": {
+        "role": "ignore",
+        "filterValues": []
+      },
+      "mainbr": {
+        "role": "ignore",
+        "filterValues": []
+      },
+      "mbdesc": {
+        "role": "ignore",
+        "filterValues": []
+      },
+      "branch": {
+        "role": "ignore",
+        "filterValues": []
+      },
+      "brdesc": {
+        "role": "ignore",
+        "filterValues": []
+      },
+      "merchant_pan": {
+        "role": "ignore",
+        "filterValues": []
+      },
+      "storeid": {
+        "role": "ignore",
+        "filterValues": []
+      },
+      "nama_merchant": {
+        "role": "ignore",
+        "filterValues": []
+      },
+      "kriteria": {
+        "role": "ignore",
+        "filterValues": []
+      },
+      "jenis_usaha": {
+        "role": "ignore",
+        "filterValues": []
+      },
+      "kode_mcc": {
+        "role": "ignore",
+        "filterValues": []
+      },
+      "mcc": {
+        "role": "ignore",
+        "filterValues": []
+      },
+      "alamat": {
+        "role": "ignore",
+        "filterValues": []
+      },
+      "kode_pos": {
+        "role": "ignore",
+        "filterValues": []
+      },
+      "kota": {
+        "role": "ignore",
+        "filterValues": []
+      },
+      "provinsi": {
+        "role": "ignore",
+        "filterValues": []
+      },
+      "no_rek": {
+        "role": "ignore",
+        "filterValues": []
+      },
+      "cif": {
+        "role": "ignore",
+        "filterValues": []
+      },
+      "pn": {
+        "role": "ignore",
+        "filterValues": []
+      },
+      "pn_pemrakasa": {
+        "role": "ignore",
+        "filterValues": []
+      },
+      "jabatan": {
+        "role": "ignore",
+        "filterValues": []
+      },
+      "tgl_balikan_pten": {
+        "role": "ignore",
+        "filterValues": []
+      },
+      "status": {
+        "role": "ignore",
+        "filterValues": []
+      },
+      "merchant_type": {
+        "role": "ignore",
+        "filterValues": []
+      },
+      "akumulasi_sv_onus": {
+        "role": "ignore",
+        "filterValues": []
+      },
+      "akumulasi_sv_offus": {
+        "role": "ignore",
+        "filterValues": []
+      },
+      "akumulasi_sv_linkaja": {
+        "role": "ignore",
+        "filterValues": []
+      },
+      "akumulasi_sv_total": {
+        "role": "ignore",
+        "filterValues": []
+      },
+      "posisi_sv_total": {
+        "role": "saldo",
+        "filterValues": []
+      },
+      "akumulasi_trx_onus": {
+        "role": "ignore",
+        "filterValues": []
+      },
+      "akumulasi_trx_offus": {
+        "role": "ignore",
+        "filterValues": []
+      },
+      "akumulasi_trx_linkaja": {
+        "role": "ignore",
+        "filterValues": []
+      },
+      "akumulasi_trx_total": {
+        "role": "ignore",
+        "filterValues": []
+      },
+      "posisi_trx_total": {
+        "role": "ignore",
+        "filterValues": []
+      },
+      "saldo_posisi": {
+        "role": "ignore",
+        "filterValues": []
+      },
+      "ratas_saldo": {
+        "role": "ignore",
+        "filterValues": []
+      },
+      "flagging_bri_merchant": {
         "role": "ignore",
         "filterValues": []
       }
